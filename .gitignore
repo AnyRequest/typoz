@@ -2,6 +2,6 @@
 .env*
 node_modules/
 # test/
-dist
+# dist
 build
 # __tests__

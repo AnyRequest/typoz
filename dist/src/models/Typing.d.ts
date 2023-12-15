@@ -1,0 +1,30 @@
+import type { HTMLTypozElement, Options } from '..';
+export default class Typing {
+    id: number;
+    name: string;
+    typingList: string[][][];
+    config: Options;
+    before: number;
+    element: HTMLTypozElement;
+    isStarted: boolean;
+    injectStyle: string;
+    order: number;
+    stop: boolean;
+    play: (value: boolean) => void;
+    constructor(id: number, el: HTMLTypozElement, config: Options, typings: string[][][]);
+    private createName;
+    orderUp(): void;
+    setup(): void;
+    copyCurrent(): string[][];
+    resume(): void;
+    pause(): void;
+    run(): void;
+    clear(): void;
+    wait(time?: number): Promise<unknown>;
+    createEl(name: string, content: string): HTMLTypozElement;
+    renderEraseDivide(eraseArray: string[][]): Promise<unknown>;
+    renderWriteDivide(writeArray: string[][]): Promise<unknown>;
+    renderErase(eraseArray: string[][]): Promise<unknown>;
+    renderWrite(writeArray: string[][]): Promise<unknown>;
+    render(): Promise<void>;
+}
