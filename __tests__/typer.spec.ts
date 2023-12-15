@@ -2,36 +2,36 @@
  * @jest-environment jsdom
  */
 
-import Typer, { KoreanParser, Parser } from '@/index';
+import Typex, { KoreanParser, Parser } from '@/index';
 
 describe('[TYPER TEST]', () => {
-  let typer: Typer;
+  let typex: Typex;
   beforeAll(() => {
-    typer = new Typer();
+    typex = new Typex();
   });
 
   describe('[Defined Test]', () => {
     beforeEach(() => {
-      typer.initialize();
+      typex.initialize();
     });
 
     it('✅ defined test', () => {
-      expect(typer).toBeDefined();
+      expect(typex).toBeDefined();
     });
   });
 
   describe('[Configuration Test]', () => {
     beforeEach(() => {
-      typer.initialize();
+      typex.initialize();
     });
 
     it('✅ default configuration check', () => {
-      expect(typer.config.mode.realTyping).toBeFalsy();
-      expect(typer.config.speed.write).toStrictEqual(1);
+      expect(typex.config.mode.realTyping).toBeFalsy();
+      expect(typex.config.speed.write).toStrictEqual(1);
     });
 
     it('✅ custom configuration test', () => {
-      typer.globalConfig({
+      typex.globalConfig({
         mode: {
           erase: false,
         },
@@ -39,16 +39,16 @@ describe('[TYPER TEST]', () => {
           write: 3,
         },
       });
-      expect(typer.config.mode.erase).toBeFalsy();
-      expect(typer.config.mode.divide).toBeTruthy();
-      expect(typer.config.speed.write).toStrictEqual(3);
-      expect(typer.config.speed.erase).toStrictEqual(1);
+      expect(typex.config.mode.erase).toBeFalsy();
+      expect(typex.config.mode.divide).toBeTruthy();
+      expect(typex.config.speed.write).toStrictEqual(3);
+      expect(typex.config.speed.erase).toStrictEqual(1);
     });
   });
 
   describe('[Parser Test]', () => {
     // beforeEach(() => {
-    //   typer.initialize();
+    //   typex.initialize();
     // });
 
     describe('[KoreanParser]', () => {

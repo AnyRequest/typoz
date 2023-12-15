@@ -1,8 +1,8 @@
-import { Typer } from 'anyrequest-typer';
+// import { Typex } from 'anyrequest-typer';
 
-const typer = new Typer();
-typer.initialize();
-typer.globalConfig({
+const typex = new Typex();
+typex.initialize();
+typex.globalConfig({
   mode: {
     divide: true,
     erase: false,
@@ -10,7 +10,7 @@ typer.globalConfig({
   nodes: [
     {
       select: '.typer',
-      words: ['제주(祭主)가 되는 기도사(祈禱詞)'],
+      words: ['다음 표시 될 내용을 추가할 수도 있습니다.'],
     },
   ],
 });
@@ -23,7 +23,7 @@ let toggle = false;
 function handleControl() {
   controls.innerHTML = !toggle ? 'resume' : 'pause';
   toggle = !toggle;
-  typer[!toggle ? 'resume' : 'pause']();
+  typex[!toggle ? 'resume' : 'pause']();
 }
 
 window.addEventListener('click', handleControl);

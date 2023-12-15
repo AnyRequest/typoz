@@ -1,10 +1,10 @@
 /* istanbul ignore file */
 
-import { Typer } from './core/Typer';
+import { Typex } from './core/Typex';
 import Parser from './modules/Parser';
 import KoreanParser from './modules/KoreanParser';
 
-export interface HTMLTyperElement extends HTMLElement {
+export interface HTMLTypexElement extends HTMLElement {
   typings: string[][][];
 }
 
@@ -32,6 +32,6 @@ export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
-export { Typer, Parser, KoreanParser };
+export { Typex, Parser, KoreanParser };
 
-export default Typer;
+export default Typex;

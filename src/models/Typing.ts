@@ -1,4 +1,4 @@
-import type { HTMLTyperElement, Options } from '..';
+import type { HTMLTypexElement, Options } from '..';
 
 export default class Typing {
   id: number;
@@ -6,7 +6,7 @@ export default class Typing {
   typingList: string[][][] = [];
   config: Options;
   before: number = 0;
-  element: HTMLTyperElement;
+  element: HTMLTypexElement;
   isStarted: boolean = false;
   injectStyle: string;
   order: number = 0;
@@ -15,7 +15,7 @@ export default class Typing {
 
   constructor(
     id: number,
-    el: HTMLTyperElement,
+    el: HTMLTypexElement,
     config: Options,
     typings: string[][][],
   ) {
@@ -109,7 +109,7 @@ export default class Typing {
   createEl(name: string, content: string) {
     const el = document.createElement(name);
     el.innerHTML = content;
-    return el as HTMLTyperElement;
+    return el as HTMLTypexElement;
   }
 
   renderEraseDivide(eraseArray: string[][]) {

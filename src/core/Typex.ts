@@ -1,8 +1,8 @@
 import Typing from '@/models/Typing';
 import Parser from '@/modules/Parser';
-import type { HTMLTyperElement, Node, Options, RecursivePartial } from '..';
+import type { HTMLTypexElement, Node, Options, RecursivePartial } from '..';
 
-export class Typer {
+export class Typex {
   private readonly defaultConfig: Options = {
     autoRender: true,
     mode: {
@@ -16,7 +16,7 @@ export class Typer {
     },
     delay: 5,
     nodes: [],
-    querySelector: '.typer',
+    querySelector: '.typex',
   };
   private parser: Parser;
 
@@ -45,7 +45,7 @@ export class Typer {
     }
   }
 
-  private findElements(): NodeListOf<HTMLTyperElement> {
+  private findElements(): NodeListOf<HTMLTypexElement> {
     return document.querySelectorAll(
       [].concat(this.config.querySelector).join(','),
     );
@@ -85,7 +85,7 @@ export class Typer {
       },
       delay: 5,
       nodes: [],
-      querySelector: '.typer',
+      querySelector: '.typex',
     },
   ): void {
     if (customConfigs) this.recursiveConfigApply(this.config, customConfigs);
@@ -108,10 +108,10 @@ export class Typer {
     return temp;
   }
 
-  getConfigNodes(): HTMLTyperElement[] {
+  getConfigNodes(): HTMLTypexElement[] {
     if ((this.config.nodes as Node[]).length > 0) {
       return (this.config.nodes as Node[]).reduce((acc, { select, words }) => {
-        const target = document.querySelector(select) as HTMLTyperElement;
+        const target = document.querySelector(select) as HTMLTypexElement;
         /* istanbul ignore next */
         if (target) {
           const targetText = target.innerText.trim();
@@ -170,10 +170,10 @@ export class Typer {
   }
 
   render(): void;
-  render(element: HTMLTyperElement): void;
-  render(elements: HTMLTyperElement[]): void;
-  render(elements?: HTMLTyperElement | HTMLTyperElement[]): void {
-    const temp: HTMLTyperElement[] = [];
+  render(element: HTMLTypexElement): void;
+  render(elements: HTMLTypexElement[]): void;
+  render(elements?: HTMLTypexElement | HTMLTypexElement[]): void {
+    const temp: HTMLTypexElement[] = [];
     let styles = '';
     let increaseId = 0;
 
@@ -211,8 +211,8 @@ export class Typer {
       this.typingList.push(typingModel);
       typingModel.run();
     }
-    const typerDefaultStyle = document.createElement('style');
-    typerDefaultStyle.innerText = styles;
-    document.head.append(typerDefaultStyle);
+    const typexDefaultStyle = document.createElement('style');
+    typexDefaultStyle.innerText = styles;
+    document.head.append(typexDefaultStyle);
   }
 }

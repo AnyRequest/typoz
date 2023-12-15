@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1702641923495" clover="3.2.0">
-  <project timestamp="1702641923495" name="All files">
-    <metrics statements="158" coveredstatements="158" conditionals="31" coveredconditionals="31" methods="54" coveredmethods="49" elements="243" coveredelements="238" complexity="0" loc="158" ncloc="158" packages="3" files="5" classes="5"/>
+<coverage generated="1702642835033" clover="3.2.0">
+  <project timestamp="1702642835033" name="All files">
+    <metrics statements="157" coveredstatements="157" conditionals="31" coveredconditionals="31" methods="53" coveredmethods="48" elements="241" coveredelements="236" complexity="0" loc="157" ncloc="157" packages="3" files="5" classes="5"/>
     <package name="core">
       <metrics statements="42" coveredstatements="42" conditionals="11" coveredconditionals="11" methods="12" coveredmethods="10"/>
       <file name="Typer.ts" path="C:\kimson\Kim_Coding\project\anyrequest-typer\src\core\Typer.ts">
@@ -51,9 +51,9 @@
       </file>
     </package>
     <package name="models">
-      <metrics statements="34" coveredstatements="34" conditionals="6" coveredconditionals="6" methods="14" coveredmethods="11"/>
+      <metrics statements="33" coveredstatements="33" conditionals="6" coveredconditionals="6" methods="13" coveredmethods="10"/>
       <file name="Typing.ts" path="C:\kimson\Kim_Coding\project\anyrequest-typer\src\models\Typing.ts">
-        <metrics statements="34" coveredstatements="34" conditionals="6" coveredconditionals="6" methods="14" coveredmethods="11"/>
+        <metrics statements="33" coveredstatements="33" conditionals="6" coveredconditionals="6" methods="13" coveredmethods="10"/>
         <line num="3" count="2" type="stmt"/>
         <line num="6" count="2" type="stmt"/>
         <line num="8" count="2" type="stmt"/>
@@ -84,7 +84,6 @@
         <line num="62" count="2" type="stmt"/>
         <line num="66" count="2" type="stmt"/>
         <line num="69" count="2" type="stmt"/>
-        <line num="88" count="2" type="stmt"/>
         <line num="110" count="37" type="stmt"/>
         <line num="111" count="37" type="stmt"/>
         <line num="112" count="37" type="stmt"/>
