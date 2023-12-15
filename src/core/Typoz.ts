@@ -1,8 +1,8 @@
 import Typing from '@/models/Typing';
 import Parser from '@/modules/Parser';
-import type { HTMLTypexElement, Node, Options, RecursivePartial } from '..';
+import type { HTMLTypozElement, Node, Options, RecursivePartial } from '..';
 
-export class Typex {
+export class Typoz {
   private readonly defaultConfig: Options = {
     autoRender: true,
     mode: {
@@ -16,7 +16,7 @@ export class Typex {
     },
     delay: 5,
     nodes: [],
-    querySelector: '.typex',
+    querySelector: '.typoz',
   };
   private parser: Parser;
 
@@ -45,7 +45,7 @@ export class Typex {
     }
   }
 
-  private findElements(): NodeListOf<HTMLTypexElement> {
+  private findElements(): NodeListOf<HTMLTypozElement> {
     return document.querySelectorAll(
       [].concat(this.config.querySelector).join(','),
     );
@@ -85,7 +85,7 @@ export class Typex {
       },
       delay: 5,
       nodes: [],
-      querySelector: '.typex',
+      querySelector: '.typoz',
     },
   ): void {
     if (customConfigs) this.recursiveConfigApply(this.config, customConfigs);
@@ -108,10 +108,10 @@ export class Typex {
     return temp;
   }
 
-  getConfigNodes(): HTMLTypexElement[] {
+  getConfigNodes(): HTMLTypozElement[] {
     if ((this.config.nodes as Node[]).length > 0) {
       return (this.config.nodes as Node[]).reduce((acc, { select, words }) => {
-        const target = document.querySelector(select) as HTMLTypexElement;
+        const target = document.querySelector(select) as HTMLTypozElement;
         /* istanbul ignore next */
         if (target) {
           const targetText = target.innerText.trim();
@@ -170,10 +170,10 @@ export class Typex {
   }
 
   render(): void;
-  render(element: HTMLTypexElement): void;
-  render(elements: HTMLTypexElement[]): void;
-  render(elements?: HTMLTypexElement | HTMLTypexElement[]): void {
-    const temp: HTMLTypexElement[] = [];
+  render(element: HTMLTypozElement): void;
+  render(elements: HTMLTypozElement[]): void;
+  render(elements?: HTMLTypozElement | HTMLTypozElement[]): void {
+    const temp: HTMLTypozElement[] = [];
     let styles = '';
     let increaseId = 0;
 
@@ -211,8 +211,8 @@ export class Typex {
       this.typingList.push(typingModel);
       typingModel.run();
     }
-    const typexDefaultStyle = document.createElement('style');
-    typexDefaultStyle.innerText = styles;
-    document.head.append(typexDefaultStyle);
+    const typozDefaultStyle = document.createElement('style');
+    typozDefaultStyle.innerText = styles;
+    document.head.append(typozDefaultStyle);
   }
 }

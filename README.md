@@ -1,12 +1,12 @@
-# Typex
+# Typos
 
-**Typex**는 ESM으로 빌드된 클라이언트 사이드 라이브러리입니다. 태그 별로 사람이 직접 타이핑하는 효과를 보다 간편하게 주기 위해 만들어졌습니다.
+**Typos**는 ESM으로 빌드된 클라이언트 사이드 라이브러리입니다. 태그 별로 사람이 직접 타이핑하는 효과를 보다 간편하게 주기 위해 만들어졌습니다.
 
 ## Installation
 
 ```bash
-npm install anyrequest/typex
-pnpm add anyrequest/typex
+npm install anyrequest/typoz
+pnpm add anyrequest/typoz
 ```
 
 ## Congifuration
@@ -15,7 +15,7 @@ pnpm add anyrequest/typex
 
 ## License
 
-[MIT](https://github.com/AnyRequest/typex/blob/main/LICENSE)
+[MIT](https://github.com/AnyRequest/typoz/blob/main/LICENSE)
 
 ## Author
 

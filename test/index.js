@@ -1,8 +1,8 @@
 // import { Typex } from 'anyrequest-typer';
 
-const typex = new Typex();
-typex.initialize();
-typex.globalConfig({
+const typoz = new Typoz();
+typoz.initialize();
+typoz.globalConfig({
   mode: {
     divide: true,
     erase: false,
@@ -23,7 +23,7 @@ let toggle = false;
 function handleControl() {
   controls.innerHTML = !toggle ? 'resume' : 'pause';
   toggle = !toggle;
-  typex[!toggle ? 'resume' : 'pause']();
+  typoz[!toggle ? 'resume' : 'pause']();
 }
 
 window.addEventListener('click', handleControl);
