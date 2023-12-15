@@ -5,6 +5,6 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  anyrequest-typer:
+  typoz:
     specifier: link:..
     version: link:..

@@ -1,4 +1,4 @@
-// import { Typex } from 'anyrequest-typer';
+import { Typoz } from 'typoz';
 
 const typoz = new Typoz();
 typoz.initialize();
