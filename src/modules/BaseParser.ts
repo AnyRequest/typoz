@@ -1,7 +1,7 @@
 import KoreanParser from './KoreanParser';
 
 export default abstract class BaseParser {
-  protected abstract readonly koreanParser: KoreanParser;
+  abstract readonly koreanParser: KoreanParser;
   protected abstract wordToLetters(word: string): string[];
   protected abstract wordToLettersWithEmpty(word: string): string[];
   abstract categorizing(sentence: string): string[][];

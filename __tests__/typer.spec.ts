@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import Typer, { KoreanParser, Parser } from '@/index';
 
 describe('[TYPER TEST]', () => {
@@ -106,16 +110,16 @@ describe('[TYPER TEST]', () => {
 
       it('letters to word test: index', () => {
         const krParser = new KoreanParser();
-        expect(krParser.lettersToWord(['ㄱ', 'ㅏ'])).toStrictEqual(44032);
-        expect(krParser.lettersToWord(['ㄱ', 'ㅐ'])).toStrictEqual(44060);
-        expect(krParser.lettersToWord(['ㄱ', 'ㅐ', 'ㅎ'])).toStrictEqual(44087);
+        expect(krParser.getWordCode(['ㄱ', 'ㅏ'])).toStrictEqual(44032);
+        expect(krParser.getWordCode(['ㄱ', 'ㅐ'])).toStrictEqual(44060);
+        expect(krParser.getWordCode(['ㄱ', 'ㅐ', 'ㅎ'])).toStrictEqual(44087);
       });
 
       it('letters to word test: word', () => {
         const krParser = new KoreanParser();
-        expect(krParser.lettersToWord(['ㄱ', 'ㅏ'])).toStrictEqual(44032);
-        expect(krParser.lettersToWord(['ㄱ', 'ㅐ'])).toStrictEqual(44060);
-        expect(krParser.lettersToWord(['ㄱ', 'ㅐ', 'ㅎ'])).toStrictEqual(44087);
+        expect(krParser.lettersToWord(['ㄱ', 'ㅏ'])).toStrictEqual('가');
+        expect(krParser.lettersToWord(['ㄱ', 'ㅐ'])).toStrictEqual('개');
+        expect(krParser.lettersToWord(['ㄱ', 'ㅐ', 'ㅎ'])).toStrictEqual('갷');
       });
     });
 
@@ -138,6 +142,19 @@ describe('[TYPER TEST]', () => {
           ['ㅎ', 'ㅏ'],
           ['ㅅ', 'ㅔ'],
           ['ㅇ', 'ㅛ'],
+        ]);
+      });
+      it('✅ sentence test: with empty item', () => {
+        const parser = new Parser();
+        expect(parser.categorizingWithEmpty('123안녕하세요')).toStrictEqual([
+          ['1', '', ''],
+          ['2', '', ''],
+          ['3', '', ''],
+          ['ㅇ', 'ㅏ', 'ㄴ'],
+          ['ㄴ', 'ㅕ', 'ㅇ'],
+          ['ㅎ', 'ㅏ', ''],
+          ['ㅅ', 'ㅔ', ''],
+          ['ㅇ', 'ㅛ', ''],
         ]);
       });
 
@@ -170,6 +187,32 @@ describe('[TYPER TEST]', () => {
       it('✅ empty sentence test', () => {
         const parser = new Parser();
         expect(parser.parse('')).toStrictEqual([]);
+      });
+
+      it('✅ sentence test: three letters', () => {
+        const parser = new Parser();
+        expect(parser.koreanParser.lettersToWord(['ㄴ', 'ㅕ'])).toStrictEqual(
+          '녀',
+        );
+        expect(parser.parse('안녕')).toStrictEqual([
+          ['ㅇ', '아', '안'],
+          ['ㄴ', '녀', '녕'],
+        ]);
+      });
+
+      it('✅ sentence test eng + kor + empty', () => {
+        const parser = new Parser();
+        expect(parser.parse('parse 테스트')).toStrictEqual([
+          ['p'],
+          ['a'],
+          ['r'],
+          ['s'],
+          ['e'],
+          [' '],
+          ['ㅌ', '테'],
+          ['ㅅ', '스'],
+          ['ㅌ', '트'],
+        ]);
       });
     });
   });

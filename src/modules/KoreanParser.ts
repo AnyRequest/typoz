@@ -45,7 +45,7 @@ export default class KoreanParser {
 
   /* 한글 판별 */
   isKorean(word: string): boolean {
-    return !!String(word).match(/[ㄱ-힣]/g);
+    return !!String(word).match(/[ㄱ-ㅎ가-힣]/g);
   }
 
   /* 음절에서 음소 단위로 분리 */
@@ -59,36 +59,53 @@ export default class KoreanParser {
     return [onset, nucleus, coda];
   }
 
-  // getLetterCode(letter: string) {
-  //   return letter.charCodeAt(0);
-  // }
-  // getOnsetCode(letterCode: number) {
-  //   return letterCode ;
-  // }
-  // getNucleusCode(letterCode: number) {
-  //   return letterCode;
-  // }
-  // getCodaCode(letterCode: number) {
-  //   return letterCode;
-  // }
-  /* 음소 단위에서 음절로 조합 */
-  lettersToWord(letters: [string]): number;
-  lettersToWord(letters: [string, string]): number;
-  lettersToWord(letters: [string, string, string]): number;
-  lettersToWord(letters: string[]): number {
+  /* 음소 인덱싱 */
+  getOnsetIndex(letter: string) {
+    return this.onset.indexOf(letter);
+  }
+  getNucleusIndex(letter: string) {
+    return this.nucleus.indexOf(letter);
+  }
+  getCodaIndex(letter: string) {
+    return this.coda.indexOf(letter);
+  }
+  /* 음소 코드 추출 */
+  getOnsetCode(letter: string) {
+    const index = this.getOnsetIndex(letter);
+    return index * this.changeOnsetPoint;
+  }
+  getNucleusCode(letter: string) {
+    const index = this.getNucleusIndex(letter);
+    return (index % this.nucleus.length) * this.coda.length;
+  }
+  getCodaCode(letter: string) {
+    const index = this.getCodaIndex(letter);
+    return index % this.coda.length;
+  }
+  /* 각 음소 코드 합계 추출 */
+  getWordCode(letters: string[]) {
     let sum = 0;
     if (letters[0]) {
-      const onsetCode = this.onset.indexOf(letters[0]);
-      sum += onsetCode * this.changeOnsetPoint;
+      sum += this.getOnsetCode(letters[0]);
     }
     if (letters[1]) {
-      const nucleusCode = this.nucleus.indexOf(letters[1]);
-      sum += (nucleusCode % this.nucleus.length) * this.coda.length;
+      sum += this.getNucleusCode(letters[1]);
     }
     if (letters[2]) {
-      const codaCode = this.coda.indexOf(letters[2]);
-      sum += codaCode % this.coda.length;
+      sum += this.getCodaCode(letters[2]);
     }
     return sum + this.startKorWordPoint;
+  }
+  /* 음소 단위에서 음절로 조합 */
+  lettersToWord(letters: string[]): string {
+    const code = this.getWordCode(letters);
+    const word = String.fromCharCode(code);
+    // return word;
+
+    if (letters.length === 1) {
+      return letters[0];
+    } else {
+      return word;
+    }
   }
 }

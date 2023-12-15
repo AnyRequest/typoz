@@ -1,4 +1,7 @@
 \[x\]*
 .env*
 node_modules/
-test/
+# test/
+dist
+build
+# __tests__

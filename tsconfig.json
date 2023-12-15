@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
-    "module": "CommonJS",
+    "strict": true,
+    "module": "ESNext",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -8,23 +9,38 @@
     "allowSyntheticDefaultImports": true,
     "target": "ESNext",
     "sourceMap": true,
-    "outDir": "./dist",
+    "outDir": "dist",
     "baseUrl": "./",
+    "allowJs": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {
       "@/*": ["./src/*"]
     },
+    "rootDir": "./",
+    "moduleResolution": "Node",
+    // "emitDeclarationOnly": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
     "types": ["node", "jest"],
-    "typeRoots": ["node_modules/@types", "src/types", "src/core"],
+    "typeRoots": ["node_modules/@types", "src/types"],
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
+    "noEmit": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false
   },
+  "buildOptions": {
+    "verbose": true
+  },
   "ts-node": {
-    "files": true
+    "files": true,
+    "compilerOptions": {
+      "module": "CommonJS"
+    },
+    "require": ["tsconfig-paths/register"]
   },
   "include": ["src/**/*", "__tests__/**/*"],
   "exclude": ["node_modules"]

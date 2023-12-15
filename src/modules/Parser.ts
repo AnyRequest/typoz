@@ -2,7 +2,7 @@ import BaseParser from './BaseParser';
 import KoreanParser from './KoreanParser';
 
 export default class Parser extends BaseParser {
-  protected readonly koreanParser: KoreanParser;
+  readonly koreanParser: KoreanParser;
 
   constructor() {
     super();
@@ -22,33 +22,52 @@ export default class Parser extends BaseParser {
    * @param sentence 문장
    * @example "안녕하세요"
    */
-  categorizingWithEmpty(sentence: string): string[][] {
+  categorizing(sentence: string): string[][] {
     const temp: string[][] = [];
-    for (const word of sentence) {
+    for (const word of sentence.trim()) {
       if (this.koreanParser.isKorean(word)) {
-        temp.push(this.koreanParser.wordToLettersWithEmpty(word));
+        const category = this.koreanParser.wordToLetters(word);
+        temp.push(category);
       } else {
-        temp.push(this.wordToLettersWithEmpty(word));
+        const category = this.wordToLetters(word);
+        temp.push(category);
       }
     }
     return temp;
   }
-
   /**
    *
    * @param sentence 문장
    * @example "안녕하세요"
    */
-  categorizing(sentence: string): string[][] {
+  categorizingWithEmpty(sentence: string): string[][] {
     const temp: string[][] = [];
-    for (const word of sentence.trim()) {
+    for (const word of sentence) {
       if (this.koreanParser.isKorean(word)) {
-        temp.push(this.koreanParser.wordToLetters(word));
+        const category = this.koreanParser.wordToLettersWithEmpty(word);
+        temp.push(category);
       } else {
-        temp.push(this.wordToLetters(word));
+        const category = this.wordToLettersWithEmpty(word);
+        temp.push(category);
       }
     }
     return temp;
+  }
+
+  getTypingFlow(categorizedGroup: string[][]) {
+    return categorizedGroup.map((group) => {
+      const temp = [];
+      if (group.some(this.koreanParser.isKorean)) {
+        for (let i = 1; i <= group.length; i++) {
+          const letters = group.slice(0, i);
+          const convertLetter = this.koreanParser.lettersToWord(letters);
+          temp.push(convertLetter);
+        }
+      } else {
+        temp.push(...group);
+      }
+      return temp;
+    });
   }
 
   /**
@@ -58,7 +77,9 @@ export default class Parser extends BaseParser {
    */
   parse(sentence: string): string[][] {
     if (sentence !== '') {
-      return this.categorizing(sentence);
+      const categorizedGroup = this.categorizing(sentence);
+      const convertedFlow = this.getTypingFlow(categorizedGroup);
+      return convertedFlow;
     } else {
       return [];
     }

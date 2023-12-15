@@ -14,6 +14,14 @@ const config = {
   roots: ['<rootDir>/'],
   rootDir: '.',
   testEnvironment: 'node',
+  // testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    html: `<html lang="ko">
+    <head></head>
+    <body>
+    </body>
+    </html>`,
+  },
   // testRegex: '.e2e-spec.ts$',
   testMatch: [
     '<rootDir>/**/*.(test|spec).(js|jsx|ts|tsx)',
@@ -22,6 +30,8 @@ const config = {
   transform: {
     '^.+\\.ts?$': 'ts-jest',
   },
+  transformIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/dist/'],
   // testTimeout: 10000,
   detectOpenHandles: true,
   forceExit: true,
