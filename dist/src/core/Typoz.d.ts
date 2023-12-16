@@ -1,4 +1,4 @@
-import Typing from '../models/Typing';
+import Typing from '@/models/Typing';
 import type { HTMLTypozElement, Options, RecursivePartial } from '..';
 export declare class Typoz {
     private readonly defaultConfig;

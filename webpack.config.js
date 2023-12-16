@@ -1,10 +1,12 @@
 const path = require('path');
 
 module.exports = {
-  entry: './dist/src/index.js',
+  entry: './src/index.ts',
   output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'umd'),
+    filename: '[name].min.js',
+    library: ['typoz', '[name]'],
+    libraryTarget: 'umd',
   },
   module: {
     rules: [
@@ -25,6 +27,9 @@ module.exports = {
     ],
   },
   resolve: {
+    alias: {
+      '@': path.resolve(__dirname, 'src'),
+    },
     modules: [path.join(__dirname, 'src'), 'node_modules'], // 모듈 위치
     extensions: ['.ts', '.js'],
   },
