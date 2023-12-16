@@ -106,12 +106,12 @@ export class Typoz {
               if (!Object.hasOwn(target, 'typings')) {
                 target.typings = [];
               }
-              target.typings.push(this.convert(targetText));
-              if (words.length > 0) {
-                target.typings.push(...this.bulkConvert(words));
-              }
-              acc.push(target);
+              target.typings.push(targetText.trim());
             }
+            if (words.length > 0) {
+              target.typings.push(...words.map((_) => _.trim()));
+            }
+            acc.push(target);
           } else {
             /* istanbul ignore next */
             console.error(
@@ -186,7 +186,7 @@ export class Typoz {
     for (const element of [...new Set(temp)]) {
       // if(this.config.nodes)
       const id = ++increaseId;
-      const parseBaseText = this.convert(element.innerText.trim());
+      const parseBaseText = element.innerText.trim();
       const parsedSentences = [parseBaseText];
       if (element.typings?.length > 0) {
         parsedSentences.push(...element.typings);
@@ -195,7 +195,7 @@ export class Typoz {
         id,
         element,
         element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)),
-        parsedSentences,
+        this.bulkConvert([...new Set(parsedSentences)]),
       );
 
       styles += typingModel.injectStyle + '\n';

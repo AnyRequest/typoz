@@ -217,16 +217,6 @@ describe('[TYPER TEST]', () => {
       });
     });
   });
-
-  describe('[Typoz Add Plugin Test]', () => {
-    it('add plugin', () => {
-      const typoz = new Typoz();
-      typoz.initialize();
-      typoz.globalConfig({
-        autoRender: false,
-      });
-    });
-  });
 });
 
 describe;

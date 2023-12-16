@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'umd'),
     filename: 'typoz.min.js',
-    library: 'typoz',
+    library: 'Typoz',
     libraryTarget: 'umd',
     libraryExport: 'default',
   },

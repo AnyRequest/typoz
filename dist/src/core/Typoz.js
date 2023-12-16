@@ -80,7 +80,6 @@ export class Typoz {
                 if (target) {
                     if (!Object.hasOwn(target, 'typozConfig')) {
                         const copy = JSON.parse(JSON.stringify(this.defaultConfig));
-                        console.log('copy', copy);
                         this.recursiveConfigApply(copy, config || this.config);
                         target.typozConfig = copy;
                     }
@@ -89,12 +88,12 @@ export class Typoz {
                         if (!Object.hasOwn(target, 'typings')) {
                             target.typings = [];
                         }
-                        target.typings.push(this.convert(targetText));
-                        if (words.length > 0) {
-                            target.typings.push(...this.bulkConvert(words));
-                        }
-                        acc.push(target);
+                        target.typings.push(targetText.trim());
                     }
+                    if (words.length > 0) {
+                        target.typings.push(...words.map((_) => _.trim()));
+                    }
+                    acc.push(target);
                 }
                 else {
                     /* istanbul ignore next */
@@ -155,12 +154,12 @@ export class Typoz {
         for (const element of [...new Set(temp)]) {
             // if(this.config.nodes)
             const id = ++increaseId;
-            const parseBaseText = this.convert(element.innerText.trim());
+            const parseBaseText = element.innerText.trim();
             const parsedSentences = [parseBaseText];
             if (element.typings?.length > 0) {
                 parsedSentences.push(...element.typings);
             }
-            const typingModel = new Typing(id, element, element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)), parsedSentences);
+            const typingModel = new Typing(id, element, element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)), this.bulkConvert([...new Set(parsedSentences)]));
             styles += typingModel.injectStyle + '\n';
             this.typingList.push(typingModel);
             typingModel.run();

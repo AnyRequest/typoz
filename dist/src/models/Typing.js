@@ -15,7 +15,6 @@ export default class Typing {
         this.element = el;
         this.name = this.createName();
         this.config = config;
-        console.log('typing config', config);
         this.typingList = typings.filter((_) => _ && _.length > 0 && _[0].length > 0 && _[0][0].length > 0);
         this.setup();
     }
@@ -37,6 +36,7 @@ export default class Typing {
     }
     setup() {
         Object.freeze(this.typingList);
+        Object.freeze(this.config);
         this.element.innerHTML = '';
         this.element.dataset.typerId = '' + this.id;
         this.element.dataset.typerName = this.name;
@@ -49,13 +49,11 @@ export default class Typing {
     }
     /* istanbul ignore next */
     resume() {
-        // console.log('resume');
         this.play(true);
         this.stop = false;
     }
     /* istanbul ignore next */
     pause() {
-        // console.log('pause');
         this.stop = true;
     }
     /* istanbul ignore next */
@@ -188,7 +186,6 @@ export default class Typing {
                 if (word.length === 0) {
                     if (writeArray.length === 0) {
                         clearInterval(writeLoop);
-                        console.log('success wrote');
                         this.element.innerText = change.join('');
                         resolve(true);
                     }
@@ -209,7 +206,6 @@ export default class Typing {
         if (this.isStarted === false)
             return;
         this.orderUp();
-        console.log('render config', this.name, this.config.mode);
         if (this.config.mode.divide) {
             await this.renderWriteDivide([...this.copyCurrent()]);
             await this.wait(this.config.delay);

@@ -54,6 +54,7 @@ export default class Typing {
 
   setup() {
     Object.freeze(this.typingList);
+    Object.freeze(this.config);
     this.element.innerHTML = '';
     this.element.dataset.typerId = '' + this.id;
     this.element.dataset.typerName = this.name;

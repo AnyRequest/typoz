@@ -54,13 +54,12 @@ describe('[DOM Test]', () => {
 
     expect(typoz.typingList[0].id).toStrictEqual(1);
     expect(typoz.typingList[0].name).toStrictEqual(typoz.typingList[0].name);
-    expect(typoz.typingList[0].element.typings[0][0][1]).toStrictEqual('가');
-    expect(typoz.typingList[0].element.typings[0][0][2]).toStrictEqual(
-      undefined,
-    );
-    expect(typoz.typingList[0].element.typings[0][2][0]).toStrictEqual('ㅁ');
+    expect(typoz.typingList[0].typingList[0][0][1]).toStrictEqual('가');
+    expect(typoz.typingList[0].typingList[0][0][2]).toStrictEqual(undefined);
+    expect(typoz.typingList[0].typingList[0][2][0]).toStrictEqual('ㅁ');
     expect(typoz.typingList[0].isStarted).toBeTruthy();
     expect(typoz.typingList.length).toStrictEqual(1);
+    expect(typoz.typingList[0].typingList.length).toStrictEqual(3);
     expect(typoz.typingList[0].element.typings.length).toStrictEqual(3);
 
     await new Promise((resolve) => {
@@ -69,6 +68,33 @@ describe('[DOM Test]', () => {
         resolve(true);
       }, 3000);
     });
+  });
+
+  it('each nodes config', () => {
+    const typoz = new Typoz();
+    const checkText = '가는말이 고와야 오는 말이 곱다';
+    const el = document.createElement('div');
+    el.classList.add('kimson');
+    el.innerText = checkText;
+    document.body.append(el);
+
+    typoz.initialize();
+    typoz.globalConfig({
+      nodes: [
+        {
+          select: '.kimson',
+          words: ['안녕하세요', '데브킴슨입니다.'],
+          config: {
+            mode: {
+              erase: false,
+            },
+          },
+        },
+      ],
+    });
+
+    expect(typoz.config.mode.erase).toBeTruthy();
+    expect(typoz.typingList[0].config.mode.erase).toBeFalsy();
   });
 
   afterEach(() => {

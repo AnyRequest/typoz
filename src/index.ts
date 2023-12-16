@@ -5,7 +5,7 @@ import Parser from './modules/Parser';
 import KoreanParser from './modules/KoreanParser';
 
 export interface HTMLTypozElement extends HTMLElement {
-  typings: string[][][];
+  typings: string[];
   typozConfig: Options;
 }
 
