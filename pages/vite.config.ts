@@ -26,11 +26,18 @@ export default defineConfig(({ command, mode }) => {
         COPYRIGHT: process.env.COPYRIGHT,
       },
     },
+    base: process.env.NODE_ENV === 'development' ? '/' : '/typoz/',
     server: {
       host: HOST,
       port: PORT,
     },
-    build: {},
+    build: {
+      minify: 'terser',
+      cssMinify: true,
+      terserOptions: {
+        keep_classnames: true,
+      },
+    },
     plugins: [react()],
   };
 });

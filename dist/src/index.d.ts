@@ -3,10 +3,12 @@ import Parser from './modules/Parser';
 import KoreanParser from './modules/KoreanParser';
 export interface HTMLTypozElement extends HTMLElement {
     typings: string[][][];
+    typozConfig: Options;
 }
 export type Node = {
     select: string;
     words: string[];
+    config: RecursivePartial<Options>;
 };
 /**
  * @param {Options} customConfigs 타이퍼 설정

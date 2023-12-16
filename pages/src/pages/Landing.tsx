@@ -11,8 +11,16 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { BRAND_NAME, COPYRIGHT } from '../utils/global';
+import Typoz from 'typoz';
+import { useEffect } from 'react';
 
 export default function Landing() {
+  useEffect(() => {
+    const typoz = new Typoz();
+    typoz.initialize();
+    typoz.globalConfig();
+  }, []);
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       {/* Header */}
@@ -45,10 +53,10 @@ export default function Landing() {
           <Container>
             <Grid container spacing={6}>
               <Grid item lg={6} md={12}>
-                <Typography variant="h3" gutterBottom>
+                <Typography variant="h3" gutterBottom className="typoz">
                   Bring your text to life with TypingEffect
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }}>
+                <Typography sx={{ color: 'text.secondary' }} className="typoz">
                   Give your UI the dynamic text animation it deserves.
                   Effortlessly configure and deploy typing animations with our
                   library.

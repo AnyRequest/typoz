@@ -91,29 +91,37 @@ export class Typoz {
 
   getConfigNodes(): HTMLTypozElement[] {
     if ((this.config.nodes as Node[]).length > 0) {
-      return (this.config.nodes as Node[]).reduce((acc, { select, words }) => {
-        const target = this.domManager.findOne(select);
-        /* istanbul ignore next */
-        if (target) {
-          const targetText = this.domManager.trimInnerText(target);
-          if (targetText !== '') {
-            if (!Object.hasOwn(target, 'typings')) {
-              target.typings = [];
-            }
-            target.typings.push(this.convert(targetText));
-            if (words.length > 0) {
-              target.typings.push(...this.bulkConvert(words));
-            }
-            acc.push(target);
-          }
-        } else {
+      return (this.config.nodes as Node[]).reduce(
+        (acc, { select, words, config }) => {
+          const target = this.domManager.findOne(select);
           /* istanbul ignore next */
-          console.error(
-            new SyntaxError('not found element.', { cause: select }),
-          );
-        }
-        return acc;
-      }, []);
+          if (target) {
+            if (!Object.hasOwn(target, 'typozConfig')) {
+              const copy = JSON.parse(JSON.stringify(this.defaultConfig));
+              this.recursiveConfigApply(copy, config || this.config);
+              target.typozConfig = copy;
+            }
+            const targetText = this.domManager.trimInnerText(target);
+            if (targetText !== '') {
+              if (!Object.hasOwn(target, 'typings')) {
+                target.typings = [];
+              }
+              target.typings.push(this.convert(targetText));
+              if (words.length > 0) {
+                target.typings.push(...this.bulkConvert(words));
+              }
+              acc.push(target);
+            }
+          } else {
+            /* istanbul ignore next */
+            console.error(
+              new SyntaxError('not found element.', { cause: select }),
+            );
+          }
+          return acc;
+        },
+        [],
+      );
     }
     return [];
   }
@@ -186,7 +194,7 @@ export class Typoz {
       const typingModel = new Typing(
         id,
         element,
-        JSON.parse(JSON.stringify(this.config)),
+        element.typozConfig,
         parsedSentences,
       );
 

@@ -74,10 +74,15 @@ export class Typoz {
     }
     getConfigNodes() {
         if (this.config.nodes.length > 0) {
-            return this.config.nodes.reduce((acc, { select, words }) => {
+            return this.config.nodes.reduce((acc, { select, words, config }) => {
                 const target = this.domManager.findOne(select);
                 /* istanbul ignore next */
                 if (target) {
+                    if (!Object.hasOwn(target, 'typozConfig')) {
+                        const copy = JSON.parse(JSON.stringify(this.defaultConfig));
+                        this.recursiveConfigApply(copy, config || this.config);
+                        target.typozConfig = copy;
+                    }
                     const targetText = this.domManager.trimInnerText(target);
                     if (targetText !== '') {
                         if (!Object.hasOwn(target, 'typings')) {
@@ -154,7 +159,7 @@ export class Typoz {
             if (element.typings?.length > 0) {
                 parsedSentences.push(...element.typings);
             }
-            const typingModel = new Typing(id, element, JSON.parse(JSON.stringify(this.config)), parsedSentences);
+            const typingModel = new Typing(id, element, element.typozConfig, parsedSentences);
             styles += typingModel.injectStyle + '\n';
             this.typingList.push(typingModel);
             typingModel.run();
