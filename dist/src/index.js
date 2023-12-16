@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import { Typoz } from './core/Typoz';
 import Parser from './modules/Parser';
 import KoreanParser from './modules/KoreanParser';

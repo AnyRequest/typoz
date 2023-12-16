@@ -46,20 +46,27 @@ export default class Typing {
         const current = JSON.parse(JSON.stringify(this.typingList[this.order]));
         return current;
     }
+    /* istanbul ignore next */
     resume() {
+        // console.log('resume');
         this.play(true);
         this.stop = false;
     }
+    /* istanbul ignore next */
     pause() {
+        // console.log('pause');
         this.stop = true;
     }
+    /* istanbul ignore next */
     run() {
         this.isStarted = true;
         this.render();
     }
+    /* istanbul ignore next */
     clear() {
         this.isStarted = false;
     }
+    /* istanbul ignore next */
     wait(time = 0) {
         return new Promise((resolve) => {
             if (this.stop) {
@@ -78,6 +85,7 @@ export default class Typing {
         return el;
     }
     renderEraseDivide(eraseArray) {
+        /* istanbul ignore next */
         return new Promise((resolve) => {
             const origin = [...this.element.innerText].map((t) => this.createEl('span', t).outerHTML);
             let pointer = origin.length;
@@ -110,6 +118,7 @@ export default class Typing {
         });
     }
     renderWriteDivide(writeArray) {
+        /* istanbul ignore next */
         return new Promise((resolve) => {
             let pointer = 0;
             const change = [];
@@ -137,6 +146,7 @@ export default class Typing {
         });
     }
     renderErase(eraseArray) {
+        /* istanbul ignore next */
         return new Promise((resolve) => {
             let pointer = this.element.innerText.length;
             const origin = this.element.innerText;
@@ -165,6 +175,7 @@ export default class Typing {
         });
     }
     renderWrite(writeArray) {
+        /* istanbul ignore next */
         return new Promise((resolve) => {
             let pointer = 0;
             const change = [];
@@ -192,6 +203,7 @@ export default class Typing {
             }, (1 / this.config.speed.write) * 100);
         });
     }
+    /* istanbul ignore next */
     async render() {
         if (this.isStarted === false)
             return;

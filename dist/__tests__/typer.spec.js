@@ -1,27 +1,30 @@
-import Typex, { KoreanParser, Parser } from '../src/index';
+/**
+ * @jest-environment jsdom
+ */
+import Typoz, { KoreanParser, Parser } from '../src/index';
 describe('[TYPER TEST]', () => {
-    let typex;
+    let typoz;
     beforeAll(() => {
-        typex = new Typex();
+        typoz = new Typoz();
     });
     describe('[Defined Test]', () => {
         beforeEach(() => {
-            typex.initialize();
+            typoz.initialize();
         });
         it('✅ defined test', () => {
-            expect(typex).toBeDefined();
+            expect(typoz).toBeDefined();
         });
     });
     describe('[Configuration Test]', () => {
         beforeEach(() => {
-            typex.initialize();
+            typoz.initialize();
         });
         it('✅ default configuration check', () => {
-            expect(typex.config.mode.realTyping).toBeFalsy();
-            expect(typex.config.speed.write).toStrictEqual(1);
+            expect(typoz.config.mode.realTyping).toBeFalsy();
+            expect(typoz.config.speed.write).toStrictEqual(1);
         });
         it('✅ custom configuration test', () => {
-            typex.globalConfig({
+            typoz.globalConfig({
                 mode: {
                     erase: false,
                 },
@@ -29,13 +32,16 @@ describe('[TYPER TEST]', () => {
                     write: 3,
                 },
             });
-            expect(typex.config.mode.erase).toBeFalsy();
-            expect(typex.config.mode.divide).toBeTruthy();
-            expect(typex.config.speed.write).toStrictEqual(3);
-            expect(typex.config.speed.erase).toStrictEqual(1);
+            expect(typoz.config.mode.erase).toBeFalsy();
+            expect(typoz.config.mode.divide).toBeTruthy();
+            expect(typoz.config.speed.write).toStrictEqual(3);
+            expect(typoz.config.speed.erase).toStrictEqual(1);
         });
     });
     describe('[Parser Test]', () => {
+        // beforeEach(() => {
+        //   typoz.initialize();
+        // });
         describe('[KoreanParser]', () => {
             it('✅ parse word success', () => {
                 const krParser = new KoreanParser();
@@ -184,6 +190,15 @@ describe('[TYPER TEST]', () => {
                     ['ㅅ', '스'],
                     ['ㅌ', '트'],
                 ]);
+            });
+        });
+    });
+    describe('[Typoz Add Plugin Test]', () => {
+        it('add plugin', () => {
+            const typoz = new Typoz();
+            typoz.initialize();
+            typoz.globalConfig({
+                autoRender: false,
             });
         });
     });

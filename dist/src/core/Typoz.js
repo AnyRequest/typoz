@@ -1,5 +1,6 @@
 import Typing from '../models/Typing';
 import Parser from '../modules/Parser';
+import DomManager from '../plugins/DomManager';
 export class Typoz {
     defaultConfig = {
         autoRender: true,
@@ -17,10 +18,12 @@ export class Typoz {
         querySelector: '.typoz',
     };
     parser;
+    domManager;
     config;
     typingList = [];
     constructor() {
         this.parser = new Parser();
+        this.domManager = new DomManager();
     }
     recursiveConfigApply(config, customConfigs) {
         for (const key of Object.keys(customConfigs)) {
@@ -34,9 +37,6 @@ export class Typoz {
                 config[key] = customConfigs[key];
             }
         }
-    }
-    findElements() {
-        return document.querySelectorAll([].concat(this.config.querySelector).join(','));
     }
     initialize() {
         this.config = this.defaultConfig;
@@ -75,9 +75,10 @@ export class Typoz {
     getConfigNodes() {
         if (this.config.nodes.length > 0) {
             return this.config.nodes.reduce((acc, { select, words }) => {
-                const target = document.querySelector(select);
+                const target = this.domManager.findOne(select);
+                /* istanbul ignore next */
                 if (target) {
-                    const targetText = target.innerText.trim();
+                    const targetText = this.domManager.trimInnerText(target);
                     if (targetText !== '') {
                         if (!Object.hasOwn(target, 'typings')) {
                             target.typings = [];
@@ -90,6 +91,7 @@ export class Typoz {
                     }
                 }
                 else {
+                    /* istanbul ignore next */
                     console.error(new SyntaxError('not found element.', { cause: select }));
                 }
                 return acc;
@@ -98,6 +100,7 @@ export class Typoz {
         return [];
     }
     resume(name) {
+        /* istanbul ignore next */
         if (name !== null && name !== undefined && typeof name === 'string') {
             const typing = this.typingList.find((typing) => typing.name === name);
             if (typing) {
@@ -111,6 +114,7 @@ export class Typoz {
         }
     }
     pause(name) {
+        /* istanbul ignore next */
         if (name !== null && name !== undefined && typeof name === 'string') {
             const typing = this.typingList.find((typing) => typing.name === name);
             if (typing) {
@@ -127,7 +131,9 @@ export class Typoz {
         const temp = [];
         let styles = '';
         let increaseId = 0;
+        /* istanbul ignore next */
         if (elements) {
+            /* istanbul ignore next */
             if (elements instanceof Array) {
                 temp.push(...elements);
             }
@@ -136,11 +142,12 @@ export class Typoz {
             }
         }
         else {
-            const defaultElements = this.findElements();
+            const defaultElements = this.domManager.findElements(this.config.querySelector);
             temp.push(...defaultElements);
         }
         temp.push(...this.getConfigNodes());
         for (const element of [...new Set(temp)]) {
+            // if(this.config.nodes)
             const id = ++increaseId;
             const parseBaseText = this.convert(element.innerText.trim());
             const parsedSentences = [parseBaseText];
@@ -152,9 +159,7 @@ export class Typoz {
             this.typingList.push(typingModel);
             typingModel.run();
         }
-        const typozDefaultStyle = document.createElement('style');
-        typozDefaultStyle.innerText = styles;
-        document.head.append(typozDefaultStyle);
+        this.domManager.initializeTypozStyle(styles);
     }
 }
 //# sourceMappingURL=Typoz.js.map

@@ -1,1 +1,4 @@
+/**
+ * @jest-environment jsdom
+ */
 export {};

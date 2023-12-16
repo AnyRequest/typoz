@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "typoz": "link:.."
+    "typoz": "0.0.2-alpha"
   }
 }

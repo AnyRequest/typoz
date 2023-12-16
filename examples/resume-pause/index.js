@@ -15,8 +15,6 @@ typoz.globalConfig({
   ],
 });
 
-// typer.render();
-
 const controls = document.getElementById('controls');
 let toggle = false;
 

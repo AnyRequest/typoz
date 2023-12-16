@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import Typoz from '../src/index';
 describe('[DOM Test]', () => {
     it('dom initialize test]', () => {
@@ -23,6 +26,7 @@ describe('[DOM Test]', () => {
         document.body.append(el);
         typoz.initialize();
         typoz.globalConfig();
+        // typoz.render();
         expect(typoz.typingList.length).toStrictEqual(1);
     });
     it('dom parsed typings check', async () => {
@@ -36,6 +40,7 @@ describe('[DOM Test]', () => {
         typoz.globalConfig({
             nodes: [{ select: '.kimson', words: ['안녕하세요', '데브킴슨입니다.'] }],
         });
+        // typoz.render();
         expect(typoz.typingList[0].id).toStrictEqual(1);
         expect(typoz.typingList[0].name).toStrictEqual(typoz.typingList[0].name);
         expect(typoz.typingList[0].element.typings[0][0][1]).toStrictEqual('가');

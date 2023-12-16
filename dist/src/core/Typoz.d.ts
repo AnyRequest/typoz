@@ -3,11 +3,11 @@ import type { HTMLTypozElement, Options, RecursivePartial } from '..';
 export declare class Typoz {
     private readonly defaultConfig;
     private parser;
+    private domManager;
     config: Options;
     typingList: Typing[];
     constructor();
     private recursiveConfigApply;
-    private findElements;
     initialize(): void;
     globalConfig(customConfigs?: RecursivePartial<Options>): void;
     convert(sentence: string): string[][];
