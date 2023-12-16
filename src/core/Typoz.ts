@@ -194,7 +194,7 @@ export class Typoz {
       const typingModel = new Typing(
         id,
         element,
-        element.typozConfig,
+        element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)),
         parsedSentences,
       );
 

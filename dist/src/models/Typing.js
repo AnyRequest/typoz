@@ -15,6 +15,7 @@ export default class Typing {
         this.element = el;
         this.name = this.createName();
         this.config = config;
+        console.log('typing config', config);
         this.typingList = typings.filter((_) => _ && _.length > 0 && _[0].length > 0 && _[0][0].length > 0);
         this.setup();
     }
@@ -208,6 +209,7 @@ export default class Typing {
         if (this.isStarted === false)
             return;
         this.orderUp();
+        console.log('render config', this.name, this.config.mode);
         if (this.config.mode.divide) {
             await this.renderWriteDivide([...this.copyCurrent()]);
             await this.wait(this.config.delay);

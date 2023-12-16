@@ -80,6 +80,7 @@ export class Typoz {
                 if (target) {
                     if (!Object.hasOwn(target, 'typozConfig')) {
                         const copy = JSON.parse(JSON.stringify(this.defaultConfig));
+                        console.log('copy', copy);
                         this.recursiveConfigApply(copy, config || this.config);
                         target.typozConfig = copy;
                     }
@@ -159,7 +160,7 @@ export class Typoz {
             if (element.typings?.length > 0) {
                 parsedSentences.push(...element.typings);
             }
-            const typingModel = new Typing(id, element, element.typozConfig, parsedSentences);
+            const typingModel = new Typing(id, element, element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)), parsedSentences);
             styles += typingModel.injectStyle + '\n';
             this.typingList.push(typingModel);
             typingModel.run();

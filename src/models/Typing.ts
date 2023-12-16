@@ -71,14 +71,12 @@ export default class Typing {
 
   /* istanbul ignore next */
   resume() {
-    // console.log('resume');
     this.play(true);
     this.stop = false;
   }
 
   /* istanbul ignore next */
   pause() {
-    // console.log('pause');
     this.stop = true;
   }
 
@@ -214,7 +212,6 @@ export default class Typing {
         if (word.length === 0) {
           if (writeArray.length === 0) {
             clearInterval(writeLoop);
-            console.log('success wrote');
             this.element.innerText = change.join('');
             resolve(true);
           } else {
