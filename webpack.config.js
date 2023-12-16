@@ -4,9 +4,10 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'umd'),
-    filename: '[name].min.js',
-    library: ['typoz', '[name]'],
+    filename: 'typoz.min.js',
+    library: 'typoz',
     libraryTarget: 'umd',
+    libraryExport: 'default',
   },
   module: {
     rules: [
