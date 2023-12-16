@@ -5,3 +5,5 @@ example-app/
 src/
 package-lock\.json
 *.db
+pages/
+test/
