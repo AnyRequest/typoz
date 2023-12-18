@@ -11,11 +11,14 @@ export class Typoz {
      * @returns {TypeBuilder} 타입빌더를 반환합니다.
      */
     node() {
-        return TypeBuilder.instance(this.parser);
+        const builder = TypeBuilder.instance(this.parser);
+        this.typeBuilderNodes.push(builder);
+        return builder;
     }
     // private domManager: DomManager;
     config;
     typeNodes = [];
+    typeBuilderNodes = [];
     constructor() {
         this.parser = new Parser();
         // this.domManager = new DomManager();
@@ -35,10 +38,14 @@ export class Typoz {
         this.config = copyConfig(this.defaultConfig);
         TypeNode.id = 0;
         TypeBuilder.id = 0;
-        for (const typing of this.typeNodes) {
-            typing.destroy();
+        for (const typeNode of this.typeNodes) {
+            typeNode.destroy();
+        }
+        for (const builder of this.typeBuilderNodes) {
+            builder.destroy();
         }
         this.typeNodes = [];
+        this.typeBuilderNodes = [];
         document.head.querySelectorAll('[typoz-styles]').forEach((style) => {
             style?.remove?.();
         });
@@ -149,7 +156,9 @@ export class Typoz {
                 }
                 else {
                     /* istanbul ignore next */
-                    console.error(new SyntaxError('not found element.', { cause: select }));
+                    console.error(new SyntaxError('not found element. select: ' + select, {
+                        cause: select,
+                    }));
                 }
                 return acc;
             }, []);
@@ -171,7 +180,7 @@ export class Typoz {
         }
     }
     render(elements) {
-        let styles = '';
+        let styles = '@keyframes cursor-blink { 100% { opacity: 0; } }';
         styles += getCursorStyle(this.config.style.cursor);
         this.defaultRender();
         this.manualRender(elements);

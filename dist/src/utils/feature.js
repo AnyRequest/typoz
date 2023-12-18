@@ -21,23 +21,23 @@ export function createEl(name, content, attribute) {
 }
 export function getCursorStyle({ blink, blinkTime = 1, content = '', color = '#56565656', dir = 'vertical', size = 1, distance = 0.1, }, name, isBuilder = false) {
     const direction = {
-        vertical: `height: ${size}em; width: calc(${size}em * 0.25);`,
-        horizontal: ` width: ${size * 0.8}em; height: calc(${size * 0.8}em * 0.35);`,
+        vertical: `height: ${size}em; width: 0px; box-shadow: 0 0 0 ${size * 2.5}px ${color}; margin-left: ${distance}em;`,
+        horizontal: `width: ${size * 0.6}em; height: calc(${size * 0.35}em * 0.35); /* margin-left: ${distance}em; */`,
     };
-    const cursorBlinkKeyframes = blink
-        ? `@keyframes cursor-blink { 100% { opacity: 0; } }`
-        : '';
+    // const cursorBlinkKeyframes = blink
+    //   ? `@keyframes cursor-blink { 100% { opacity: 0; } }`
+    //   : '';
     const cursorBlinkAnimation = blink
         ? `animation: cursor-blink ${blinkTime}s steps(2) infinite;`
         : 'animation: none';
     // prettier-ignore
     if (isBuilder) {
         // prettier-ignore
-        return `[typoz-name${name ? `="${name}"` : ''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name ? `="${name}"` : ''}] { } [typoz-name${name ? `="${name}"` : ''}]>[typoz-cursor]::after { box-sizing: content-box; display: inline-block; content: "${content}"; ${ /* direction[dir] */`width: 0px; height: 1em; border-left: 1px solid ${'#565656'};`} /* margin-left: ${distance}em; */ line-height: inherit; ${'' /* `background-color: ${color};` */} ${cursorBlinkAnimation} }${cursorBlinkKeyframes}`;
+        return `[typoz-node-builder-name${name ? `="${name}"` : ''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-node-builder-name${name ? `="${name}"` : ''}] { } [typoz-node-builder-name${name ? `="${name}"` : ''}]>[typoz-cursor]::after { box-sizing: content-box; display: inline-block; content: "${content}"; ${ /* direction[dir] */`width: 0px; height: 1em; overflow: hidden; box-shadow: 0 0 0 ${size * 2.5}px ${color};`} margin-left: ${distance}em; line-height: inherit; ${'' /* `background-color: ${color};` */} ${cursorBlinkAnimation} }${ /* cursorBlinkKeyframes */''}`;
     }
     else {
         // prettier-ignore
-        return `[typoz-name${name ? `="${name}"` : ''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name ? `="${name}"` : ''}] { } [typoz-name${name ? `="${name}"` : ''}]::after { display: inline-block; content: "${content}"; ${direction[dir]} /* margin-left: ${distance}em; */ line-height: inherit; background-color: ${color}; ${cursorBlinkAnimation} }${cursorBlinkKeyframes}`;
+        return `[typoz-name${name ? `="${name}"` : ''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name ? `="${name}"` : ''}] { } [typoz-name${name ? `="${name}"` : ''}]::after { display: inline-block; content: "${content}"; ${direction[dir]} line-height: inherit; overflow: hidden; background-color: ${color}; ${cursorBlinkAnimation} }${ /* cursorBlinkKeyframes */''}`;
     }
 }
 export function findElements(querySelector) {

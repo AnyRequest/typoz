@@ -48,10 +48,15 @@ export default class TypeNode {
   }
 
   copyCurrent() {
-    const current = JSON.parse(
-      JSON.stringify(this.typingList[this.order]),
-    ) as string[][];
-    return current;
+    try {
+      const current = JSON.parse(
+        JSON.stringify(this.typingList[this.order]),
+      ) as string[][];
+      return current;
+    } catch (error) {
+      console.error('TypeNode was destroyed. [name: ' + this.name + ']', error);
+      return [];
+    }
   }
 
   /* istanbul ignore next */

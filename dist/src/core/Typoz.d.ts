@@ -11,6 +11,7 @@ export declare class Typoz {
     node(): TypeBuilder;
     config: Options;
     typeNodes: TypeNode[];
+    typeBuilderNodes: TypeBuilder[];
     constructor();
     /**
      * @method initialize typoz 사용에서 항상 필수로 먼저 실행되어야 합니다.

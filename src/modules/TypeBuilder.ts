@@ -22,10 +22,13 @@ export default class TypeBuilder {
   name: string;
   config: Options = DEFAULT_CONFIG;
   typeNode: HTMLTypozElement;
+  private originContent: string;
 
   taskQueue: (() => (void | number) | Promise<void | number>)[] = [];
   pointer: number = 0;
   content = [];
+
+  stop: boolean = false;
 
   constructor(parser: Parser) {
     this.parser = parser;
@@ -44,6 +47,7 @@ export default class TypeBuilder {
     TypeBuilder.id += 1;
     this.id = TypeBuilder.id;
     this.typeNode = element;
+    this.originContent = element.innerHTML;
     this.name = createName();
     return this;
   }
@@ -53,8 +57,8 @@ export default class TypeBuilder {
 
     const style = getCursorStyle(this.config.style.cursor, this.name, true);
     initializeTypozStyle(style);
-    this.typeNode.setAttribute('typoz-id', '' + this.id);
-    this.typeNode.setAttribute('typoz-name', this.name);
+    this.typeNode.setAttribute('typoz-node-builder-id', '' + this.id);
+    this.typeNode.setAttribute('typoz-node-builder-name', this.name);
     this.typeNode.setAttribute('typoz-node-builder', '');
     this.typeNode.setAttribute('typoz-processed', '');
     this.typeNode.innerHTML = '';
@@ -216,6 +220,30 @@ export default class TypeBuilder {
     }
   }
 
+  async forever(skipErase: boolean = false) {
+    for (const task of this.taskQueue) {
+      await task();
+    }
+    await this.wait(this.config.delay * 1000);
+    if (skipErase) {
+      this.pointer = 0;
+      this.content = [];
+      this.renderContent();
+    } else {
+      while (this.content.length > 0) {
+        this.cursorUpdate(-1);
+        this.content.pop();
+        this.renderContent();
+        await this.wait((1 / (this.config.speed.erase / 2) / 5) * 100);
+      }
+      await this.wait(this.config.delay * 1000);
+    }
+    if (this.stop) {
+      return;
+    }
+    this.forever(skipErase);
+  }
+
   renderContent() {
     this.typeNode.innerHTML = this.content
       .map(
@@ -232,5 +260,11 @@ export default class TypeBuilder {
           ).outerHTML,
       )
       .join('');
+  }
+
+  destroy() {
+    this.stop = true;
+    this.taskQueue = [];
+    this.typeNode.innerHTML = this.originContent;
   }
 }

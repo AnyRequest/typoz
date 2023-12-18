@@ -1,11 +1,26 @@
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode, ThemeOptions, createTheme } from '@mui/material';
-import { amber, grey, deepOrange, green, indigo } from '@mui/material/colors';
+import {
+  amber,
+  grey,
+  deepOrange,
+  green,
+  indigo,
+  blue,
+  blueGrey,
+} from '@mui/material/colors';
 import { useState, useMemo, ReactElement, createContext } from 'react';
+import { BASE_PATH } from '../utils/global';
 
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
-  mode: () => {},
+  change: (mode: 'dark' | 'light') => {},
+  mode: () => {
+    return '' as PaletteMode;
+  },
+  // getLogo: () => {
+  //   return '' as string;
+  // },
 });
 
 const getDesignTokens = (mode: PaletteMode) =>
@@ -31,14 +46,14 @@ const getDesignTokens = (mode: PaletteMode) =>
           }
         : {
             // palette values for dark mode
-            primary: indigo,
+            primary: blueGrey,
             divider: deepOrange[700],
             background: {
-              default: indigo['800'],
+              default: '#1b1c2e',
               paper: indigo['800'],
             },
             text: {
-              primary: '#fff',
+              primary: '#ffffff',
               secondary: grey[500],
             },
           }),
@@ -59,9 +74,17 @@ export default function CustomThemeProvider({
           prevMode === 'light' ? 'dark' : 'light',
         );
       },
+      change(mode: 'dark' | 'light') {
+        setMode(mode);
+      },
       mode: () => {
         return mode;
       },
+      // getLogo() {
+      //   return mode === 'dark'
+      //     ? BASE_PATH + 'logo/typoz-logo-w-fit.png'
+      //     : BASE_PATH + 'logo/typoz-logo-bw-fit.png';
+      // },
     }),
     [],
   );

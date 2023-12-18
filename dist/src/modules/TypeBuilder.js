@@ -10,9 +10,11 @@ export default class TypeBuilder {
     name;
     config = DEFAULT_CONFIG;
     typeNode;
+    originContent;
     taskQueue = [];
     pointer = 0;
     content = [];
+    stop = false;
     constructor(parser) {
         this.parser = parser;
     }
@@ -28,6 +30,7 @@ export default class TypeBuilder {
         TypeBuilder.id += 1;
         this.id = TypeBuilder.id;
         this.typeNode = element;
+        this.originContent = element.innerHTML;
         this.name = createName();
         return this;
     }
@@ -36,8 +39,8 @@ export default class TypeBuilder {
             recursiveConfigApply(this.config, config);
         const style = getCursorStyle(this.config.style.cursor, this.name, true);
         initializeTypozStyle(style);
-        this.typeNode.setAttribute('typoz-id', '' + this.id);
-        this.typeNode.setAttribute('typoz-name', this.name);
+        this.typeNode.setAttribute('typoz-node-builder-id', '' + this.id);
+        this.typeNode.setAttribute('typoz-node-builder-name', this.name);
         this.typeNode.setAttribute('typoz-node-builder', '');
         this.typeNode.setAttribute('typoz-processed', '');
         this.typeNode.innerHTML = '';
@@ -174,6 +177,30 @@ export default class TypeBuilder {
             await task();
         }
     }
+    async forever(skipErase = false) {
+        for (const task of this.taskQueue) {
+            await task();
+        }
+        await this.wait(this.config.delay * 1000);
+        if (skipErase) {
+            this.pointer = 0;
+            this.content = [];
+            this.renderContent();
+        }
+        else {
+            while (this.content.length > 0) {
+                this.cursorUpdate(-1);
+                this.content.pop();
+                this.renderContent();
+                await this.wait((1 / (this.config.speed.erase / 2) / 5) * 100);
+            }
+            await this.wait(this.config.delay * 1000);
+        }
+        if (this.stop) {
+            return;
+        }
+        this.forever(skipErase);
+    }
     renderContent() {
         this.typeNode.innerHTML = this.content
             .map((_, __) => createEl('span', _, __ === this.pointer - 1
@@ -183,6 +210,11 @@ export default class TypeBuilder {
             }
             : undefined).outerHTML)
             .join('');
+    }
+    destroy() {
+        this.stop = true;
+        this.taskQueue = [];
+        this.typeNode.innerHTML = this.originContent;
     }
 }
 //# sourceMappingURL=TypeBuilder.js.map

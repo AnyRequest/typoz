@@ -2,6 +2,10 @@
 
 **`Typos`**는 Typography의 어원인 typ과 -술을 의미하는 접미사 graphy의 합성어에서 그리스어의 두 단어 τύπος(`typos`, 표시)에서 따온 이름입니다. 사용자가 직접 타이핑하는 효과를 주고, 다양한 효과를 쉽게 조작하기 위해 제작되었습니다.
 
+## Version
+
+current version v0.0.11
+
 ## Typos의 한글 분해, 조합
 
 `음소` -> `음절` \[조합\], `음절` -> `음소` \[분해\] 하며, 한글을 입력할 때 나타나는 자모의 조합 효과를 그대로 재현합니다.
@@ -16,7 +20,7 @@ pnpm add anyrequest/typoz
 ## CDN
 
 ```html
-<script src="https://www.unpkg.com/typoz@0.0.10/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@0.0.11/umd/typoz.min.js"></script>
 ```
 
 ## Congifuration

@@ -35,8 +35,14 @@ export default class TypeNode {
         this.injectStyle = getCursorStyle(this.config.style.cursor, this.name);
     }
     copyCurrent() {
-        const current = JSON.parse(JSON.stringify(this.typingList[this.order]));
-        return current;
+        try {
+            const current = JSON.parse(JSON.stringify(this.typingList[this.order]));
+            return current;
+        }
+        catch (error) {
+            console.error('TypeNode was destroyed. [name: ' + this.name + ']', error);
+            return [];
+        }
     }
     /* istanbul ignore next */
     resume() {

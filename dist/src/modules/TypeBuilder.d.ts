@@ -8,9 +8,11 @@ export default class TypeBuilder {
     name: string;
     config: Options;
     typeNode: HTMLTypozElement;
+    private originContent;
     taskQueue: (() => (void | number) | Promise<void | number>)[];
     pointer: number;
     content: any[];
+    stop: boolean;
     constructor(parser: Parser);
     private wait;
     select(select: string): this;
@@ -27,6 +29,8 @@ export default class TypeBuilder {
     move(value: number, speed?: number): this;
     addTask(task: Task): void;
     run(): Promise<void>;
+    forever(skipErase?: boolean): Promise<void>;
     renderContent(): void;
+    destroy(): void;
 }
 export {};

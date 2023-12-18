@@ -37,7 +37,7 @@ function Test() {
       .write('여러 문자 등 작성 가능합니다.')
       .move(-7)
       .write(', 추가 작성도')
-      .run();
+      .forever(true);
   });
 
   return (
