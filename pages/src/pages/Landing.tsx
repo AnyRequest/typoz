@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  Chip,
   Container,
   Grid,
   Paper,
@@ -10,16 +9,16 @@ import {
   Typography,
 } from '@mui/material';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Typoz from 'typoz';
 import JavaScriptIcon from '../assets/icons/JavaScriptIcon';
 import ReactIcon from '../assets/icons/ReactIcon';
+import TypeScriptIcon from '../assets/icons/TypeScriptIcon';
 import VueIcon from '../assets/icons/VueIcon';
 import CodeBlock from '../components/common/CodeBlock';
 import Preview from '../components/common/Preview';
 import { goTo } from '../utils/features';
 import { BRAND_NAME } from '../utils/global';
-import TypeScriptIcon from '../assets/icons/TypeScriptIcon';
-import { Link } from 'react-router-dom';
 
 export default function Landing() {
   useEffect(() => {

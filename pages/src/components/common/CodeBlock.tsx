@@ -2,7 +2,6 @@ import AssignmentTurnedInIcon from '@mui/icons-material/AssignmentTurnedIn';
 import IntegrationInstructionsIcon from '@mui/icons-material/IntegrationInstructions';
 import {
   Box,
-  Chip,
   IconButton,
   SxProps,
   Theme,
@@ -11,8 +10,8 @@ import {
 } from '@mui/material';
 import { useState } from 'react';
 // import SyntaxHighlighter from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 type CodeBlockProps = {
   language: string;

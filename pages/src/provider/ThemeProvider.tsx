@@ -1,20 +1,17 @@
 import { ThemeProvider } from '@emotion/react';
 import { PaletteMode, ThemeOptions, createTheme } from '@mui/material';
 import {
-  amber,
-  grey,
+  blueGrey,
   deepOrange,
   green,
+  grey,
   indigo,
-  blue,
-  blueGrey,
 } from '@mui/material/colors';
-import { useState, useMemo, ReactElement, createContext } from 'react';
-import { BASE_PATH } from '../utils/global';
+import { ReactElement, createContext, useMemo, useState } from 'react';
 
 export const ColorModeContext = createContext({
   toggleColorMode: () => {},
-  change: (mode: 'dark' | 'light') => {},
+  change: (_mode: 'dark' | 'light') => {},
   mode: () => {
     return '' as PaletteMode;
   },
@@ -86,7 +83,7 @@ export default function CustomThemeProvider({
       //     : BASE_PATH + 'logo/typoz-logo-bw-fit.png';
       // },
     }),
-    [],
+    [mode],
   );
 
   // Update the theme only if the mode changes
