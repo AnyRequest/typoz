@@ -17,7 +17,7 @@ export default class Parser extends BaseParser {
      * @example "안녕하세요"
      */
     categorizingWithEmpty(sentence: string): string[][];
-    getTypingFlow(categorizedGroup: string[][]): any[][];
+    getTypingFlow(categorizedGroup: string[][]): string[][];
     /**
      *
      * @param sentences 문장 배열

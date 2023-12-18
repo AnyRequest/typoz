@@ -60,3 +60,27 @@ classDiagram
     +parse() List~String~
   }
 ```
+
+```mermaid
+classDiagram
+  class TypeBuilder {
+    -$instance: TypeBuilder
+    -$id: int
+    +id: int
+    parser: Parser
+    move(int num) TypeBuilder
+    write(String word) TypeBuilder
+    erase(int num) TypeBuilder
+    allErase() TypeBuilder
+    pause() TypeBuilder
+    run() TypeBuilder
+  }
+  class Typoz {
+    +node(Parser parser) TypeBuilder
+  }
+  class Parser {
+
+  }
+  Typoz <--o TypeBuilder
+  TypeBuilder <--o Parser
+```

@@ -1,6 +1,8 @@
+import { createEl, createName, getCursorStyle } from '@/utils/feature';
 import type { HTMLTypozElement, Options } from '..';
 
-export default class Typing {
+export default class TypeNode {
+  static id: number = 0;
   id: number;
   name: string;
   typingList: string[][][] = [];
@@ -14,14 +16,14 @@ export default class Typing {
   play: (value: boolean) => void;
 
   constructor(
-    id: number,
+    // id: number,
     el: HTMLTypozElement,
     config: Options,
     typings: string[][][],
   ) {
-    this.id = id;
+    this.id = ++TypeNode.id;
     this.element = el;
-    this.name = this.createName();
+    this.name = createName();
     this.config = config;
     this.typingList = typings.filter(
       (_) => _ && _.length > 0 && _[0].length > 0 && _[0][0].length > 0,
@@ -30,37 +32,19 @@ export default class Typing {
     this.setup();
   }
 
-  private createName() {
-    return 'xyxyxx-xyyx-xxy-xxyyxxyxyyxy1xxyyxyxxx0xxyyy'.replace(
-      /x|y/g,
-      ($1) => {
-        const w = 'abcdefghijklmnopqrstuvwxyz';
-        const W = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        const random = (src: string) =>
-          src[Math.floor(Math.random() * src.length)];
-        switch ($1) {
-          case 'x':
-            return random(w);
-          case 'y':
-            return random(W);
-        }
-      },
-    );
-  }
-
   orderUp() {
-    this.order = (this.order + 1) % this.typingList.length;
+    this.order = (this.order + 1) % this.typingList.length || 0;
   }
 
   setup() {
     Object.freeze(this.typingList);
     Object.freeze(this.config);
     this.element.innerHTML = '';
-    this.element.dataset.typerId = '' + this.id;
-    this.element.dataset.typerName = this.name;
-    this.element.setAttribute('typer-processed', '');
+    this.element.setAttribute('typoz-id', '' + this.id);
+    this.element.setAttribute('typoz-name', this.name);
+    this.element.setAttribute('typoz-processed', '');
 
-    this.injectStyle = `[data-typer-name="${this.name}"]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; }`;
+    this.injectStyle = getCursorStyle(this.config.style.cursor, this.name);
   }
 
   copyCurrent() {
@@ -82,14 +66,15 @@ export default class Typing {
   }
 
   /* istanbul ignore next */
-  run() {
-    this.isStarted = true;
-    this.render();
-  }
-
-  /* istanbul ignore next */
   clear() {
     this.isStarted = false;
+  }
+
+  destroy() {
+    this.pause();
+    this.clear();
+    this.element.innerHTML = this.element.typings[0];
+    this.typingList = [];
   }
 
   /* istanbul ignore next */
@@ -105,17 +90,17 @@ export default class Typing {
     });
   }
 
-  createEl(name: string, content: string) {
-    const el = document.createElement(name);
-    el.innerHTML = content;
-    return el as HTMLTypozElement;
+  /* istanbul ignore next */
+  run() {
+    this.isStarted = true;
+    this.render();
   }
 
   renderEraseDivide(eraseArray: string[][]) {
     /* istanbul ignore next */
     return new Promise((resolve) => {
       const origin = [...this.element.innerText].map(
-        (t) => this.createEl('span', t).outerHTML,
+        (t) => createEl('span', t).outerHTML,
       );
       let pointer = origin.length;
       let word = eraseArray.pop();
@@ -138,7 +123,7 @@ export default class Typing {
         } else {
           this.element.innerHTML = [
             ...origin.slice(0, pointer - 1),
-            this.createEl('span', word.pop()).outerHTML,
+            createEl('span', word.pop()).outerHTML,
           ].join('');
         }
       }, (1 / this.config.speed.erase) * 100);
@@ -165,7 +150,7 @@ export default class Typing {
             pointer += 1;
           }
         } else {
-          change[pointer] = this.createEl('span', word.shift()).outerHTML;
+          change[pointer] = createEl('span', word.shift()).outerHTML;
           this.element.innerHTML = change.join('');
         }
       }, (1 / this.config.speed.write) * 100);
@@ -240,7 +225,6 @@ export default class Typing {
       }
     } else {
       await this.renderWrite([...this.copyCurrent()]);
-      await this.wait(this.config.delay);
       if (this.config.mode.erase) {
         await this.renderErase([...this.copyCurrent()]);
         await this.wait(this.config.delay);

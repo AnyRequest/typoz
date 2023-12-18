@@ -1,4 +1,6 @@
-export default class Typing {
+import { createEl, createName, getCursorStyle } from '../utils/feature';
+export default class TypeNode {
+    static id = 0;
     id;
     name;
     typingList = [];
@@ -10,38 +12,27 @@ export default class Typing {
     order = 0;
     stop = false;
     play;
-    constructor(id, el, config, typings) {
-        this.id = id;
+    constructor(
+    // id: number,
+    el, config, typings) {
+        this.id = ++TypeNode.id;
         this.element = el;
-        this.name = this.createName();
+        this.name = createName();
         this.config = config;
         this.typingList = typings.filter((_) => _ && _.length > 0 && _[0].length > 0 && _[0][0].length > 0);
         this.setup();
     }
-    createName() {
-        return 'xyxyxx-xyyx-xxy-xxyyxxyxyyxy1xxyyxyxxx0xxyyy'.replace(/x|y/g, ($1) => {
-            const w = 'abcdefghijklmnopqrstuvwxyz';
-            const W = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            const random = (src) => src[Math.floor(Math.random() * src.length)];
-            switch ($1) {
-                case 'x':
-                    return random(w);
-                case 'y':
-                    return random(W);
-            }
-        });
-    }
     orderUp() {
-        this.order = (this.order + 1) % this.typingList.length;
+        this.order = (this.order + 1) % this.typingList.length || 0;
     }
     setup() {
         Object.freeze(this.typingList);
         Object.freeze(this.config);
         this.element.innerHTML = '';
-        this.element.dataset.typerId = '' + this.id;
-        this.element.dataset.typerName = this.name;
-        this.element.setAttribute('typer-processed', '');
-        this.injectStyle = `[data-typer-name="${this.name}"]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; }`;
+        this.element.setAttribute('typoz-id', '' + this.id);
+        this.element.setAttribute('typoz-name', this.name);
+        this.element.setAttribute('typoz-processed', '');
+        this.injectStyle = getCursorStyle(this.config.style.cursor, this.name);
     }
     copyCurrent() {
         const current = JSON.parse(JSON.stringify(this.typingList[this.order]));
@@ -57,13 +48,14 @@ export default class Typing {
         this.stop = true;
     }
     /* istanbul ignore next */
-    run() {
-        this.isStarted = true;
-        this.render();
-    }
-    /* istanbul ignore next */
     clear() {
         this.isStarted = false;
+    }
+    destroy() {
+        this.pause();
+        this.clear();
+        this.element.innerHTML = this.element.typings[0];
+        this.typingList = [];
     }
     /* istanbul ignore next */
     wait(time = 0) {
@@ -78,15 +70,15 @@ export default class Typing {
             }
         });
     }
-    createEl(name, content) {
-        const el = document.createElement(name);
-        el.innerHTML = content;
-        return el;
+    /* istanbul ignore next */
+    run() {
+        this.isStarted = true;
+        this.render();
     }
     renderEraseDivide(eraseArray) {
         /* istanbul ignore next */
         return new Promise((resolve) => {
-            const origin = [...this.element.innerText].map((t) => this.createEl('span', t).outerHTML);
+            const origin = [...this.element.innerText].map((t) => createEl('span', t).outerHTML);
             let pointer = origin.length;
             let word = eraseArray.pop();
             const eraseLoop = setInterval(async () => {
@@ -110,7 +102,7 @@ export default class Typing {
                 else {
                     this.element.innerHTML = [
                         ...origin.slice(0, pointer - 1),
-                        this.createEl('span', word.pop()).outerHTML,
+                        createEl('span', word.pop()).outerHTML,
                     ].join('');
                 }
             }, (1 / this.config.speed.erase) * 100);
@@ -138,7 +130,7 @@ export default class Typing {
                     }
                 }
                 else {
-                    change[pointer] = this.createEl('span', word.shift()).outerHTML;
+                    change[pointer] = createEl('span', word.shift()).outerHTML;
                     this.element.innerHTML = change.join('');
                 }
             }, (1 / this.config.speed.write) * 100);
@@ -216,7 +208,6 @@ export default class Typing {
         }
         else {
             await this.renderWrite([...this.copyCurrent()]);
-            await this.wait(this.config.delay);
             if (this.config.mode.erase) {
                 await this.renderErase([...this.copyCurrent()]);
                 await this.wait(this.config.delay);
@@ -227,4 +218,4 @@ export default class Typing {
         }
     }
 }
-//# sourceMappingURL=Typing.js.map
+//# sourceMappingURL=TypeNode.js.map

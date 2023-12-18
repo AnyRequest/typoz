@@ -1,0 +1,31 @@
+import type { HTMLTypozElement, Options, Parser, RecursivePartial } from '..';
+type Task = () => void | Promise<number>;
+export default class TypeBuilder {
+    static instance(parser: Parser): TypeBuilder;
+    static id: number;
+    private parser;
+    id: number;
+    name: string;
+    config: Options;
+    typeNode: HTMLTypozElement;
+    taskQueue: (() => (void | number) | Promise<void | number>)[];
+    pointer: number;
+    content: any[];
+    constructor(parser: Parser);
+    private wait;
+    select(select: string): this;
+    conf(config?: RecursivePartial<Options>): this;
+    getCurrentRenderContentLength(): number;
+    cursorUpdate(value: number): void;
+    pause(sec: number): this;
+    commonWrite(letter: string): void;
+    replace(point: number, word: string): void;
+    write(word: string): this;
+    erase(value?: number): this;
+    allErase(): this;
+    move(value: number): this;
+    addTask(task: Task): void;
+    run(): Promise<void>;
+    renderContent(): void;
+}
+export {};

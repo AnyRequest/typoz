@@ -3,7 +3,6 @@
  */
 
 import Typoz, { KoreanParser, Parser } from '@/index';
-import DomManager from '@/plugins/DomManager';
 
 describe('[TYPER TEST]', () => {
   let typoz;
@@ -43,7 +42,7 @@ describe('[TYPER TEST]', () => {
       expect(typoz.config.mode.erase).toBeFalsy();
       expect(typoz.config.mode.divide).toBeTruthy();
       expect(typoz.config.speed.write).toStrictEqual(3);
-      expect(typoz.config.speed.erase).toStrictEqual(1);
+      expect(typoz.config.speed.erase).toStrictEqual(5);
     });
   });
 

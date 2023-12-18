@@ -1,0 +1,13 @@
+import { CursorStyle, HTMLTypozElement, Options, RecursivePartial } from '..';
+export declare function recursiveConfigApply(config: Options, customConfigs: RecursivePartial<Options>): void;
+export declare function createEl(name: string, content: string, attribute?: {
+    name: string;
+    value: string;
+}): HTMLTypozElement;
+export declare function getCursorStyle({ blink, blinkTime, content, color, dir, size, distance, }: CursorStyle, name?: string, isBuilder?: boolean): string;
+export declare function findElements(querySelector: string | string[]): NodeListOf<HTMLTypozElement>;
+export declare function findOne(select: string): HTMLTypozElement;
+export declare function trimInnerText(target: HTMLTypozElement): string;
+export declare function initializeTypozStyle(styles: string): void;
+export declare function copyConfig(config: Options): Options;
+export declare function createName(): string;

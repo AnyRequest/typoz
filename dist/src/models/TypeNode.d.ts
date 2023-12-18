@@ -1,5 +1,6 @@
 import type { HTMLTypozElement, Options } from '..';
-export default class Typing {
+export default class TypeNode {
+    static id: number;
     id: number;
     name: string;
     typingList: string[][][];
@@ -11,17 +12,16 @@ export default class Typing {
     order: number;
     stop: boolean;
     play: (value: boolean) => void;
-    constructor(id: number, el: HTMLTypozElement, config: Options, typings: string[][][]);
-    private createName;
+    constructor(el: HTMLTypozElement, config: Options, typings: string[][][]);
     orderUp(): void;
     setup(): void;
     copyCurrent(): string[][];
     resume(): void;
     pause(): void;
-    run(): void;
     clear(): void;
+    destroy(): void;
     wait(time?: number): Promise<unknown>;
-    createEl(name: string, content: string): HTMLTypozElement;
+    run(): void;
     renderEraseDivide(eraseArray: string[][]): Promise<unknown>;
     renderWriteDivide(writeArray: string[][]): Promise<unknown>;
     renderErase(eraseArray: string[][]): Promise<unknown>;

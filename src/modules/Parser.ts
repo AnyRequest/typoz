@@ -54,7 +54,7 @@ export default class Parser extends BaseParser {
     return temp;
   }
 
-  getTypingFlow(categorizedGroup: string[][]) {
+  getTypingFlow(categorizedGroup: string[][]): string[][] {
     return categorizedGroup.map((group) => {
       const temp = [];
       if (group.some(this.koreanParser.isKorean)) {

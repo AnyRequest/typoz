@@ -15,6 +15,16 @@ export type Node = {
   config: RecursivePartial<Options>;
 };
 
+export type CursorStyle = {
+  blink: boolean;
+  blinkTime: number;
+  content: string;
+  color: string;
+  dir: 'horizontal' | 'vertical';
+  size: number;
+  distance: number;
+};
+
 /**
  * @param {Options} customConfigs 타이퍼 설정
  * @param {Options['autoRender']} [customConfigs.autoRender=true] 로드 시 타이퍼 자동 실행
@@ -45,6 +55,9 @@ export interface Options {
   delay: number;
   nodes: Node[];
   querySelector: string | string[];
+  style: {
+    cursor: CursorStyle;
+  };
 }
 
 export type RecursivePartial<T> = {

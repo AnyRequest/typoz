@@ -1,7 +1,10 @@
 import Typoz from 'typoz';
 
 const typoz = new Typoz();
+// The initialize method must be executed.
 typoz.initialize();
+// After running globalConfig, it automatically finds and executes typoz elements.
+// typoz looks for the .typoz class name by default.
 typoz.globalConfig({
   delay: 0.5,
   speed: {
@@ -24,14 +27,3 @@ typoz.globalConfig({
     },
   ],
 });
-
-const controls = document.getElementById('controls');
-let toggle = false;
-
-function handleControl() {
-  controls.innerHTML = !toggle ? 'resume' : 'pause';
-  toggle = !toggle;
-  typoz[!toggle ? 'resume' : 'pause']();
-}
-
-window.addEventListener('click', handleControl);

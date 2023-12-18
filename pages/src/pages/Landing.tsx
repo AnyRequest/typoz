@@ -13,12 +13,49 @@ import { Link } from 'react-router-dom';
 import { BRAND_NAME, COPYRIGHT } from '../utils/global';
 import Typoz from 'typoz';
 import { useEffect } from 'react';
+import CodeBlock from '../components/common/CodeBlock';
 
 export default function Landing() {
   useEffect(() => {
     const typoz = new Typoz();
     typoz.initialize();
-    typoz.globalConfig();
+    typoz.globalConfig({
+      style: {
+        cursor: {
+          blink: true,
+          blinkTime: 0.5,
+          dir: 'vertical',
+          color: '#565656',
+        },
+      },
+      nodes: [
+        {
+          select: '#head1',
+          config: {
+            delay: 0.5,
+            speed: {
+              write: 3,
+              erase: 5,
+            },
+            style: {
+              cursor: {
+                dir: 'horizontal',
+              },
+            },
+          },
+        },
+        {
+          select: '#head2',
+          config: {
+            delay: 0.5,
+            speed: {
+              write: 3,
+              erase: 5,
+            },
+          },
+        },
+      ],
+    });
   }, []);
 
   return (
@@ -53,10 +90,28 @@ export default function Landing() {
           <Container>
             <Grid container spacing={6}>
               <Grid item lg={6} md={12}>
-                <Typography variant="h3" gutterBottom className="typoz">
+                <Typography
+                  id="head1"
+                  variant="h3"
+                  gutterBottom
+                  sx={{
+                    height: 112,
+                    '&::after': {
+                      display: 'inline-block',
+                      content: '""',
+                      height: '1em',
+                      width: '10px',
+                      ml: 1,
+                      backgroundColor: '#56565656',
+                    },
+                  }}
+                >
                   Bring your text to life with TypingEffect
                 </Typography>
-                <Typography sx={{ color: 'text.secondary' }} className="typoz">
+                <Typography
+                  id="head2"
+                  sx={{ color: 'text.secondary', height: 48 }}
+                >
                   Give your UI the dynamic text animation it deserves.
                   Effortlessly configure and deploy typing animations with our
                   library.
@@ -97,29 +152,14 @@ export default function Landing() {
             <Paper
               component="pre"
               sx={{
-                bgcolor: 'primary.dark',
-                color: 'common.white',
+                // bgcolor: 'primary.dark',
+                // color: 'common.white',
                 p: 2,
                 borderRadius: 1,
               }}
             >
-              <code>npm install typing-effect</code>
-            </Paper>
-            <Paper
-              component="pre"
-              sx={{
-                bgcolor: 'primary.dark',
-                color: 'common.white',
-                p: 2,
-                borderRadius: 1,
-                mt: 2,
-              }}
-            >
-              <code>
-                {
-                  '<script src="https://cdn.typingeffect.com/typing-effect.min.js"></script>'
-                }
-              </code>
+              <CodeBlock language="bash" code={`npm install typoz`} sx={{}} />
+              <CodeBlock language="javascript" code={'pnpm add typoz'} />
             </Paper>
           </Container>
         </Box>
