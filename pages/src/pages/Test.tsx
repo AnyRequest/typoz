@@ -8,32 +8,35 @@ function Test() {
     typoz.initialize();
     typoz.globalConfig({
       mode: { realTyping: true },
+      speed: { write: 1 },
     });
     typoz
       .node()
       .select('#builder')
       .conf({
-        delay: 1,
-        speed: { write: 1, erase: 1 },
+        speed: {
+          write: 2,
+        },
       })
-      .write('안녕?!')
+      .write('Write the entire text')
       .write(' ')
-      .write('test word wa')
-      .erase()
-      .erase()
-      .write('is')
-      .write(' ')
-      .write('oo')
-      .move(-2)
-      .write('g')
-      .move(3)
-      .write('d!22')
-      .allErase()
-      .pause(5)
-      .write('done! 잘됐나?')
+      .write('r')
       .move(-1)
+      .write('o')
+      .move(2)
+      .write(' ')
+      .write('type each character individually.')
+      .write(' 한글과 영어')
+      .pause(1)
       .erase()
-      .write('지!')
+      .erase()
+      .write('숫자')
+      .pause(1)
+      .erase()
+      .erase()
+      .write('여러 문자 등 작성 가능합니다.')
+      .move(-7)
+      .write(', 추가 작성도')
       .run();
   });
 

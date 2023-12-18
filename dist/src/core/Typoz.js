@@ -105,7 +105,7 @@ export class Typoz {
                 element.typings.push(trimText.trim());
             }
             const converted = this.convert(trimText);
-            const typingModel = new TypeNode(element, element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)), [converted]);
+            const typingModel = new TypeNode(element, element.typozConfig || JSON.parse(JSON.stringify(this.config)), [converted]);
             this.typeNodes.push(typingModel);
         }
     }
@@ -119,7 +119,7 @@ export class Typoz {
                 element.typings.push(trimText.trim());
             }
             const converted = this.convert(trimText);
-            const typingModel = new TypeNode(element, element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)), [converted]);
+            const typingModel = new TypeNode(element, element.typozConfig || JSON.parse(JSON.stringify(this.config)), [converted]);
             this.typeNodes.push(typingModel);
         }
     }
@@ -131,7 +131,7 @@ export class Typoz {
                 if (target) {
                     target.setAttribute;
                     if (!Object.hasOwn(target, 'typozConfig')) {
-                        const copy = JSON.parse(JSON.stringify(this.defaultConfig));
+                        const copy = JSON.parse(JSON.stringify(this.config));
                         recursiveConfigApply(copy, config || this.config);
                         target.typozConfig = copy;
                     }

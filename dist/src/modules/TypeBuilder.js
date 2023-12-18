@@ -59,30 +59,67 @@ export default class TypeBuilder {
     }
     commonWrite(letter) {
         this.addTask(async () => {
-            this.content.splice(this.pointer, 0, letter);
+            this.content = this.content
+                .slice(0, this.pointer)
+                .concat(letter)
+                .concat(this.content.slice(this.pointer));
+            // this.content.splice(this.pointer, 0, letter);
             this.cursorUpdate(1);
             this.renderContent();
             return await this.wait((1 / this.config.speed.write) * 100);
         });
     }
-    replace(point, word) {
+    addplace(point, word) {
         this.addTask(async () => {
+            this.content = this.content
+                .slice(0, this.pointer)
+                .concat(word)
+                .concat(this.content.slice(this.pointer));
             this.cursorUpdate(point);
-            this.content.splice(this.pointer, 1, word);
             this.renderContent();
             return await this.wait((1 / this.config.speed.write) * 100);
         });
+        return this;
     }
-    write(word) {
+    replace(point, word) {
+        this.addTask(async () => {
+            this.content.splice(this.pointer, 1, word);
+            this.cursorUpdate(point);
+            this.renderContent();
+            return await this.wait((1 / this.config.speed.write) * 100);
+        });
+        return this;
+    }
+    write(word, speed) {
         for (const letter of word) {
             if (this.parser.koreanParser.isKorean(letter)) {
                 const parsedKoreanLetter = this.parser.categorizing(letter);
                 const typingFlows = this.parser.getTypingFlow(parsedKoreanLetter)[0];
-                while (typingFlows.length > 0) {
-                    const letters = typingFlows.shift();
-                    this.replace(0, letters);
+                for (let i = 0; i < typingFlows.length; i++) {
+                    const letters = typingFlows[i];
+                    if (i === 0) {
+                        this.addTask(async () => {
+                            this.content = this.content
+                                .slice(0, this.pointer)
+                                .concat(letters)
+                                .concat(this.content.slice(this.pointer));
+                            this.renderContent();
+                            return await this.wait(speed ? (1 / speed) * 100 : (1 / this.config.speed.write) * 100);
+                        });
+                    }
+                    else {
+                        this.addTask(async () => {
+                            this.content.splice(this.pointer, 1, letters);
+                            this.renderContent();
+                            return await this.wait(speed ? (1 / speed) * 100 : (1 / this.config.speed.write) * 100);
+                        });
+                    }
                 }
-                this.move(1);
+                this.addTask(async () => {
+                    this.cursorUpdate(1);
+                    this.renderContent();
+                    return await this.wait(speed ? (1 / speed) * 100 : (1 / this.config.speed.write) * 100);
+                });
             }
             else {
                 this.commonWrite(letter);
@@ -90,37 +127,41 @@ export default class TypeBuilder {
         }
         return this;
     }
-    erase(value = 1) {
+    erase(value = 1, speed) {
         for (let i = 0; i < value; i++) {
             this.addTask(async () => {
                 this.cursorUpdate(-1);
                 this.content.splice(this.pointer, 1);
                 this.renderContent();
-                return await this.wait((1 / this.config.speed.erase) * 100);
+                return await this.wait(speed ? (1 / speed) * 100 : (1 / (this.config.speed.erase / 2)) * 100);
             });
         }
         return this;
     }
-    allErase() {
+    allErase(speed) {
         this.addTask(async () => {
             while (this.content.length > 0) {
                 this.cursorUpdate(-1);
                 this.content.pop();
                 this.renderContent();
-                await this.wait((1 / this.config.speed.erase / 5) * 100);
+                await this.wait(speed
+                    ? (1 / (speed / 2) / 5) * 100
+                    : (1 / (this.config.speed.erase / 2) / 5) * 100);
             }
-            return (1 / this.config.speed.erase / 5) * 100;
+            return speed
+                ? (1 / (speed / 2) / 5) * 100
+                : (1 / (this.config.speed.erase / 2) / 5) * 100;
         });
         return this;
     }
-    move(value) {
+    move(value, speed) {
         const abs = Math.abs(value);
         const amount = Math.floor(Math.abs(value) / value);
         for (let i = 0; i < abs; i++) {
             this.addTask(async () => {
                 this.cursorUpdate(amount);
                 this.renderContent();
-                return await this.wait(this.config.delay * 100);
+                return await this.wait(speed ? (1 / speed) * 100 : this.config.delay * 100);
             });
         }
         return this;

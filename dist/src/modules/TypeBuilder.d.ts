@@ -19,11 +19,12 @@ export default class TypeBuilder {
     cursorUpdate(value: number): void;
     pause(sec: number): this;
     commonWrite(letter: string): void;
-    replace(point: number, word: string): void;
-    write(word: string): this;
-    erase(value?: number): this;
-    allErase(): this;
-    move(value: number): this;
+    addplace(point: number, word: string): this;
+    replace(point: number, word: string): this;
+    write(word: string, speed?: number): this;
+    erase(value?: number, speed?: number): this;
+    allErase(speed?: number): this;
+    move(value: number, speed?: number): this;
     addTask(task: Task): void;
     run(): Promise<void>;
     renderContent(): void;

@@ -69,7 +69,6 @@ export class Typoz {
     customConfigs: RecursivePartial<Options> = DEFAULT_CONFIG,
   ): void {
     if (customConfigs) recursiveConfigApply(this.config, customConfigs);
-
     if (this.config.autoRender) {
       this.render();
     }
@@ -141,7 +140,7 @@ export class Typoz {
       const converted = this.convert(trimText);
       const typingModel = new TypeNode(
         element,
-        element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)),
+        element.typozConfig || JSON.parse(JSON.stringify(this.config)),
         [converted],
       );
 
@@ -163,7 +162,7 @@ export class Typoz {
       const converted = this.convert(trimText);
       const typingModel = new TypeNode(
         element,
-        element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)),
+        element.typozConfig || JSON.parse(JSON.stringify(this.config)),
         [converted],
       );
 
@@ -180,7 +179,7 @@ export class Typoz {
           if (target) {
             target.setAttribute;
             if (!Object.hasOwn(target, 'typozConfig')) {
-              const copy = JSON.parse(JSON.stringify(this.defaultConfig));
+              const copy = JSON.parse(JSON.stringify(this.config));
               recursiveConfigApply(copy, config || this.config);
               target.typozConfig = copy;
             }
