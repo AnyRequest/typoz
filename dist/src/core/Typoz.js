@@ -39,6 +39,9 @@ export class Typoz {
             typing.destroy();
         }
         this.typeNodes = [];
+        document.head.querySelectorAll('[typoz-styles]').forEach((style) => {
+            style?.remove?.();
+        });
     }
     /**
      * @method globalConfig typoz의 모든 노드에 기본 적용되는 환경설정을 합니다.

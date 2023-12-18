@@ -22,7 +22,7 @@ export default function Landing() {
     typoz.globalConfig({
       style: {
         cursor: {
-          blink: false,
+          blink: true,
           blinkTime: 0.5,
           dir: 'vertical',
           color: '#565656',
@@ -39,6 +39,7 @@ export default function Landing() {
             },
             style: {
               cursor: {
+                blink: false,
                 dir: 'horizontal',
               },
             },

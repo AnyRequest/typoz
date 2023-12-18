@@ -54,6 +54,9 @@ export class Typoz {
       typing.destroy();
     }
     this.typeNodes = [];
+    document.head.querySelectorAll('[typoz-styles]').forEach((style) => {
+      style?.remove?.();
+    });
   }
 
   /**
