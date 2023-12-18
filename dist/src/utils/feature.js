@@ -19,7 +19,7 @@ export function createEl(name, content, attribute) {
     }
     return el;
 }
-export function getCursorStyle({ blink = true, blinkTime = 1, content = '', color = '#56565656', dir = 'vertical', size = 1, distance = 0.1, }, name, isBuilder = false) {
+export function getCursorStyle({ blink, blinkTime = 1, content = '', color = '#56565656', dir = 'vertical', size = 1, distance = 0.1, }, name, isBuilder = false) {
     const direction = {
         vertical: `height: ${size}em; width: calc(${size}em * 0.25);`,
         horizontal: ` width: ${size * 0.8}em; height: calc(${size * 0.8}em * 0.35);`,
@@ -29,7 +29,7 @@ export function getCursorStyle({ blink = true, blinkTime = 1, content = '', colo
         : '';
     const cursorBlinkAnimation = blink
         ? `animation: cursor-blink ${blinkTime}s steps(2) infinite;`
-        : '';
+        : 'animation: none';
     // prettier-ignore
     if (isBuilder) {
         // prettier-ignore

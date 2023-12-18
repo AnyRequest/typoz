@@ -33,7 +33,7 @@ export function createEl(
 
 export function getCursorStyle(
   {
-    blink = true,
+    blink,
     blinkTime = 1,
     content = '',
     color = '#56565656',
@@ -55,7 +55,7 @@ export function getCursorStyle(
     : '';
   const cursorBlinkAnimation = blink
     ? `animation: cursor-blink ${blinkTime}s steps(2) infinite;`
-    : '';
+    : 'animation: none';
   // prettier-ignore
   if (isBuilder) {
     // prettier-ignore

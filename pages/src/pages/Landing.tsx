@@ -22,7 +22,7 @@ export default function Landing() {
     typoz.globalConfig({
       style: {
         cursor: {
-          blink: true,
+          blink: false,
           blinkTime: 0.5,
           dir: 'vertical',
           color: '#565656',
@@ -56,6 +56,9 @@ export default function Landing() {
         },
       ],
     });
+    return () => {
+      typoz.destroy();
+    };
   }, []);
 
   return (
@@ -121,6 +124,50 @@ export default function Landing() {
                 </Button>
               </Grid>
               <Grid item lg={6} md={12}>
+                <CodeBlock
+                  language="typescript"
+                  code={`
+const typoz = new Typoz();
+typoz.initialize();
+typoz.globalConfig({
+  style: {
+    cursor: {
+      blink: true,
+      blinkTime: 0.5,
+      dir: 'vertical',
+      color: '#565656',
+    },
+  },
+  nodes: [
+    {
+      select: '#head1',
+      config: {
+        delay: 0.5,
+        speed: {
+          write: 3,
+          erase: 5,
+        },
+        style: {
+          cursor: {
+            dir: 'horizontal',
+          },
+        },
+      },
+    },
+    {
+      select: '#head2',
+      config: {
+        delay: 0.5,
+        speed: {
+          write: 3,
+          erase: 5,
+        },
+      },
+    },
+  ],
+});
+                `}
+                />
                 {/* Typing effect demo or image */}
               </Grid>
             </Grid>
