@@ -8,9 +8,11 @@ import {
   Toolbar,
   Typography,
   Paper,
+  Avatar,
+  Stack,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { BRAND_NAME, COPYRIGHT } from '../utils/global';
+import { BASE_PATH, BRAND_NAME, COPYRIGHT } from '../utils/global';
 import Typoz from 'typoz';
 import { useEffect } from 'react';
 import CodeBlock from '../components/common/CodeBlock';
@@ -20,26 +22,19 @@ export default function Landing() {
     const typoz = new Typoz();
     typoz.initialize();
     typoz.globalConfig({
-      style: {
-        cursor: {
-          blink: true,
-          blinkTime: 0.5,
-          dir: 'vertical',
-          color: '#565656',
-        },
-      },
       nodes: [
         {
           select: '#head1',
+          words: [''],
           config: {
-            delay: 0.5,
+            delay: 2,
             speed: {
               write: 3,
               erase: 5,
             },
             style: {
               cursor: {
-                blink: false,
+                blink: true,
                 dir: 'horizontal',
               },
             },
@@ -67,9 +62,31 @@ export default function Landing() {
       {/* Header */}
       <AppBar position="static" color="default">
         <Toolbar>
-          <Link to="#">
-            <Button startIcon={<KeyboardIcon />}>{BRAND_NAME}</Button>
-          </Link>
+          <Stack
+            direction="row"
+            alignItems="center"
+            component={Link}
+            to={BASE_PATH}
+            sx={{ textDecoration: 'none' }}
+          >
+            <Avatar
+              variant="square"
+              src="/logo/typoz-logo-bw-fit.png"
+              imgProps={{
+                sx: {
+                  objectFit: 'contain',
+                },
+              }}
+            />
+            <Typography
+              component="div"
+              fontSize={(theme) => theme.typography.pxToRem(20)}
+              fontWeight={700}
+              sx={{ color: (theme) => theme.palette.text.primary }}
+            >
+              {BRAND_NAME}
+            </Typography>
+          </Stack>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', gap: 2 }}>
             {[
@@ -110,7 +127,7 @@ export default function Landing() {
                     },
                   }}
                 >
-                  Bring your text to life with TypingEffect
+                  Bring your text to life with {BRAND_NAME}
                 </Typography>
                 <Typography
                   id="head2"
@@ -175,19 +192,6 @@ typoz.globalConfig({
           </Container>
         </Box>
 
-        {/* How to Use Section */}
-        <Box sx={{ bgcolor: 'background.paper', py: 6, px: 4 }}>
-          <Container>
-            <Typography variant="h4" gutterBottom>
-              How to use
-            </Typography>
-            <Typography sx={{ color: 'text.secondary', mb: 2 }}>
-              Here's an example of how to use TypingEffect in your project.
-            </Typography>
-            {/* Code example */}
-          </Container>
-        </Box>
-
         {/* Installation Section */}
         <Box sx={{ bgcolor: 'background.default', py: 6, px: 4 }}>
           <Container>
@@ -208,7 +212,21 @@ typoz.globalConfig({
             >
               <CodeBlock language="bash" code={`npm install typoz`} sx={{}} />
               <CodeBlock language="javascript" code={'pnpm add typoz'} />
+              <CodeBlock language="javascript" code={'pnpm add typoz'} />
             </Paper>
+          </Container>
+        </Box>
+
+        {/* How to Use Section */}
+        <Box sx={{ bgcolor: 'background.paper', py: 6, px: 4 }}>
+          <Container>
+            <Typography variant="h4" gutterBottom>
+              How to use
+            </Typography>
+            <Typography sx={{ color: 'text.secondary', mb: 2 }}>
+              Here's an example of how to use TypingEffect in your project.
+            </Typography>
+            {/* Code example */}
           </Container>
         </Box>
 

@@ -4,7 +4,7 @@ module.exports = {
   entry: './src/index.ts',
   output: {
     path: path.resolve(__dirname, 'umd'),
-    filename: 'typoz-[hash].min.js',
+    filename: 'typoz.min.js',
     library: 'Typoz',
     libraryTarget: 'umd',
     libraryExport: 'default',

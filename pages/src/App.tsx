@@ -2,15 +2,14 @@ import { Routes, Route } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Landing from './pages/Landing';
 import Test from './pages/Test';
-
-const basePath = import.meta.env.DEV ? '/' : '/typoz/';
+import { BASE_PATH } from './utils/global';
 
 function App() {
   return (
     <Routes>
       <Route path="" element={<Layout />}>
-        <Route path={basePath} element={<Landing />} />
-        <Route path={basePath+'test/'} element={<Test />} />
+        <Route path={BASE_PATH} element={<Landing />} />
+        <Route path={BASE_PATH + 'test/'} element={<Test />} />
       </Route>
     </Routes>
   );
