@@ -8,10 +8,9 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material';
-import { useState } from 'react';
-// import SyntaxHighlighter from 'react-syntax-highlighter';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { atomDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { useEffect, useState } from 'react';
+
+import Prism from 'prismjs';
 
 type CodeBlockProps = {
   language: string;
@@ -21,6 +20,10 @@ type CodeBlockProps = {
 
 function CodeBlock({ language = 'javascript', code, sx = {} }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
 
   function copyToClipboard() {
     navigator.clipboard.writeText(code);
@@ -50,33 +53,40 @@ function CodeBlock({ language = 'javascript', code, sx = {} }: CodeBlockProps) {
       >
         {language}
       </Typography>
-      <Box
-        component={SyntaxHighlighter}
-        language={language}
-        style={atomDark}
-        sx={{
-          my: '0 !important',
-          borderTopLeftRadius: '0 !important',
-          borderTopRightRadius: '0 !important',
-          '&::-webkit-scrollbar': {
-            width: 5,
-            height: 5,
-            backgroundColor: 'inherit',
-          },
-          '&::-webkit-scrollbar-thumb': {
-            width: 5,
-            height: 5,
-            backgroundColor: (theme) => theme.palette.text.primary,
-          },
-          '&::-webkit-scrollbar-corner': {
-            width: 5,
-            height: 5,
-            backgroundColor: 'inherit',
-          },
-          ...sx,
-        }}
-      >
-        {code.trim()}
+      <Box component="div">
+        <Box
+          component="pre"
+          sx={{
+            my: '0 !important',
+            '&::-webkit-scrollbar': {
+              width: 5,
+              height: 5,
+              backgroundColor: 'inherit',
+            },
+            '&::-webkit-scrollbar-thumb': {
+              width: 5,
+              height: 5,
+              backgroundColor: 'inherit',
+            },
+            '&::-webkit-scrollbar-corner': {
+              width: 5,
+              height: 5,
+              backgroundColor: 'inherit',
+            },
+            ...sx,
+          }}
+        >
+          <Box
+            component="code"
+            className={`language-${language}`}
+            sx={{
+              borderTopLeftRadius: '0 !important',
+              borderTopRightRadius: '0 !important',
+            }}
+          >
+            {code.trim()}
+          </Box>
+        </Box>
       </Box>
       <Tooltip title={copied ? 'Copied!' : ''} placement="right">
         <IconButton

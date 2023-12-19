@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.76% </span>
+                <span class="strong">84.21% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>59/68</span>
+                <span class='fraction'>64/76</span>
             </div>
         
             
@@ -37,16 +37,16 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">80% </span>
+                <span class="strong">81.25% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>12/15</span>
+                <span class='fraction'>13/16</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">86.56% </span>
+                <span class="strong">84% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>58/67</span>
+                <span class='fraction'>63/75</span>
             </div>
         
             
@@ -310,7 +310,20 @@
 <a name='L245'></a><a href='#L245'>245</a>
 <a name='L246'></a><a href='#L246'>246</a>
 <a name='L247'></a><a href='#L247'>247</a>
-<a name='L248'></a><a href='#L248'>248</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<a name='L248'></a><a href='#L248'>248</a>
+<a name='L249'></a><a href='#L249'>249</a>
+<a name='L250'></a><a href='#L250'>250</a>
+<a name='L251'></a><a href='#L251'>251</a>
+<a name='L252'></a><a href='#L252'>252</a>
+<a name='L253'></a><a href='#L253'>253</a>
+<a name='L254'></a><a href='#L254'>254</a>
+<a name='L255'></a><a href='#L255'>255</a>
+<a name='L256'></a><a href='#L256'>256</a>
+<a name='L257'></a><a href='#L257'>257</a>
+<a name='L258'></a><a href='#L258'>258</a>
+<a name='L259'></a><a href='#L259'>259</a>
+<a name='L260'></a><a href='#L260'>260</a>
+<a name='L261'></a><a href='#L261'>261</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -335,10 +348,13 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -362,10 +378,19 @@
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -378,7 +403,6 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -510,6 +534,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -581,12 +607,15 @@ export class Typoz {
    * @returns {TypeBuilder} 타입빌더를 반환합니다.
    */
 <span class="fstat-no" title="function not covered" >  node(</span>): TypeBuilder {
-<span class="cstat-no" title="statement not covered" >    return TypeBuilder.instance(this.parser);</span>
+    const builder = <span class="cstat-no" title="statement not covered" >TypeBuilder.instance(this.parser);</span>
+<span class="cstat-no" title="statement not covered" >    this.typeBuilderNodes.push(builder);</span>
+<span class="cstat-no" title="statement not covered" >    return builder;</span>
   }
   // private domManager: DomManager;
 &nbsp;
   config: Options;
   typeNodes: TypeNode[] = [];
+  typeBuilderNodes: TypeBuilder[] = [];
 &nbsp;
   constructor() {
     this.parser = new Parser();
@@ -609,10 +638,19 @@ export class Typoz {
     this.config = copyConfig(this.defaultConfig);
     TypeNode.id = 0;
     TypeBuilder.id = 0;
-    for (const typing of this.typeNodes) {
-      typing.destroy();
+&nbsp;
+    for (const typeNode of this.typeNodes) {
+      typeNode.destroy();
     }
+    for (const builder of this.typeBuilderNodes) {
+<span class="cstat-no" title="statement not covered" >      builder.destroy();</span>
+    }
+&nbsp;
     this.typeNodes = [];
+    this.typeBuilderNodes = [];
+    document.head.querySelectorAll('[typoz-styles]').forEach((style) =&gt; {
+      style?.remove?.();
+    });
   }
 &nbsp;
   /**
@@ -625,7 +663,6 @@ export class Typoz {
     customConfigs: RecursivePartial&lt;Options&gt; = DEFAULT_CONFIG,
   ): void {
     if (customConfigs) recursiveConfigApply(this.config, customConfigs);
-&nbsp;
     if (this.config.autoRender) {
       this.render();
     }
@@ -697,7 +734,7 @@ export class Typoz {
       const converted = this.convert(trimText);
       const typingModel = new TypeNode(
         element,
-        element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)),
+        element.typozConfig || JSON.parse(JSON.stringify(this.config)),
         [converted],
       );
 &nbsp;
@@ -719,7 +756,7 @@ export class Typoz {
       const converted = <span class="cstat-no" title="statement not covered" >this.convert(trimText);</span>
       const typingModel = <span class="cstat-no" title="statement not covered" >new TypeNode(</span>
         element,
-        element.typozConfig || JSON.parse(JSON.stringify(this.defaultConfig)),
+        element.typozConfig || JSON.parse(JSON.stringify(this.config)),
         [converted],
       );
 &nbsp;
@@ -736,7 +773,7 @@ export class Typoz {
           if (target) {
             target.setAttribute;
             if (!Object.hasOwn(target, 'typozConfig')) {
-              const copy = JSON.parse(JSON.stringify(this.defaultConfig));
+              const copy = JSON.parse(JSON.stringify(this.config));
               recursiveConfigApply(copy, config || this.config);
               target.typozConfig = copy;
             }
@@ -754,7 +791,9 @@ export class Typoz {
           } else {
             /* istanbul ignore next */
             console.error(
-              new SyntaxError('not found element.', { cause: select }),
+              new SyntaxError('not found element. select: ' + select, {
+                cause: select,
+              }),
             );
           }
           return acc;
@@ -788,7 +827,7 @@ export class Typoz {
   render(): void;
   render(elements: NodeListOf&lt;HTMLTypozElement&gt; | HTMLTypozElement[]): void;
   render(elements?: NodeListOf&lt;HTMLTypozElement&gt; | HTMLTypozElement[]): void {
-    let styles = '';
+    let styles = '@keyframes cursor-blink { 100% { opacity: 0; } }';
 &nbsp;
     styles += getCursorStyle(this.config.style.cursor);
 &nbsp;
@@ -811,7 +850,7 @@ export class Typoz {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-12-18T06:34:14.115Z
+                at 2023-12-19T04:51:06.841Z
             </div>
         <script src="../prettify.js"></script>
         <script>

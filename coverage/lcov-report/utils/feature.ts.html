@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.23% </span>
+                <span class="strong">90.24% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>40/42</span>
+                <span class='fraction'>37/41</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">55.55% </span>
+                <span class="strong">52.94% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>20/36</span>
+                <span class='fraction'>18/34</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">95.23% </span>
+                <span class="strong">90.24% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>40/42</span>
+                <span class='fraction'>37/41</span>
             </div>
         
             
@@ -202,12 +202,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
@@ -229,7 +229,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">7x</span>
@@ -261,12 +261,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
-<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -338,24 +338,24 @@ export function getCursorStyle(
   isBuilder: boolean = false,
 ) {
   const direction = {
-    vertical: `height: ${size}em; width: calc(${size}em * 0.25);`,
-    horizontal: ` width: ${size * 0.8}em; height: calc(${
-      size * 0.8
-    }em * 0.35);`,
+    vertical: `height: ${size}em; width: 0px; box-shadow: 0 0 0 ${size * 2.5}px ${color}; margin-left: ${distance}em;`,
+    horizontal: `width: ${size * 0.6}em; height: calc(${
+      size * 0.35
+    }em * 0.35); /* margin-left: ${distance}em; */`,
   };
-  const cursorBlinkKeyframes = blink
-    ? `@keyframes cursor-blink { 100% { opacity: 0; } }`
-    : <span class="branch-1 cbranch-no" title="branch not covered" >'';</span>
+  // const cursorBlinkKeyframes = blink
+  //   ? `@keyframes cursor-blink { 100% { opacity: 0; } }`
+  //   : '';
   const cursorBlinkAnimation = blink
     ? `animation: cursor-blink ${blinkTime}s steps(2) infinite;`
     : <span class="branch-1 cbranch-no" title="branch not covered" >'animation: none';</span>
   // prettier-ignore
   <span class="missing-if-branch" title="if path not taken" >I</span>if (isBuilder) {
     // prettier-ignore
-<span class="cstat-no" title="statement not covered" >    return `[typoz-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name?`="${name}"`:''}] { } [typoz-name${name?`="${name}"`:''}]&gt;[typoz-cursor]::after { box-sizing: content-box; display: inline-block; content: "${content}"; ${/* direction[dir] */`width: 0px; height: 1em; border-left: 1px solid ${'#565656'};`} /* margin-left: ${distance}em; */ line-height: inherit; ${''/* `background-color: ${color};` */} ${cursorBlinkAnimation} }${cursorBlinkKeyframes}`;</span>
+<span class="cstat-no" title="statement not covered" >    return `[typoz-node-builder-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-node-builder-name${name?`="${name}"`:''}] { } [typoz-node-builder-name${name?`="${name}"`:''}]&gt;[typoz-cursor]::after { box-sizing: content-box; display: inline-block; content: "${content}"; ${/* direction[dir] */`width: 0px; height: 1em; overflow: hidden; box-shadow: 0 0 0 ${size * 2.5}px ${color};`} margin-left: ${distance}em; line-height: inherit; ${''/* `background-color: ${color};` */} ${cursorBlinkAnimation} }${/* cursorBlinkKeyframes */''}`;</span>
   } else {
     // prettier-ignore
-    return `[typoz-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name?`="${name}"`:''}] { } [typoz-name${name?`="${name}"`:''}]::after { display: inline-block; content: "${content}"; ${direction[dir]} /* margin-left: ${distance}em; */ line-height: inherit; background-color: ${color}; ${cursorBlinkAnimation} }${cursorBlinkKeyframes}`;
+    return `[typoz-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name?`="${name}"`:''}] { } [typoz-name${name?`="${name}"`:''}]::after { display: inline-block; content: "${content}"; ${direction[dir]} line-height: inherit; overflow: hidden; background-color: ${color}; ${cursorBlinkAnimation} }${/* cursorBlinkKeyframes */''}`;
   }
 }
 &nbsp;
@@ -374,9 +374,9 @@ export function trimInnerText(target: HTMLTypozElement) {
 }
 &nbsp;
 export function initializeTypozStyle(styles: string) {
-  if (document.head.querySelector('[typoz-styles]')) {
-    const typozDefaultStyle = document.head.querySelector('[typoz-styles]');
-    typozDefaultStyle.innerHTML += styles;
+  <span class="missing-if-branch" title="if path not taken" >I</span>if (document.head.querySelector('[typoz-styles]')) {
+    const typozDefaultStyle = <span class="cstat-no" title="statement not covered" >document.head.querySelector('[typoz-styles]');</span>
+<span class="cstat-no" title="statement not covered" >    typozDefaultStyle.innerHTML += styles;</span>
   } else {
     const typozDefaultStyle = createEl('style', styles);
     typozDefaultStyle.setAttribute('typoz-styles', '');
@@ -412,7 +412,7 @@ export function createName() {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2023-12-18T06:34:14.115Z
+                at 2023-12-19T04:51:06.841Z
             </div>
         <script src="../prettify.js"></script>
         <script>

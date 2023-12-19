@@ -3,10 +3,17 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import CustomThemeProvider from './provider/ThemeProvider.tsx';
 import { CssBaseline, GlobalStyles } from '@mui/material';
+import 'prismjs/themes/prism-tomorrow.css';
+import 'prismjs/components/prism-javascript.min';
+import 'prismjs/components/prism-typescript.min';
+import 'prismjs/components/prism-jsx.min';
+import 'prismjs/components/prism-tsx.min';
+import 'prismjs/components/prism-bash.min';
+import 'prismjs/plugins/line-numbers/prism-line-numbers';
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <>
-    {/* <React.StrictMode></React.StrictMode> */}
     <GlobalStyles
       styles={`
       html {
