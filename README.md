@@ -4,7 +4,7 @@
 
 ## Version
 
-`v0.0.13`
+`v0.0.14`
 
 ## Typos의 한글 분해, 조합
 
@@ -20,7 +20,7 @@ pnpm add typoz
 ## CDN
 
 ```html
-<script src="https://www.unpkg.com/typoz@0.0.13/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@0.0.14/umd/typoz.min.js"></script>
 ```
 
 ## Congifuration

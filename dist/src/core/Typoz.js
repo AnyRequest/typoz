@@ -1,3 +1,6 @@
+/**
+ * @version 0.0.14
+ */
 import TypeNode from '../models/TypeNode';
 import Parser from '../modules/Parser';
 import { copyConfig, findElements, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, trimInnerText, } from '../utils/feature';
