@@ -1,5 +1,5 @@
 /**
- * @version 0.0.14
+ * @version 0.0.16
  */
 import TypeNode from '../models/TypeNode';
 import Parser from '../modules/Parser';
