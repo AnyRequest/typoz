@@ -1,5 +1,6 @@
 import { Box, Paper, Stack, Typography } from '@mui/material';
 import CodeBlock from './CodeBlock';
+import { ReactElement } from 'react';
 
 type PreviewProps = {
   title: string;
@@ -8,6 +9,7 @@ type PreviewProps = {
   typozClass?: string;
   lang: string;
   code: string;
+  addCodes?: ReactElement | ReactElement[];
   // children: ReactElement;
 };
 
@@ -18,6 +20,7 @@ function Preview({
   typozClass,
   lang,
   code,
+  addCodes,
 }: PreviewProps) {
   return (
     <Paper
@@ -39,9 +42,10 @@ function Preview({
       >
         {desc}
       </Box>
-      <Box sx={{ flex: 1 }}>
+      <Stack gap={1} sx={{ flex: 1 }}>
+        {addCodes}
         <CodeBlock language={lang} code={code.trim()} />
-      </Box>
+      </Stack>
     </Paper>
   );
 }

@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   Paper,
   Stack,
   SvgIcon,
@@ -125,14 +124,14 @@ export default function Landing() {
       {/* Hero Section */}
       <Box id="about" sx={{ py: 6, px: 4, bgcolor: 'background.default' }}>
         <Container>
-          <Grid container spacing={6}>
-            <Grid item lg={6} md={12}>
+          <Stack direction={{ xs: 'column', lg: 'row' }} gap={3}>
+            <Stack flex={1} gap={1}>
               <Typography
                 id="head1"
                 variant="h3"
                 gutterBottom
                 sx={{
-                  height: 112,
+                  height: { xs: '3.5em', lg: '2.5em' },
                   color: (theme) => theme.palette.text.primary,
                   '&::after': {
                     display: 'inline-block',
@@ -148,25 +147,31 @@ export default function Landing() {
               </Typography>
               <Typography
                 id="head2"
-                sx={{ color: 'text.secondary', height: 48 }}
+                sx={{
+                  color: 'text.secondary',
+                  height: { xs: '3.5em', lg: '2.5em' },
+                }}
               >
                 Give your UI the dynamic text animation it deserves.
                 Effortlessly configure and deploy typing animations with our
                 library.
               </Typography>
-              <Button
-                variant="contained"
-                color="success"
-                sx={{ mt: 2 }}
-                onClick={() => goTo('installation')}
-              >
-                Get Started
-              </Button>
-            </Grid>
-            <Grid item lg={6} md={12}>
+              <Box>
+                <Button
+                  startIcon={'🚀'}
+                  variant="contained"
+                  color="success"
+                  sx={{ mt: 2 }}
+                  onClick={() => goTo('installation')}
+                >
+                  Get Started!
+                </Button>
+              </Box>
+            </Stack>
+            <Stack flex={1}>
               <CodeBlock
                 sx={{
-                  maxHeight: 300,
+                  maxHeight: '70vh',
                   overflowY: 'auto',
                 }}
                 language="typescript"
@@ -212,9 +217,15 @@ typoz.globalConfig({
 });
                 `}
               />
-              {/* Typing effect demo or image */}
+            </Stack>
+          </Stack>
+          {/* <Grid container spacing={6}>
+            <Grid item lg={6} md={12}></Grid>
+
+            <Grid item lg={6} md={12}>
+              
             </Grid>
-          </Grid>
+          </Grid> */}
         </Container>
       </Box>
 
@@ -319,8 +330,9 @@ typoz.globalConfig({
                 code={`
 const typoz = new Typoz();
 typoz.initialize();
-// 기본적으로 .typoz 클래스를 가지고 있는 요소를 탐색하고 자동 실행합니다.
-// 자동 실행을 비활성화하려면 아래 주석을 제거하세요.
+// 기본적으로 .typoz 클래스를 가지고 있는 요소를 탐색하고
+// globalConfig호출 시 자동 렌더링 합니다.
+// 자동 렌더링을 비활성화하려면 autoRender를 false로 지정하세요.
 typoz.globalConfig(
 /* {
   // 자동 렌더링 여부
@@ -381,23 +393,32 @@ typoz.globalConfig(
           </Typography>
           <Stack gap={5}>
             {/* exam 1 */}
+
             <Preview
               typozClass="typoz"
               title="Auto Rendering"
-              desc="기본 사용방법입니다."
+              desc="기본 사용방법입니다. 자동 렌더링 예시입니다."
               lang="javascript"
               code={`
 // auto render
 const typoz = new Typoz();
 typoz.initialize();
 typoz.globalConfig();`}
+              addCodes={
+                <CodeBlock
+                  language={'html'}
+                  code={`
+<div class="typoz">기본 사용방법입니다. 자동 렌더링 예시입니다.</div>
+            `}
+                />
+              }
             />
 
             {/* exam 2 */}
             <Preview
               typozClass="typoz"
               title="Manual Rendering"
-              desc="기본 사용방법입니다."
+              desc="기본 사용방법입니다. 수동 렌더링 예시입니다."
               lang="javascript"
               code={`
 // manual render
@@ -409,6 +430,14 @@ typoz.globalConfig({
 
 // ... other processes ...
 typoz.render();`}
+              addCodes={
+                <CodeBlock
+                  language={'html'}
+                  code={`
+<div class="typoz">기본 사용방법입니다. 수동 렌더링 예시입니다.</div>
+`}
+                />
+              }
             />
 
             {/* exam 2 */}
@@ -426,6 +455,14 @@ nodes: [
     select: '#target',
   }
 ]`}
+              addCodes={
+                <CodeBlock
+                  language={'html'}
+                  code={`
+<div id="target">지정된 노드 사용방법입니다.</div>
+`}
+                />
+              }
             />
 
             {/* exam 3 */}
@@ -464,6 +501,14 @@ typoz
   .move(-7)
   .write(', 추가 작성도')
   .run();`}
+              addCodes={
+                <CodeBlock
+                  language={'html'}
+                  code={`
+<div id="non-loop-node-builder">이 내용은 표시되지 않습니다.</div>
+`}
+                />
+              }
             />
 
             {/* exam 4 */}
@@ -487,6 +532,14 @@ typoz
    * @param {boolean=false} skipErase if true, deactivate erase motion
    */
   .forever();`}
+              addCodes={
+                <CodeBlock
+                  language={'html'}
+                  code={`
+<div id="loop-node-builder-with-erase-motion">이 내용은 표시되지 않습니다.</div>
+`}
+                />
+              }
             />
 
             {/* exam 5 */}
@@ -507,6 +560,14 @@ typoz
   })
   .write('지우기 모션이 없는 무한 반복 예시입니다.')
   .forever(true);`}
+              addCodes={
+                <CodeBlock
+                  language={'html'}
+                  code={`
+<div id="loop-node-builder-without-erase-motion">이 내용은 표시되지 않습니다.</div>
+`}
+                />
+              }
             />
           </Stack>
         </Container>
