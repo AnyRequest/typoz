@@ -1,9 +1,9 @@
 /**
- * @version 0.0.17
+ * @version 0.0.18
  */
-import TypeNode from '@/models/TypeNode';
+import TypeNode from '../models/TypeNode';
 import type { HTMLTypozElement, Options, RecursivePartial } from '..';
-import TypeBuilder from '@/modules/TypeBuilder';
+import TypeBuilder from '../modules/TypeBuilder';
 export declare class Typoz {
     private readonly defaultConfig;
     private parser;
