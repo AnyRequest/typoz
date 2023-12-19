@@ -34,7 +34,16 @@
     "url": "https://github.com/AnyRequest/typoz"
   },
   "types": "./dist/src/index.d.ts",
-  "keywords": [],
+  "keywords": [
+    "react",
+    "javascript",
+    "library",
+    "typescript",
+    "typing",
+    "write",
+    "typing-effect",
+    "typing-builder"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.23.6",
