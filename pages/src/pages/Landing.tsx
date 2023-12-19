@@ -18,7 +18,7 @@ import VueIcon from '../assets/icons/VueIcon';
 import CodeBlock from '../components/common/CodeBlock';
 import Preview from '../components/common/Preview';
 import { goTo } from '../utils/features';
-import { BRAND_NAME } from '../utils/global';
+import { BRAND_NAME, VERSION } from '../utils/global';
 
 export default function Landing() {
   useEffect(() => {
@@ -249,7 +249,7 @@ typoz.globalConfig({
             <CodeBlock
               language="html"
               code={`
-<script src="https://www.unpkg.com/typoz@0.0.12/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@${VERSION}/umd/typoz.min.js"></script>
               `}
             />
             <Typography variant="h6">NPM module</Typography>

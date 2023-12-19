@@ -6,10 +6,11 @@ import {
   Typography,
   Box,
   Button,
+  Chip,
 } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BASE_PATH, BRAND_NAME } from '../../utils/global';
+import { BASE_PATH, BRAND_NAME, VERSION } from '../../utils/global';
 import { goTo } from '../../utils/features';
 import { ColorModeContext } from '../../provider/ThemeProvider';
 
@@ -91,6 +92,18 @@ function Header() {
               sx={{ color: (theme) => theme.palette.text.primary }}
             >
               {BRAND_NAME}
+              <Chip
+                color="info"
+                size="small"
+                label={'v' + VERSION}
+                sx={{
+                  ml: 1,
+                  fontSize: 10,
+                  px: 0.1,
+                  py: 0.3,
+                  height: 'inherit',
+                }}
+              />
             </Typography>
           </Stack>
           <Box sx={{ flexGrow: 1 }} />

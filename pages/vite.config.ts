@@ -24,6 +24,7 @@ export default defineConfig(({ command, mode }) => {
         BRAND_NAME: process.env.BRAND_NAME,
         AUTHOR: process.env.AUTHOR,
         COPYRIGHT: process.env.COPYRIGHT,
+        VERSION: process.env.VERSION,
       },
     },
     base: process.env.NODE_ENV === 'development' ? '/' : '/typoz/',
