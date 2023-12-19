@@ -7,7 +7,7 @@
     "dev": "cross-env NODE_ENV=development nodemon --watch-path=\"src/**\" --ext \"ts,json\" --ignore \"src/**/*.test.ts\" --exec \"ts-node src/index.ts\"",
     "build2": "rm -rf dist/ && gulp dev",
     "build": "rm -rf dist/ && tsc && tsc-alias",
-    "webpack": "webpack",
+    "webpack": "rm -rf umd/typoz.min.js && webpack",
     "test": "jest --coverage --watch __tests__/",
     "preview": "cd test && pnpm dev"
   },
