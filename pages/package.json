@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && touch dist/.nojekyll",
+    "build": "tsc && vite build && cp sitemap.xml robots.txt dist/ && touch dist/.nojekyll",
     "postbuild": "cd dist/ && git init && git add -A && git commit -m \"🌟 gh-pages\" && git push https://github.com/AnyRequest/typoz.git master:gh-pages -f",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "buildonly": "tsc && vite build"
+    "buildonly": "tsc && vite build && cp sitemap.xml robots.txt dist/ && touch dist/.nojekyll"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
