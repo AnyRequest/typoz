@@ -1,5 +1,9 @@
 # Updates
 
+- v0.0.17
+  - bugfix
+    - alias 모듈 변경 동시 명령으로 인해 실패
+    - alias 정상 변경 빌드
 - v0.0.16
   - bugfix
     - alias 모듈 변경 동시 명령으로 인해 실패
