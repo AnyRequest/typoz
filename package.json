@@ -1,6 +1,6 @@
 {
   "name": "@anyrequest/typoz",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "It was created to make it easier for users to implement their own typing effects. We are envisioning unique and diverse effects.",
   "main": "dist/src/index.js",
   "scripts": {
