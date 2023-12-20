@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import Typoz, { KoreanParser, Parser } from '../src/index';
+import Typoz, { KoreanParser, Parser } from '../src/index.js';
 describe('[TYPER TEST]', () => {
     let typoz;
     beforeAll(() => {

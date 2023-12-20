@@ -1,4 +1,4 @@
-import type { HTMLTypozElement, OmitNodesOptions, Parser, RecursivePartial } from '..';
+import type { HTMLTypozElement, OmitNodesOptions, Parser, RecursivePartial } from '../index.js';
 type Task = () => void | Promise<number>;
 export default class TypeBuilder {
     /**

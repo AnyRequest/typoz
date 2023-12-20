@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import Typoz from '../src/index';
+import Typoz from '../src/index.js';
 const typoz = new Typoz();
 describe('[DOM Test]', () => {
     it('dom initialize test]', () => {

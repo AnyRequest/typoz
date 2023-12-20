@@ -260,7 +260,7 @@ typoz.globalConfig({
             <CodeBlock
               language="html"
               code={`
-<script src="https://www.unpkg.com/typoz@${VERSION}/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@${VERSION}/dist/umd/typoz.min.js"></script>
               `}
             />
             <Typography variant="h6">NPM module</Typography>

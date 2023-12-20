@@ -1,4 +1,4 @@
-import { createEl, createName, getCursorStyle } from '../utils/feature';
+import { createEl, createName, getCursorStyle } from '../utils/feature.js';
 export default class TypeNode {
     /**
      * @static

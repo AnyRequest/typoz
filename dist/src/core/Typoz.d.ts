@@ -1,9 +1,9 @@
 /**
- * @version 0.0.21
+ * @version 0.0.22
  */
-import TypeNode from '../models/TypeNode';
-import type { HTMLTypozElement, Options, RecursivePartial } from '..';
-import TypeBuilder from '../modules/TypeBuilder';
+import TypeNode from '../models/TypeNode.js';
+import type { HTMLTypozElement, Options, RecursivePartial } from '../index.js';
+import TypeBuilder from '../modules/TypeBuilder.js';
 export declare class Typoz {
     /**
      * @private

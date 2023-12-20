@@ -1,11 +1,11 @@
 /**
- * @version 0.0.21
+ * @version 0.0.22
  */
-import TypeNode from '../models/TypeNode';
-import Parser from '../modules/Parser';
-import { copyConfig, findElements, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, trimInnerText, } from '../utils/feature';
-import TypeBuilder from '../modules/TypeBuilder';
-import { DEFAULT_CONFIG } from '../utils/global.instance';
+import TypeNode from '../models/TypeNode.js';
+import Parser from '../modules/Parser.js';
+import { copyConfig, findElements, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, trimInnerText, } from '../utils/feature.js';
+import TypeBuilder from '../modules/TypeBuilder.js';
+import { DEFAULT_CONFIG } from '../utils/global.instance.js';
 export class Typoz {
     /**
      * @private

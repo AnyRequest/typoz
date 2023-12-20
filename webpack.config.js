@@ -4,7 +4,7 @@ export default [
   {
     entry: './src/index.ts',
     output: {
-      path: path.resolve(path.resolve(), 'umd'),
+      path: path.resolve(path.resolve(), 'dist/umd'),
       filename: 'typoz.min.js',
       library: 'Typoz',
       libraryTarget: 'umd',
@@ -40,8 +40,8 @@ export default [
   {
     entry: './src/index.ts',
     output: {
-      path: path.resolve(path.resolve(), 'cjs'),
-      filename: 'typoz.min.cjs',
+      path: path.resolve(path.resolve(), 'dist/cjs'),
+      filename: 'index.cjs',
       library: {
         type: 'commonjs-static',
       },

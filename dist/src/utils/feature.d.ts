@@ -1,4 +1,4 @@
-import { CursorStyle, HTMLTypozElement, Options, RecursivePartial } from '..';
+import { CursorStyle, HTMLTypozElement, Options, RecursivePartial } from '../index.js';
 export declare function recursiveConfigApply<T>(config: T, customConfigs: RecursivePartial<T>): void;
 export declare function createEl(name: string, content: string, attribute?: {
     name: string;

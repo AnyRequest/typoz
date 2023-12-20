@@ -1,5 +1,5 @@
-import { createEl, createName, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, } from '../utils/feature';
-import { DEFAULT_CONFIG } from '../utils/global.instance';
+import { createEl, createName, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, } from '../utils/feature.js';
+import { DEFAULT_CONFIG } from '../utils/global.instance.js';
 export default class TypeBuilder {
     /**
      * @static

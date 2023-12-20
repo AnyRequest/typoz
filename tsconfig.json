@@ -35,6 +35,10 @@
   "buildOptions": {
     "verbose": true
   },
+  "tsc-alias": {
+    "resolveFullPaths": true,
+    "verbose": true
+  },
   "ts-node": {
     "files": true,
     "compilerOptions": {

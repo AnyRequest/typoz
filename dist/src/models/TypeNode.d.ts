@@ -1,4 +1,4 @@
-import type { HTMLTypozElement, OmitNodesOptions } from '..';
+import type { HTMLTypozElement, OmitNodesOptions } from '../index.js';
 export default class TypeNode {
     /**
      * @static

@@ -1,5 +1,5 @@
-import BaseParser from './BaseParser';
-import KoreanParser from './KoreanParser';
+import BaseParser from './BaseParser.js';
+import KoreanParser from './KoreanParser.js';
 export default class Parser extends BaseParser {
     readonly koreanParser: KoreanParser;
     constructor();

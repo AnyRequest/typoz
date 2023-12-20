@@ -1,4 +1,4 @@
-import KoreanParser from './KoreanParser';
+import KoreanParser from './KoreanParser.js';
 export default abstract class BaseParser {
     abstract readonly koreanParser: KoreanParser;
     protected abstract wordToLetters(word: string): string[];

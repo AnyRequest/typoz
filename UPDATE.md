@@ -1,5 +1,10 @@
 # Updates
 
+- v0.0.22
+  - fix
+    - 버전 업데이트
+    - esm 모듈 extension 추가 빌드
+    - umd, cjs 빌드 경로 변경
 - v0.0.21
   - fix
     - project commonjs -> esm 변경
