@@ -1,8 +1,8 @@
 import { CursorStyle, HTMLTypozElement, Options, RecursivePartial } from '..';
 
-export function recursiveConfigApply(
-  config: Options,
-  customConfigs: RecursivePartial<Options>,
+export function recursiveConfigApply<T>(
+  config: T,
+  customConfigs: RecursivePartial<T>,
 ) {
   for (const key of Object.keys(customConfigs)) {
     if (
@@ -45,7 +45,9 @@ export function getCursorStyle(
   isBuilder: boolean = false,
 ) {
   const direction = {
-    vertical: `height: ${size}em; width: 0px; box-shadow: 0 0 0 ${size * 2.5}px ${color}; margin-left: ${distance}em;`,
+    vertical: `height: ${size}em; width: 0px; box-shadow: 0 0 0 ${
+      size * 2.5
+    }px ${color}; margin-left: ${distance}em;`,
     horizontal: `width: ${size * 0.6}em; height: calc(${
       size * 0.35
     }em * 0.35); /* margin-left: ${distance}em; */`,

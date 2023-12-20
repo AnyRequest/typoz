@@ -1,24 +1,52 @@
 import { createEl, createName, getCursorStyle } from '@/utils/feature';
-import type { HTMLTypozElement, Options } from '..';
+import type { HTMLTypozElement, OmitNodesOptions, Options } from '..';
 
 export default class TypeNode {
+  /**
+   * @static
+   * @property {number} id 타입노드 auto increment id
+   */
   static id: number = 0;
+  /** @property {number} id 타입노드 고유 id */
   id: number;
+  /** @property {string} name 타입노드 고유 랜덤 네임 */
   name: string;
+  /** @property {string[][][]} typingList 파싱된 타이핑 3차 배열 */
   typingList: string[][][] = [];
-  config: Options;
-  before: number = 0;
+  /** @property {OmitNodesOptions} config 타입노드 설정 */
+  config: OmitNodesOptions;
+  // before: number = 0;
+  /** @property {HTMLTypozElement} element 타입노드 지정 요소 */
   element: HTMLTypozElement;
+  /**
+   * @property {boolean} isStarted 렌더링 시작 여부
+   * @default false
+   */
   isStarted: boolean = false;
+  /** @property {string} injectStyle 주입 스타일 텍스트 */
   injectStyle: string;
-  order: number = 0;
-  stop: boolean = false;
-  play: (value: boolean) => void;
+  /**
+   * @private
+   * @property {number} order 주입 스타일 텍스트
+   * @default 0
+   */
+  private order: number = 0;
+  /**
+   * @private
+   * @property {boolean} stop 정지 신호
+   * @default false
+   */
+  private stop: boolean = false;
+  /**
+   * @private
+   * @property {(value: boolean) => void} play 렌더링 시작 resolver
+   */
+  private play: (value: boolean) => void;
 
   constructor(
     // id: number,
     el: HTMLTypozElement,
-    config: Options,
+    config: OmitNodesOptions,
     typings: string[][][],
   ) {
     this.id = ++TypeNode.id;
@@ -32,11 +60,24 @@ export default class TypeNode {
     this.setup();
   }
 
+  /**
+   * @method orderUp 타이핑 순서 증가
+   * @description 0에서 타이핑 배열의 갯수-1 까지 순환 증가합니다.
+   * @example
+   * // typingList.length === 3
+   * // current order === 3
+   * orderUp();
+   * // current order === 0
+   */
   orderUp() {
     this.order = (this.order + 1) % this.typingList.length || 0;
   }
 
-  setup() {
+  /**
+   * @private
+   * @method setup 타입노드 초기화 메서드
+   */
+  private setup() {
     Object.freeze(this.typingList);
     Object.freeze(this.config);
     this.element.innerHTML = '';
@@ -47,7 +88,12 @@ export default class TypeNode {
     this.injectStyle = getCursorStyle(this.config.style.cursor, this.name);
   }
 
-  copyCurrent() {
+  /**
+   * @private
+   * @method copyCurrent 타이핑 항목 복사
+   * @returns {string[][]} Returns string array
+   */
+  private copyCurrent(): string[][] {
     try {
       const current = JSON.parse(
         JSON.stringify(this.typingList[this.order]),
@@ -59,31 +105,58 @@ export default class TypeNode {
     }
   }
 
+  /**
+   * @method resume 렌더링 다시 재생
+   */
   /* istanbul ignore next */
   resume() {
     this.play(true);
     this.stop = false;
   }
 
+  /**
+   * @method pause 렌더링 정지
+   */
   /* istanbul ignore next */
   pause() {
     this.stop = true;
   }
 
+  /**
+   * @method clear 렌더링 시작 초기화
+   */
   /* istanbul ignore next */
   clear() {
     this.isStarted = false;
   }
 
+  /**
+   * @method destroy 타입노드 해제 및 초기화
+   */
   destroy() {
     this.pause();
     this.clear();
     this.element.innerHTML = this.element.typings[0];
+    delete this.element['typings'];
+    delete this.element['typozConfig'];
     this.typingList = [];
   }
 
+  /**
+   * @private
+   * @method wait 애니메이션 딜레이
+   * @returns {Promise<unknown>} Returns promise
+   */
+  private wait(): Promise<unknown>;
+  /**
+   * @private
+   * @method wait 애니메이션 딜레이
+   * @param {number} [time=0] 딜레이 시간
+   * @returns {Promise<unknown>} Returns promise
+   */
+  private wait(/** @default 0 */ time: number): Promise<unknown>;
   /* istanbul ignore next */
-  wait(time: number = 0) {
+  private wait(/** @default 0 */ time: number = 0): Promise<unknown> {
     return new Promise((resolve) => {
       if (this.stop) {
         this.play = resolve;
@@ -95,13 +168,23 @@ export default class TypeNode {
     });
   }
 
+  /**
+   * @method run 초기 렌더링 시작 메서드
+   * @description 외부에서 호출하기위해 제작되었습니다.
+   */
   /* istanbul ignore next */
   run() {
     this.isStarted = true;
     this.render();
   }
 
-  renderEraseDivide(eraseArray: string[][]) {
+  /**
+   * @private
+   * @method renderEraseDivide divide모드 타이핑 지우기
+   * @param {string[][]} eraseArray 지울 타이핑 리스트
+   * @returns {Promise<unknown>} Returns promise
+   */
+  private renderEraseDivide(eraseArray: string[][]): Promise<unknown> {
     /* istanbul ignore next */
     return new Promise((resolve) => {
       const origin = [...this.element.innerText].map(
@@ -135,7 +218,13 @@ export default class TypeNode {
     });
   }
 
-  renderWriteDivide(writeArray: string[][]) {
+  /**
+   * @private
+   * @method renderWriteDivide divide모드로 타이핑 쓰기
+   * @param {string[][]} writeArray 쓸 타이핑 리스트
+   * @returns {Promise<unknown>} Returns promise
+   */
+  private renderWriteDivide(writeArray: string[][]): Promise<unknown> {
     /* istanbul ignore next */
     return new Promise((resolve) => {
       let pointer = 0;
@@ -162,7 +251,12 @@ export default class TypeNode {
     });
   }
 
-  renderErase(eraseArray: string[][]) {
+  /**
+   * @method renderErase 일반 타이핑 지우기
+   * @param {string[][]} eraseArray 지울 타이핑 리스트
+   * @returns {Promise<unknown>} Returns promise
+   */
+  private renderErase(eraseArray: string[][]): Promise<unknown> {
     /* istanbul ignore next */
     return new Promise((resolve) => {
       let pointer = this.element.innerText.length;
@@ -190,7 +284,13 @@ export default class TypeNode {
     });
   }
 
-  renderWrite(writeArray: string[][]) {
+  /**
+   * @private
+   * @method renderWrite 일반 타이핑 쓰기
+   * @param {string[][]} writeArray 쓸 타이핑 리스트
+   * @returns {Promise<unknown>} Returns promise
+   */
+  private renderWrite(writeArray: string[][]): Promise<unknown> {
     /* istanbul ignore next */
     return new Promise((resolve) => {
       let pointer = 0;
@@ -217,8 +317,13 @@ export default class TypeNode {
     });
   }
 
+  /**
+   * @async
+   * @method render 타입노드 렌더링
+   * @returns {Promise<void>} Returns promise
+   */
   /* istanbul ignore next */
-  async render() {
+  async render(): Promise<void> {
     if (this.isStarted === false) return;
     this.orderUp();
     if (this.config.mode.divide) {

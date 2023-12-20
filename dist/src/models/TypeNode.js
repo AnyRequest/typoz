@@ -1,16 +1,44 @@
 import { createEl, createName, getCursorStyle } from '../utils/feature';
 export default class TypeNode {
+    /**
+     * @static
+     * @property {number} id 타입노드 auto increment id
+     */
     static id = 0;
+    /** @property {number} id 타입노드 고유 id */
     id;
+    /** @property {string} name 타입노드 고유 랜덤 네임 */
     name;
+    /** @property {string[][][]} typingList 파싱된 타이핑 3차 배열 */
     typingList = [];
+    /** @property {OmitNodesOptions} config 타입노드 설정 */
     config;
-    before = 0;
+    // before: number = 0;
+    /** @property {HTMLTypozElement} element 타입노드 지정 요소 */
     element;
+    /**
+     * @property {boolean} isStarted 렌더링 시작 여부
+     * @default false
+     */
     isStarted = false;
+    /** @property {string} injectStyle 주입 스타일 텍스트 */
     injectStyle;
+    /**
+     * @private
+     * @property {number} order 주입 스타일 텍스트
+     * @default 0
+     */
     order = 0;
+    /**
+     * @private
+     * @property {boolean} stop 정지 신호
+     * @default false
+     */
     stop = false;
+    /**
+     * @private
+     * @property {(value: boolean) => void} play 렌더링 시작 resolver
+     */
     play;
     constructor(
     // id: number,
@@ -22,9 +50,22 @@ export default class TypeNode {
         this.typingList = typings.filter((_) => _ && _.length > 0 && _[0].length > 0 && _[0][0].length > 0);
         this.setup();
     }
+    /**
+     * @method orderUp 타이핑 순서 증가
+     * @description 0에서 타이핑 배열의 갯수-1 까지 순환 증가합니다.
+     * @example
+     * // typingList.length === 3
+     * // current order === 3
+     * orderUp();
+     * // current order === 0
+     */
     orderUp() {
         this.order = (this.order + 1) % this.typingList.length || 0;
     }
+    /**
+     * @private
+     * @method setup 타입노드 초기화 메서드
+     */
     setup() {
         Object.freeze(this.typingList);
         Object.freeze(this.config);
@@ -34,6 +75,11 @@ export default class TypeNode {
         this.element.setAttribute('typoz-processed', '');
         this.injectStyle = getCursorStyle(this.config.style.cursor, this.name);
     }
+    /**
+     * @private
+     * @method copyCurrent 타이핑 항목 복사
+     * @returns {string[][]} Returns string array
+     */
     copyCurrent() {
         try {
             const current = JSON.parse(JSON.stringify(this.typingList[this.order]));
@@ -44,27 +90,41 @@ export default class TypeNode {
             return [];
         }
     }
+    /**
+     * @method resume 렌더링 다시 재생
+     */
     /* istanbul ignore next */
     resume() {
         this.play(true);
         this.stop = false;
     }
+    /**
+     * @method pause 렌더링 정지
+     */
     /* istanbul ignore next */
     pause() {
         this.stop = true;
     }
+    /**
+     * @method clear 렌더링 시작 초기화
+     */
     /* istanbul ignore next */
     clear() {
         this.isStarted = false;
     }
+    /**
+     * @method destroy 타입노드 해제 및 초기화
+     */
     destroy() {
         this.pause();
         this.clear();
         this.element.innerHTML = this.element.typings[0];
+        delete this.element['typings'];
+        delete this.element['typozConfig'];
         this.typingList = [];
     }
     /* istanbul ignore next */
-    wait(time = 0) {
+    wait(/** @default 0 */ time = 0) {
         return new Promise((resolve) => {
             if (this.stop) {
                 this.play = resolve;
@@ -76,11 +136,21 @@ export default class TypeNode {
             }
         });
     }
+    /**
+     * @method run 초기 렌더링 시작 메서드
+     * @description 외부에서 호출하기위해 제작되었습니다.
+     */
     /* istanbul ignore next */
     run() {
         this.isStarted = true;
         this.render();
     }
+    /**
+     * @private
+     * @method renderEraseDivide divide모드 타이핑 지우기
+     * @param {string[][]} eraseArray 지울 타이핑 리스트
+     * @returns {Promise<unknown>} Returns promise
+     */
     renderEraseDivide(eraseArray) {
         /* istanbul ignore next */
         return new Promise((resolve) => {
@@ -114,6 +184,12 @@ export default class TypeNode {
             }, (1 / this.config.speed.erase) * 100);
         });
     }
+    /**
+     * @private
+     * @method renderWriteDivide divide모드로 타이핑 쓰기
+     * @param {string[][]} writeArray 쓸 타이핑 리스트
+     * @returns {Promise<unknown>} Returns promise
+     */
     renderWriteDivide(writeArray) {
         /* istanbul ignore next */
         return new Promise((resolve) => {
@@ -142,6 +218,11 @@ export default class TypeNode {
             }, (1 / this.config.speed.write) * 100);
         });
     }
+    /**
+     * @method renderErase 일반 타이핑 지우기
+     * @param {string[][]} eraseArray 지울 타이핑 리스트
+     * @returns {Promise<unknown>} Returns promise
+     */
     renderErase(eraseArray) {
         /* istanbul ignore next */
         return new Promise((resolve) => {
@@ -171,6 +252,12 @@ export default class TypeNode {
             }, (1 / this.config.speed.erase) * 100);
         });
     }
+    /**
+     * @private
+     * @method renderWrite 일반 타이핑 쓰기
+     * @param {string[][]} writeArray 쓸 타이핑 리스트
+     * @returns {Promise<unknown>} Returns promise
+     */
     renderWrite(writeArray) {
         /* istanbul ignore next */
         return new Promise((resolve) => {
@@ -199,6 +286,11 @@ export default class TypeNode {
             }, (1 / this.config.speed.write) * 100);
         });
     }
+    /**
+     * @async
+     * @method render 타입노드 렌더링
+     * @returns {Promise<void>} Returns promise
+     */
     /* istanbul ignore next */
     async render() {
         if (this.isStarted === false)

@@ -1,5 +1,12 @@
 # Updates
 
+- v0.0.19
+  - fix
+    - TypeBuilder.conf => TypeBuilder.config로 변경
+    - TypeNode 메서드 일부 private로 변경
+    - Typoz, TypeNode, TypeBuilder 클래스 전체 jsdoc 상세 설정 및 override별 주석 작성
+  - add
+    - Typoz 및 TypeNode, TypBuilder 모든 메서드, 프로퍼티 jsdoc 주석 추가
 - v0.0.18
   - bugfix
     - alias 모듈 변경 동시 명령으로 인해 실패

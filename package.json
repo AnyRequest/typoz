@@ -43,7 +43,9 @@
     "typing",
     "write",
     "typing-effect",
-    "typing-builder"
+    "typing-builder",
+    "korean-typing-effect",
+    "korean-typing"
   ],
   "license": "MIT",
   "devDependencies": {

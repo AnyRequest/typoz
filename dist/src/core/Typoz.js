@@ -1,5 +1,5 @@
 /**
- * @version 0.0.18
+ * @version 0.0.19
  */
 import TypeNode from '../models/TypeNode';
 import Parser from '../modules/Parser';
@@ -7,35 +7,54 @@ import { copyConfig, findElements, findOne, getCursorStyle, initializeTypozStyle
 import TypeBuilder from '../modules/TypeBuilder';
 import { DEFAULT_CONFIG } from '../utils/global.instance';
 export class Typoz {
+    /**
+     * @private
+     * @readonly
+     * @property {Options} defaultConfig 기본 타이핑 설정
+     */
     defaultConfig = DEFAULT_CONFIG;
+    /**
+     * @private
+     * @property {Parser} parser 텍스트 분석기
+     */
     parser;
     /**
-     * 빌더는 파서를 확장하여 사용됩니다.
+     * @method node 타입빌더 인스턴스 호출 메서드
+     * @description 빌더는 파서를 확장하여 사용됩니다.
      * @returns {TypeBuilder} 타입빌더를 반환합니다.
+     * @example
+     * const typoz = new Typoz();
+     * // select 및 config는 필수로 호출되어야 합니다.
+     * // config가 호출되지 않으면 오류가 발생 할 수 있습니다.
+     * typoz.node().select("#target").config();
+     * // or
+     * typoz.node().select("#target").config({
+     *   speed: { write: 1 },
+     * });
      */
     node() {
         const builder = TypeBuilder.instance(this.parser);
         this.typeBuilderNodes.push(builder);
         return builder;
     }
-    // private domManager: DomManager;
+    /** @property {Options} config 타이핑 설정 */
     config;
+    /** @property {TypNode[]} typNodes 타입 노드 배열 */
     typeNodes = [];
     typeBuilderNodes = [];
     constructor() {
         this.parser = new Parser();
-        // this.domManager = new DomManager();
     }
     /**
      * @method initialize typoz 사용에서 항상 필수로 먼저 실행되어야 합니다.
      */
     initialize() {
         this.config = copyConfig(this.defaultConfig);
+        // this.parser = new Parser();
     }
     /**
-     * @method destroy
-     * SPA환경에서 hmr를 고려하여 에러를 우회하기 위해 typoz를 파괴합니다.
-     * 다시 시작하려면 initialize와 globalConfig를 호출해야합니다.
+     * @method destroy typoz 설정 해제 및 초기화
+     * @description typoz에 등록된 모든 노드를 정지, 제거합니다. 다시 시작하려면 initialize와 globalConfig를 호출해야합니다.
      */
     destroy() {
         this.config = copyConfig(this.defaultConfig);
@@ -56,7 +75,7 @@ export class Typoz {
     /**
      * @method globalConfig typoz의 모든 노드에 기본 적용되는 환경설정을 합니다.
      * @param {RecursivePartial<Options>} customConfigs 전역 환경 설정
-     * globalConfig를 호출하면 자동으로 render메서드가 호출됩니다. autoRender가 false면 render메서드를 원하는 시점에서 호출해야합니다. autoRender의 기본 값은 true입니다.
+     * @description globalConfig를 호출하면 자동으로 render메서드가 호출됩니다. autoRender가 false면 render메서드를 원하는 시점에서 호출해야합니다.
      *
      */
     globalConfig(customConfigs = DEFAULT_CONFIG) {
@@ -66,9 +85,19 @@ export class Typoz {
             this.render();
         }
     }
+    /**
+     * @method convert 단어 단위 문장 분해
+     * @param {string} sentences 텍스트 타이핑을 위해 분해할 문장
+     * @returns {string[][]} 분해된 단어 묶음 (2차 배열)
+     */
     convert(sentences) {
         return this.parser.parse(sentences);
     }
+    /**
+     * @method bulkConvert 단어 단위 배열 문장 분해
+     * @param sentences 텍스트 타이핑을 위해 분해할 문장 배열
+     * @returns {string[][]} 분해된 단어 묶음 (3차 배열)
+     */
     bulkConvert(sentences) {
         const temp = [];
         for (const sentence of sentences) {
@@ -104,6 +133,10 @@ export class Typoz {
             }
         }
     }
+    /**
+     * @private
+     * @method defaultRender 기본 요소 렌더링 준비
+     */
     defaultRender() {
         const defaultElements = findElements(this.config.querySelector);
         for (const element of [...new Set(defaultElements)]) {
@@ -119,6 +152,11 @@ export class Typoz {
             this.typeNodes.push(typingModel);
         }
     }
+    /**
+     * @private
+     * @method manualRender 수동 추가된 요소 렌더링 준비
+     * See {@link Typoz.render} argument
+     */
     manualRender(elements) {
         for (const element of [...new Set(elements)]) {
             const trimText = element.innerText.trim();
@@ -133,6 +171,10 @@ export class Typoz {
             this.typeNodes.push(typingModel);
         }
     }
+    /**
+     * @private
+     * @method getConfigNodes config에 추가된 nodes 요소 탐색
+     */
     getConfigNodes() {
         if (this.config.nodes.length > 0) {
             return this.config.nodes.reduce((acc, { select, words, config }) => {
@@ -168,6 +210,10 @@ export class Typoz {
         }
         return [];
     }
+    /**
+     * @private
+     * @method nodesRender nodes 요소 렌더링 준비
+     */
     nodesRender() {
         const nodesElements = this.getConfigNodes();
         for (const element of [...new Set(nodesElements)]) {
