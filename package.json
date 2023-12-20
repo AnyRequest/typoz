@@ -1,5 +1,5 @@
 {
-  "name": "typoz",
+  "name": "@anyrequest/typoz",
   "version": "0.0.19",
   "description": "It was created to make it easier for users to implement their own typing effects. We are envisioning unique and diverse effects.",
   "main": "dist/src/index.js",
@@ -31,7 +31,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/AnyRequest/typoz"
+    "url": "https://github.com/AnyRequest/typoz.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "homepage": "https://anyrequest.github.io/typoz/",
   "types": "./dist/src/index.d.ts",

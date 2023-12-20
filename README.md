@@ -4,7 +4,7 @@
 
 ## Version
 
-`v0.0.19`
+`v0.0.20`
 
 ## Typos의 한글 분해, 조합
 
@@ -20,7 +20,7 @@ pnpm add typoz
 ## CDN
 
 ```html
-<script src="https://www.unpkg.com/typoz@0.0.19/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@0.0.20/umd/typoz.min.js"></script>
 ```
 
 ## Congifuration
@@ -141,7 +141,8 @@ const typoz = new Typoz();
 typoz
   .node()
   .select('#test')
-  .conf(/* custom configs */)
+  // .conf(/* custom configs */) // deprecated
+  .config(/* custom configs */)
   .write('Write the entire text')
   .write(' ')
   .write('r')
@@ -170,7 +171,8 @@ const typoz = new Typoz();
 typoz
   .node()
   .select('#test')
-  .conf(/* custom configs */)
+  // .conf(/* custom configs */) // deprecated
+  .config(/* custom configs */)
   .write('Write the entire text')
   .forever();
 ```
@@ -184,7 +186,8 @@ const typoz = new Typoz();
 typoz
   .node()
   .select('#test')
-  .conf(/* custom configs */)
+  // .conf(/* custom configs */) // deprecated
+  .config(/* custom configs */)
   .write('여러 문자 등 작성 가능합니다.')
   .forever(true);
 ```

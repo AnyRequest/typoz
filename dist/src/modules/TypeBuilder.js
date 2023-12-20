@@ -80,6 +80,7 @@ export default class TypeBuilder {
         return this;
     }
     conf(config = DEFAULT_CONFIG) {
+        console.warn('this method is deprecated since version 0.0.19, please use "config" method');
         if (config)
             recursiveConfigApply(this._config, config);
         const style = getCursorStyle(this._config.style.cursor, this.name, true);

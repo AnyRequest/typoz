@@ -1,5 +1,8 @@
 # Updates
 
+- v0.0.20
+  - fix
+    - conf 메서드 deprecated 경고 메세지 출력 추가
 - v0.0.19
   - fix
     - TypeBuilder.conf => TypeBuilder.config로 변경

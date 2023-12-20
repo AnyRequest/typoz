@@ -61,7 +61,7 @@ export default function Landing() {
     typoz
       .node()
       .select('#non-loop-node-builder')
-      .conf({
+      .config({
         speed: {
           write: 2,
         },
@@ -90,7 +90,7 @@ export default function Landing() {
     typoz
       .node()
       .select('#loop-node-builder-with-erase-motion')
-      .conf({
+      .config({
         speed: {
           write: 2,
         },
@@ -101,7 +101,7 @@ export default function Landing() {
     typoz
       .node()
       .select('#loop-node-builder-without-erase-motion')
-      .conf({
+      .config({
         speed: {
           write: 2,
         },
@@ -476,7 +476,7 @@ const typoz = new Typoz();
 typoz
   .node()
   .select('#non-loop-node-builder')
-  .conf({
+  .config({
     speed: {
       write: 2,
     },
@@ -522,7 +522,7 @@ const typoz = new Typoz();
 typoz
   .node()
   .select('#loop-node-builder-with-erase-motion')
-  .conf({
+  .config({
     speed: {
       write: 2,
     },
@@ -553,7 +553,7 @@ const typoz = new Typoz();
 typoz
   .node()
   .select('#loop-node-builder-without-erase-motion')
-  .conf({
+  .config({
     speed: {
       write: 2,
     },
