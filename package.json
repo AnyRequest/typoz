@@ -34,7 +34,7 @@
     "url": "https://github.com/AnyRequest/typoz.git"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org/"
   },
   "homepage": "https://anyrequest.github.io/typoz/",
   "types": "./dist/src/index.d.ts",
