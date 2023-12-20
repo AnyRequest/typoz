@@ -1,5 +1,11 @@
 # Updates
 
+- v0.0.21
+  - fix
+    - project commonjs -> esm 변경
+    - cjs 빌드 추가
+    - umd 혼합 빌드
+    - 버전 업데이트
 - v0.0.20
   - fix
     - conf 메서드 deprecated 경고 메세지 출력 추가

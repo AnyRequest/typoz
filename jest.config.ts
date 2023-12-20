@@ -5,6 +5,7 @@
 
 /** @type {import('jest').Config} */
 const config = {
+  preset: 'ts-jest',
   verbose: true,
   moduleDirectories: ['node_modules', 'src'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
