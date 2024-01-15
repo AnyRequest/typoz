@@ -663,7 +663,7 @@ import TypozRender from './TypozRender';
 function Index() {
   return (
     <div>
-      <Typings
+      <TypozRender
         id='sub-word'
         fontSize={(theme) => theme.typography.pxToRem(TITLE_SIZE.S)}
         fontWeight={200}
@@ -678,7 +678,7 @@ function Index() {
         ]}>
         typoz는 사용자가 직접 입력하는 효과를 편하게 구현하기 위해 직접
         제작한 오픈소스 라이브러리입니다.
-      </Typings>
+      </TypozRender>
     </div>
   );
 }
@@ -705,7 +705,7 @@ import TypozRender from './TypozRender';
 function Index() {
   return (
     <div>
-      <Typings
+      <TypozRender
         id='main-word'
         builder
         config={{

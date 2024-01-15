@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App.tsx';
 import CustomThemeProvider from './provider/ThemeProvider.tsx';
 import { CssBaseline, GlobalStyles } from '@mui/material';
+import './assets/style/main.scss';
 import 'prismjs/themes/prism-tomorrow.css';
 import 'prismjs/components/prism-javascript.min';
 import 'prismjs/components/prism-typescript.min';

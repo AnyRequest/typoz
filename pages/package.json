@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp sitemap.xml robots.txt dist/ && touch dist/.nojekyll",
+    "build": "tsc && vite build && cp sitemap.xml robots.txt dist/ && touch dist/.nojekyll && pnpm run makedir",
+    "makedir": "mkdir \"dist/api/render\" && cp \"dist/index.html\" \"dist/api/render/\"",
     "postbuild": "cd dist/ && git init && git add -A && git commit -m \"🌟 gh-pages\" && git push https://github.com/AnyRequest/typoz.git master:gh-pages -f",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
@@ -35,6 +36,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
     "path": "^0.12.7",
+    "sass": "^1.69.7",
     "terser": "^5.26.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.8"
