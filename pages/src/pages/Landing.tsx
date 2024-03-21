@@ -60,7 +60,7 @@ export default function Landing() {
     });
 
     typoz
-      .node()
+      .createBuilder()
       .select('#non-loop-node-builder')
       .config({
         speed: {
@@ -89,7 +89,7 @@ export default function Landing() {
       .run();
 
     typoz
-      .node()
+      .createBuilder()
       .select('#loop-node-builder-with-erase-motion')
       .config({
         speed: {
@@ -100,7 +100,7 @@ export default function Landing() {
       .forever();
 
     typoz
-      .node()
+      .createBuilder()
       .select('#loop-node-builder-without-erase-motion')
       .config({
         speed: {
@@ -475,7 +475,7 @@ nodes: [
               code={`
 const typoz = new Typoz();
 typoz
-  .node()
+  .createBuilder()
   .select('#non-loop-node-builder')
   .config({
     speed: {
@@ -521,7 +521,7 @@ typoz
               code={`
 const typoz = new Typoz();
 typoz
-  .node()
+  .createBuilder()
   .select('#loop-node-builder-with-erase-motion')
   .config({
     speed: {
@@ -552,7 +552,7 @@ typoz
               code={`
 const typoz = new Typoz();
 typoz
-  .node()
+  .createBuilder()
   .select('#loop-node-builder-without-erase-motion')
   .config({
     speed: {
@@ -861,7 +861,7 @@ function TypozRender({
 
   function handleTypeBuilderProcess(typoz: Typoz, processes: PropcessType[]) {
     const typeBuilder = typoz
-      .node()
+      .createBuilder()
       .select("#" + id)
       .config(config || {});
     for (const { action, value, speed } of processes) {
@@ -1023,7 +1023,7 @@ function TypozRender({
 
   function handleTypeBuilderProcess(typoz: Typoz, processes: PropcessType[]) {
     const typeBuilder = typoz
-      .node()
+      .createBuilder()
       .select("#" + id)
       .config(config || {});
     for (const { action, value, speed } of processes) {

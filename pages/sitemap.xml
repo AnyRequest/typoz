@@ -2,6 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://anyrequest.github.io/typoz/</loc>
-    <lastmod>2023-12-19</lastmod>
+    <lastmod>2024-03-21</lastmod>
+  </url>
+  <url>
+    <loc>https://anyrequest.github.io/typoz/api/render</loc>
+    <lastmod>2024-03-21</lastmod>
   </url>
 </urlset>

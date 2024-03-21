@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp sitemap.xml robots.txt dist/ && touch dist/.nojekyll && pnpm run makedir",
+    "build": "rm -rf dist/ && tsc && vite build && cp sitemap.xml robots.txt dist/ && touch dist/.nojekyll && pnpm run makedir",
     "makedir": "mkdir \"dist/api/render\" && cp \"dist/index.html\" \"dist/api/render/\"",
     "postbuild": "cd dist/ && git init && git add -A && git commit -m \"🌟 gh-pages\" && git push https://github.com/AnyRequest/typoz.git master:gh-pages -f",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
@@ -21,7 +21,7 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.0",
-    "typoz": "link:.."
+    "typoz": "^0.1.0"
   },
   "devDependencies": {
     "@types/prismjs": "^1.26.3",
