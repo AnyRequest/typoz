@@ -126,7 +126,7 @@ typoz.render([myElement]);
 
 빌더를 이용해 원하는 타이핑 효과를 제어할 수 있습니다. 빌더는 `TypeNode`를 렌더링하는 방식과 달리 개별 단위로 실행합니다. 메서드 행위는 아래와 같습니다.
 
-- createBuilder(): 빌더 인스턴스를 얻습니다.
+- createBuilder(): 빌더 인스턴스를 얻습니다. (✨ since v0.1.0)
 - node(): (deprecated) 빌더 인스턴스를 얻습니다. (since v0.1.0)
 - select(idOrClass: string): 타겟을 지정합니다.
 - conf(config: Options): Typoz의 config와 동일한 포멧입니다.
