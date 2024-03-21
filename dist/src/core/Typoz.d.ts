@@ -1,5 +1,5 @@
 /**
- * @version 0.0.22
+ * @version 0.1.0
  */
 import TypeNode from '../models/TypeNode.js';
 import type { HTMLTypozElement, Options, RecursivePartial } from '../index.js';
@@ -17,6 +17,22 @@ export declare class Typoz {
      */
     private parser;
     /**
+     * @method createBuilder 타입빌더 인스턴스 호출 메서드
+     * @description 빌더는 파서를 확장하여 사용됩니다.
+     * @returns {TypeBuilder} 타입빌더를 반환합니다.
+     * @example
+     * const typoz = new Typoz();
+     * // select 및 config는 필수로 호출되어야 합니다.
+     * // config가 호출되지 않으면 오류가 발생 할 수 있습니다.
+     * typoz.createBuilder().select("#target").config().write("hello").run();
+     * // or
+     * typoz.createBuilder().select("#target").config({
+     *   speed: { write: 1 },
+     * }).write("hello").run();
+     */
+    createBuilder(): TypeBuilder;
+    /**
+     * @deprecated since version 0.1.0
      * @method node 타입빌더 인스턴스 호출 메서드
      * @description 빌더는 파서를 확장하여 사용됩니다.
      * @returns {TypeBuilder} 타입빌더를 반환합니다.
@@ -24,11 +40,11 @@ export declare class Typoz {
      * const typoz = new Typoz();
      * // select 및 config는 필수로 호출되어야 합니다.
      * // config가 호출되지 않으면 오류가 발생 할 수 있습니다.
-     * typoz.node().select("#target").config();
+     * typoz.node().select("#target").config().write("hello").run();
      * // or
      * typoz.node().select("#target").config({
      *   speed: { write: 1 },
-     * });
+     * }).write("hello").run();
      */
     node(): TypeBuilder;
     /** @property {Options} config 타이핑 설정 */

@@ -1,9 +1,9 @@
 /**
- * @version 0.0.22
+ * @version 0.1.0
  */
 import TypeNode from '../models/TypeNode.js';
 import Parser from '../modules/Parser.js';
-import { copyConfig, findElements, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, trimInnerText, } from '../utils/feature.js';
+import { copyConfig, deprecatedMessage, findElements, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, trimInnerText, } from '../utils/feature.js';
 import TypeBuilder from '../modules/TypeBuilder.js';
 import { DEFAULT_CONFIG } from '../utils/global.instance.js';
 export class Typoz {
@@ -19,6 +19,26 @@ export class Typoz {
      */
     parser;
     /**
+     * @method createBuilder 타입빌더 인스턴스 호출 메서드
+     * @description 빌더는 파서를 확장하여 사용됩니다.
+     * @returns {TypeBuilder} 타입빌더를 반환합니다.
+     * @example
+     * const typoz = new Typoz();
+     * // select 및 config는 필수로 호출되어야 합니다.
+     * // config가 호출되지 않으면 오류가 발생 할 수 있습니다.
+     * typoz.createBuilder().select("#target").config().write("hello").run();
+     * // or
+     * typoz.createBuilder().select("#target").config({
+     *   speed: { write: 1 },
+     * }).write("hello").run();
+     */
+    createBuilder() {
+        const builder = TypeBuilder.instance(this.parser);
+        this.typeBuilderNodes.push(builder);
+        return builder;
+    }
+    /**
+     * @deprecated since version 0.1.0
      * @method node 타입빌더 인스턴스 호출 메서드
      * @description 빌더는 파서를 확장하여 사용됩니다.
      * @returns {TypeBuilder} 타입빌더를 반환합니다.
@@ -26,13 +46,14 @@ export class Typoz {
      * const typoz = new Typoz();
      * // select 및 config는 필수로 호출되어야 합니다.
      * // config가 호출되지 않으면 오류가 발생 할 수 있습니다.
-     * typoz.node().select("#target").config();
+     * typoz.node().select("#target").config().write("hello").run();
      * // or
      * typoz.node().select("#target").config({
      *   speed: { write: 1 },
-     * });
+     * }).write("hello").run();
      */
     node() {
+        deprecatedMessage('0.1.0', 'createBuilder');
         const builder = TypeBuilder.instance(this.parser);
         this.typeBuilderNodes.push(builder);
         return builder;
@@ -108,28 +129,50 @@ export class Typoz {
     resume(name) {
         /* istanbul ignore next */
         if (name !== null && name !== undefined && typeof name === 'string') {
+            /* typing node control */
             const typing = this.typeNodes.find((typing) => typing.name === name);
             if (typing) {
                 typing.resume();
             }
+            /* builder control */
+            const builder = this.typeBuilderNodes.find((builder) => builder.name === name);
+            if (builder) {
+                builder.resumeRender();
+            }
         }
         else {
+            /* typing node control */
             for (const typing of this.typeNodes) {
                 typing.resume();
+            }
+            /* builder control */
+            for (const builder of this.typeBuilderNodes) {
+                builder.resumeRender();
             }
         }
     }
     pause(name) {
         /* istanbul ignore next */
         if (name !== null && name !== undefined && typeof name === 'string') {
+            /* typing node control */
             const typing = this.typeNodes.find((typing) => typing.name === name);
             if (typing) {
                 typing.pause();
             }
+            /* builder control */
+            const builder = this.typeBuilderNodes.find((builder) => builder.name === name);
+            if (builder) {
+                builder.resumeRender();
+            }
         }
         else {
+            /* typing node control */
             for (const typing of this.typeNodes) {
                 typing.pause();
+            }
+            /* builder control */
+            for (const builder of this.typeBuilderNodes) {
+                builder.pauseRender();
             }
         }
     }

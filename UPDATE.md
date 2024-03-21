@@ -1,5 +1,17 @@
 # Updates
 
+- v0.1.0
+  - feat
+    - Type Builder 모듈
+      - pauseRender: 렌더링 일시정지 기능 추가
+      - resumeRender: 렌더링 재개 기능 추가
+      - pauseSignal 및 resumeResolver, pausePromise 변수 추가
+  - fix
+    - css 주입에서 빌더 패턴 커서 마진으로 워딩 밀리는 현상 때문에 마진 값 조정
+    - typoz 코어 객체에서 Type Builder 인스턴스 생성 메서드 node() -> createBuilder() 명확한 이름으로 변경
+    - typoz 코어 객체에서 resume 및 pause 메서드에 typeBuilderNodes 포함해서 동작하도록 로직 추가
+    - Type Builder에서 기존 node() 메서드 deprecated 결정
+    - Type Builder 모듈 내 write, move, allErase 메서드 example 주석에 스피드 값 예시 추가
 - v0.0.22
   - fix
     - 버전 업데이트

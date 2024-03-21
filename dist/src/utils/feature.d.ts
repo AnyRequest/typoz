@@ -11,3 +11,4 @@ export declare function trimInnerText(target: HTMLTypozElement): string;
 export declare function initializeTypozStyle(styles: string): void;
 export declare function copyConfig(config: Options): Options;
 export declare function createName(): string;
+export declare const deprecatedMessage: (since: string, instead?: string) => void;

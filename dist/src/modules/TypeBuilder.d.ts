@@ -44,7 +44,43 @@ export default class TypeBuilder {
      * @default false
      */
     stop: boolean;
+    /**
+     * @private
+     * @property {boolean} pauseRender 일시정지 시그널
+     */
+    private pauseSignal;
+    /**
+     * @private
+     * @property {Function} resumeResolver 재개 활성화 리졸버
+     */
+    private resumeResolver;
+    /**
+     * @private
+     * @property {Promise<boolean>} pausePromise 일시정지 펜딩 변수
+     */
+    private pausePromise;
     constructor(parser: Parser);
+    /**
+     * @method pauseRender 렌더링 일시정지
+     * @since 0.1.0
+     * @example
+     * window.addEventListener("click", () => {
+     *  if(toggle) {
+     *    // resume render
+     *    typoz.typeBuilderNodes[0]?.resumeRender();
+     *  } else {
+     *    // pause render
+     *    typoz.typeBuilderNodes[0]?.pauseRender();
+     *  }
+     * });
+     */
+    pauseRender(): void;
+    /**
+     * @method resumeRender 렌더링 재개
+     * @since 0.1.0
+     * @see pauseRender
+     */
+    resumeRender(): void;
     /**
      * @private
      * @method wait 비동기 대기 메서드
@@ -134,7 +170,7 @@ export default class TypeBuilder {
      * builder1
      *   .write('test content')
      *   .erase() // delete "t"
-     *   .erase(6, 3) // delete "conten"
+     *   .erase(6, 3) // delete "conten", speed 3
      *   .write('value')
      *   .run();
      * @returns {TypeBuilder} Returns a TypeBuilder
@@ -148,7 +184,7 @@ export default class TypeBuilder {
      * builder1
      *   .write('test content')
      *   .erase() // delete "t"
-     *   .erase(6, 3) // delete "conten"
+     *   .erase(6, 3) // delete "conten", speed 3
      *   .write('value')
      *   .run();
      * @returns {TypeBuilder} Returns a TypeBuilder
@@ -163,7 +199,7 @@ export default class TypeBuilder {
      * builder1
      *   .write('test content')
      *   .erase() // delete "t"
-     *   .erase(6, 3) // delete "conten"
+     *   .erase(6, 3) // delete "conten", speed 3
      *   .write('value')
      *   .run();
      * @returns {TypeBuilder} Returns a TypeBuilder
@@ -176,6 +212,12 @@ export default class TypeBuilder {
      * builder1
      *   .write('test content')
      *   .allErase() // delete "test content"
+     *   .write('value') // write "value"
+     *   .run(); // the last sentence is "vaule"
+     * const builder2 = typoz.node().select("#target2").config();
+     * builder2
+     *   .write('test content2')
+     *   .allErase(3) // delete "test content", speed 3
      *   .write('value') // write "value"
      *   .run(); // the last sentence is "vaule"
      * @returns {TypeBuilder} Returns a TypeBuilder
@@ -191,6 +233,12 @@ export default class TypeBuilder {
      *   .allErase() // delete "test content"
      *   .write('value') // write "value"
      *   .run(); // the last sentence is "vaule"
+     * const builder2 = typoz.node().select("#target2").config();
+     * builder2
+     *   .write('test content2')
+     *   .allErase(3) // delete "test content", speed 3
+     *   .write('value') // write "value"
+     *   .run(); // the last sentence is "vaule"
      * @returns {TypeBuilder} Returns a TypeBuilder
      */
     allErase(speed: number): TypeBuilder;
@@ -203,7 +251,7 @@ export default class TypeBuilder {
      *   .write("test")
      *   .move(-4)
      *   .write("my ")
-     *   .move(4)
+     *   .move(4, 2) move left 4 words, speed 2
      *   .write("content")
      *   .run(); // the last sentence is "my test content"
      * @returns {TypeBuilder} Returns a TypeBuilder
@@ -219,7 +267,7 @@ export default class TypeBuilder {
      *   .write("test")
      *   .move(-4)
      *   .write("my ")
-     *   .move(4)
+     *   .move(4, 2) move left 4 words, speed 2
      *   .write("content")
      *   .run(); // the last sentence is "my test content"
      * @returns {TypeBuilder} Returns a TypeBuilder

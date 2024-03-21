@@ -1,6 +1,7 @@
 import { Typoz } from './core/Typoz.js';
 import Parser from './modules/Parser.js';
 import KoreanParser from './modules/KoreanParser.js';
+export declare const version: string;
 export type OmitNodesOptions = Omit<Options, 'nodes'>;
 export interface HTMLTypozElement extends HTMLElement {
     /**

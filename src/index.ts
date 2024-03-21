@@ -3,6 +3,9 @@
 import { Typoz } from './core/Typoz';
 import Parser from './modules/Parser';
 import KoreanParser from './modules/KoreanParser';
+import packages from '../package.json';
+
+export const { version } = packages;
 
 export type OmitNodesOptions = Omit<Options, 'nodes'>;
 

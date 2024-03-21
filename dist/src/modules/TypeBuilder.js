@@ -1,4 +1,4 @@
-import { createEl, createName, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, } from '../utils/feature.js';
+import { createEl, createName, deprecatedMessage, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, } from '../utils/feature.js';
 import { DEFAULT_CONFIG } from '../utils/global.instance.js';
 export default class TypeBuilder {
     /**
@@ -46,8 +46,54 @@ export default class TypeBuilder {
      * @default false
      */
     stop = false;
+    /**
+     * @private
+     * @property {boolean} pauseRender 일시정지 시그널
+     */
+    pauseSignal = false;
+    /**
+     * @private
+     * @property {Function} resumeResolver 재개 활성화 리졸버
+     */
+    resumeResolver;
+    /**
+     * @private
+     * @property {Promise<boolean>} pausePromise 일시정지 펜딩 변수
+     */
+    pausePromise;
     constructor(parser) {
         this.parser = parser;
+    }
+    /**
+     * @method pauseRender 렌더링 일시정지
+     * @since 0.1.0
+     * @example
+     * window.addEventListener("click", () => {
+     *  if(toggle) {
+     *    // resume render
+     *    typoz.typeBuilderNodes[0]?.resumeRender();
+     *  } else {
+     *    // pause render
+     *    typoz.typeBuilderNodes[0]?.pauseRender();
+     *  }
+     * });
+     */
+    pauseRender() {
+        this.pauseSignal = true;
+        this.pausePromise = new Promise((resolve) => {
+            this.resumeResolver = resolve;
+        });
+    }
+    /**
+     * @method resumeRender 렌더링 재개
+     * @since 0.1.0
+     * @see pauseRender
+     */
+    resumeRender() {
+        this.resumeResolver(true);
+        this.pauseSignal = false;
+        this.resumeResolver = undefined;
+        this.pausePromise = undefined;
     }
     /**
      * @private
@@ -80,7 +126,7 @@ export default class TypeBuilder {
         return this;
     }
     conf(config = DEFAULT_CONFIG) {
-        console.warn('this method is deprecated since version 0.0.19, please use "config" method');
+        deprecatedMessage('0.0.19', 'config');
         if (config)
             recursiveConfigApply(this._config, config);
         const style = getCursorStyle(this._config.style.cursor, this.name, true);
@@ -111,6 +157,7 @@ export default class TypeBuilder {
      * @returns {number} Returns the number of current render content
      */
     getCurrentRenderContentLength() {
+        deprecatedMessage('0.0.19');
         return this.content.length;
     }
     /**
@@ -269,12 +316,24 @@ export default class TypeBuilder {
      */
     async run() {
         for (const task of this.taskQueue) {
+            if (this.stop) {
+                break;
+            }
+            if (this.pauseSignal) {
+                await this.pausePromise;
+            }
             await task();
         }
     }
     async forever(
     /** @default false */ skipErase = false) {
         for (const task of this.taskQueue) {
+            if (this.stop) {
+                return;
+            }
+            if (this.pauseSignal) {
+                await this.pausePromise;
+            }
             await task();
         }
         await this.wait(this._config.delay * 1000);
@@ -291,9 +350,6 @@ export default class TypeBuilder {
                 await this.wait((1 / (this._config.speed.erase / 2) / 5) * 100);
             }
             await this.wait(this._config.delay * 1000);
-        }
-        if (this.stop) {
-            return;
         }
         this.forever(skipErase);
     }

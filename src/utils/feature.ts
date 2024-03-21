@@ -61,7 +61,7 @@ export function getCursorStyle(
   // prettier-ignore
   if (isBuilder) {
     // prettier-ignore
-    return `[typoz-node-builder-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-node-builder-name${name?`="${name}"`:''}] { } [typoz-node-builder-name${name?`="${name}"`:''}]>[typoz-cursor]::after { box-sizing: content-box; display: inline-block; content: "${content}"; ${/* direction[dir] */`width: 0px; height: 1em; overflow: hidden; box-shadow: 0 0 0 ${size * 2.5}px ${color};`} margin-left: ${distance}em; line-height: inherit; ${''/* `background-color: ${color};` */} ${cursorBlinkAnimation} }${/* cursorBlinkKeyframes */''}`;
+    return `[typoz-node-builder-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-node-builder-name${name?`="${name}"`:''}] { } [typoz-node-builder-name${name?`="${name}"`:''}]>[typoz-cursor]::after { box-sizing: content-box; display: inline-block; content: "${content}"; ${/* direction[dir] */`width: 0px; height: 1em; overflow: hidden; box-shadow: 0 0 0 ${size * 2.5}px ${color};`} margin-left: ${distance}em; margin-right: -${distance}em; line-height: inherit; ${''/* `background-color: ${color};` */} ${cursorBlinkAnimation} }${/* cursorBlinkKeyframes */''}`;
   } else {
     // prettier-ignore
     return `[typoz-name${name?`="${name}"`:''}]::before { content: '　'; display: inline-block; height: 1em; width: 1px; user-select: none; pointer-events: none; color: transparent; background-color: transparent; } [typoz-name${name?`="${name}"`:''}] { } [typoz-name${name?`="${name}"`:''}]::after { display: inline-block; content: "${content}"; ${direction[dir]} line-height: inherit; overflow: hidden; background-color: ${color}; ${cursorBlinkAnimation} }${/* cursorBlinkKeyframes */''}`;
@@ -114,3 +114,13 @@ export function createName() {
     },
   );
 }
+
+export const deprecatedMessage = (since: string, instead?: string) => {
+  if (instead) {
+    console.warn(
+      `this method is deprecated since version ${since}, please use "${instead}" method`,
+    );
+  } else {
+    console.warn(`this method is deprecated since version ${since}.`);
+  }
+};

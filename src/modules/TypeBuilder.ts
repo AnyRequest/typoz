@@ -1,6 +1,7 @@
 import {
   createEl,
   createName,
+  deprecatedMessage,
   findOne,
   getCursorStyle,
   initializeTypozStyle,
@@ -66,8 +67,59 @@ export default class TypeBuilder {
    */
   stop: boolean = false;
 
+  /**
+   * @private
+   * @property {boolean} pauseRender 일시정지 시그널
+   */
+  private pauseSignal: boolean = false;
+
+  /**
+   * @private
+   * @property {Function} resumeResolver 재개 활성화 리졸버
+   */
+  private resumeResolver: (value: boolean) => void;
+
+  /**
+   * @private
+   * @property {Promise<boolean>} pausePromise 일시정지 펜딩 변수
+   */
+  private pausePromise: Promise<boolean>;
+
   constructor(parser: Parser) {
     this.parser = parser;
+  }
+
+  /**
+   * @method pauseRender 렌더링 일시정지
+   * @since 0.1.0
+   * @example
+   * window.addEventListener("click", () => {
+   *  if(toggle) {
+   *    // resume render
+   *    typoz.typeBuilderNodes[0]?.resumeRender();
+   *  } else {
+   *    // pause render
+   *    typoz.typeBuilderNodes[0]?.pauseRender();
+   *  }
+   * });
+   */
+  pauseRender() {
+    this.pauseSignal = true;
+    this.pausePromise = new Promise<boolean>((resolve) => {
+      this.resumeResolver = resolve;
+    });
+  }
+
+  /**
+   * @method resumeRender 렌더링 재개
+   * @since 0.1.0
+   * @see pauseRender
+   */
+  resumeRender() {
+    this.resumeResolver(true);
+    this.pauseSignal = false;
+    this.resumeResolver = undefined;
+    this.pausePromise = undefined;
   }
 
   /**
@@ -120,9 +172,7 @@ export default class TypeBuilder {
   conf(
     config: RecursivePartial<OmitNodesOptions> = DEFAULT_CONFIG,
   ): TypeBuilder {
-    console.warn(
-      'this method is deprecated since version 0.0.19, please use "config" method',
-    );
+    deprecatedMessage('0.0.19', 'config');
 
     if (config) recursiveConfigApply(this._config, config);
 
@@ -169,6 +219,7 @@ export default class TypeBuilder {
    * @returns {number} Returns the number of current render content
    */
   private getCurrentRenderContentLength() {
+    deprecatedMessage('0.0.19');
     return this.content.length;
   }
 
@@ -304,7 +355,7 @@ export default class TypeBuilder {
    * builder1
    *   .write('test content')
    *   .erase() // delete "t"
-   *   .erase(6, 3) // delete "conten"
+   *   .erase(6, 3) // delete "conten", speed 3
    *   .write('value')
    *   .run();
    * @returns {TypeBuilder} Returns a TypeBuilder
@@ -318,7 +369,7 @@ export default class TypeBuilder {
    * builder1
    *   .write('test content')
    *   .erase() // delete "t"
-   *   .erase(6, 3) // delete "conten"
+   *   .erase(6, 3) // delete "conten", speed 3
    *   .write('value')
    *   .run();
    * @returns {TypeBuilder} Returns a TypeBuilder
@@ -333,7 +384,7 @@ export default class TypeBuilder {
    * builder1
    *   .write('test content')
    *   .erase() // delete "t"
-   *   .erase(6, 3) // delete "conten"
+   *   .erase(6, 3) // delete "conten", speed 3
    *   .write('value')
    *   .run();
    * @returns {TypeBuilder} Returns a TypeBuilder
@@ -364,6 +415,12 @@ export default class TypeBuilder {
    *   .allErase() // delete "test content"
    *   .write('value') // write "value"
    *   .run(); // the last sentence is "vaule"
+   * const builder2 = typoz.node().select("#target2").config();
+   * builder2
+   *   .write('test content2')
+   *   .allErase(3) // delete "test content", speed 3
+   *   .write('value') // write "value"
+   *   .run(); // the last sentence is "vaule"
    * @returns {TypeBuilder} Returns a TypeBuilder
    */
   allErase(): TypeBuilder;
@@ -375,6 +432,12 @@ export default class TypeBuilder {
    * builder1
    *   .write('test content')
    *   .allErase() // delete "test content"
+   *   .write('value') // write "value"
+   *   .run(); // the last sentence is "vaule"
+   * const builder2 = typoz.node().select("#target2").config();
+   * builder2
+   *   .write('test content2')
+   *   .allErase(3) // delete "test content", speed 3
    *   .write('value') // write "value"
    *   .run(); // the last sentence is "vaule"
    * @returns {TypeBuilder} Returns a TypeBuilder
@@ -408,7 +471,7 @@ export default class TypeBuilder {
    *   .write("test")
    *   .move(-4)
    *   .write("my ")
-   *   .move(4)
+   *   .move(4, 2) move left 4 words, speed 2
    *   .write("content")
    *   .run(); // the last sentence is "my test content"
    * @returns {TypeBuilder} Returns a TypeBuilder
@@ -424,7 +487,7 @@ export default class TypeBuilder {
    *   .write("test")
    *   .move(-4)
    *   .write("my ")
-   *   .move(4)
+   *   .move(4, 2) move left 4 words, speed 2
    *   .write("content")
    *   .run(); // the last sentence is "my test content"
    * @returns {TypeBuilder} Returns a TypeBuilder
@@ -461,6 +524,12 @@ export default class TypeBuilder {
    */
   async run() {
     for (const task of this.taskQueue) {
+      if (this.stop) {
+        break;
+      }
+      if (this.pauseSignal) {
+        await this.pausePromise;
+      }
       await task();
     }
   }
@@ -500,6 +569,12 @@ export default class TypeBuilder {
     /** @default false */ skipErase: boolean = false,
   ): Promise<void> {
     for (const task of this.taskQueue) {
+      if (this.stop) {
+        return;
+      }
+      if (this.pauseSignal) {
+        await this.pausePromise;
+      }
       await task();
     }
     await this.wait(this._config.delay * 1000);
@@ -516,9 +591,7 @@ export default class TypeBuilder {
       }
       await this.wait(this._config.delay * 1000);
     }
-    if (this.stop) {
-      return;
-    }
+
     this.forever(skipErase);
   }
 
