@@ -17,6 +17,7 @@ import {
 import type { HTMLTypozElement, Node, Options, RecursivePartial } from '..';
 import TypeBuilder from '@/modules/TypeBuilder';
 import { DEFAULT_CONFIG } from '@/utils/global.instance';
+import Util from '@/libs/utils';
 
 export class Typoz {
   /**
@@ -30,6 +31,7 @@ export class Typoz {
    * @property {Parser} parser 텍스트 분석기
    */
   private parser: Parser;
+  readonly util: Util;
 
   /**
    * @method createBuilder 타입빌더 인스턴스 호출 메서드
@@ -82,6 +84,7 @@ export class Typoz {
 
   constructor() {
     this.parser = new Parser();
+    this.util = new Util(this.parser);
   }
 
   /**

@@ -4,6 +4,7 @@ import { Typoz } from './core/Typoz';
 import Parser from './modules/Parser';
 import KoreanParser from './modules/KoreanParser';
 import packages from '../package.json';
+import Util from './libs/utils';
 
 export const { version } = packages;
 
@@ -155,6 +156,6 @@ export type RecursivePartial<T> = {
   [P in keyof T]?: RecursivePartial<T[P]>;
 };
 
-export { Typoz, Parser, KoreanParser };
+export { Typoz, Parser, KoreanParser, Util };
 
 export default Typoz;

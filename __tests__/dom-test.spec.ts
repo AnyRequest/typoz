@@ -3,6 +3,7 @@
  */
 
 import Typoz from '@/index';
+import { describe, expect, it, vitest } from 'vitest';
 
 const typoz = new Typoz();
 
@@ -14,7 +15,7 @@ describe('[DOM Test]', () => {
 
   it('document body append test', () => {
     const checkText = '가시는 걸음 놓인 그 꽃을 사뿐히 즈려밟고 가시옵소서.';
-    const documentSpyOn = jest.spyOn(document.body, 'append');
+    const documentSpyOn = vitest.spyOn(document.body, 'append');
     const el = document.createElement('div');
     el.classList.add('typoz');
     el.innerText = checkText;

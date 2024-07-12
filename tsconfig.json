@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "strict": true,
-    "module": "ES6",
+    "module": "ESNext",
     "declaration": true,
     "removeComments": false,
     "emitDecoratorMetadata": true,
@@ -21,7 +21,6 @@
     // "emitDeclarationOnly": true,
     "isolatedModules": true,
     "esModuleInterop": true,
-    "types": ["node", "jest"],
     "typeRoots": ["node_modules/@types", "src/types"],
     "incremental": true,
     "skipLibCheck": true,

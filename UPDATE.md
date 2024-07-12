@@ -1,5 +1,14 @@
 # Updates
 
+- v0.1.1
+  - feat
+    - Typoz 신규 기능 추가
+      - 유틸리티 함수 구성
+  - fix
+    - vitest로 테스트 환경 변경
+      - vitest ui 연동
+      - 실시간 유닛테스트 가능
+      - 커버리지 조회 가능
 - v0.1.0
   - feat
     - Type Builder 모듈
