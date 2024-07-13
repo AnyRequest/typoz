@@ -2,15 +2,21 @@
  * @jest-environment jsdom
  */
 import Typoz from '../src/index.js';
+import { describe, expect, it, vitest } from 'vitest';
 const typoz = new Typoz();
 describe('[DOM Test]', () => {
-    it('dom initialize test]', () => {
+    afterEach(() => {
+        [...document.body.children].forEach((child) => child.remove());
+        typoz.destroy();
+        typoz.initialize();
+    });
+    it('[DOM 출력] 엘리먼트 정의', () => {
         const el = document.createElement('div');
         expect(el).toBeDefined();
     });
-    it('document body append test', () => {
+    it('[DOM 출력] typoz 출력', () => {
         const checkText = '가시는 걸음 놓인 그 꽃을 사뿐히 즈려밟고 가시옵소서.';
-        const documentSpyOn = jest.spyOn(document.body, 'append');
+        const documentSpyOn = vitest.spyOn(document.body, 'append');
         const el = document.createElement('div');
         el.classList.add('typoz');
         el.innerText = checkText;
@@ -18,7 +24,7 @@ describe('[DOM Test]', () => {
         expect(documentSpyOn).toHaveBeenCalled();
         expect(el.innerText).toStrictEqual(checkText);
     });
-    it('typoz render test', () => {
+    it('[DOM 출력] 렌더링 노드 갯수', () => {
         const checkText = '가시는 걸음 놓인 그 꽃을 사뿐히 즈려밟고 가시옵소서.';
         const el = document.createElement('div');
         el.classList.add('typoz');
@@ -28,7 +34,7 @@ describe('[DOM Test]', () => {
         typoz.globalConfig();
         expect(typoz.typeNodes.length).toStrictEqual(1);
     });
-    it('dom parsed typings check', async () => {
+    it('[DOM 출력] 노드 출력 텍스트 배열', async () => {
         const checkText = '가는말이 고와야 오는 말이 곱다';
         const el = document.createElement('div');
         el.classList.add('kimson');
@@ -54,7 +60,7 @@ describe('[DOM Test]', () => {
             }, 3000);
         });
     });
-    it('each nodes config', () => {
+    it('[DOM 출력] 각 노드 설정 변경', () => {
         const checkText = '가는말이 고와야 오는 말이 곱다';
         const el = document.createElement('div');
         el.classList.add('kimson');
@@ -76,11 +82,6 @@ describe('[DOM Test]', () => {
         });
         expect(typoz.config.mode.erase).toBeTruthy();
         expect(typoz.typeNodes[0].config.mode.erase).toBeFalsy();
-    });
-    afterEach(() => {
-        [...document.body.children].forEach((child) => child.remove());
-        typoz.destroy();
-        typoz.initialize();
     });
 });
 //# sourceMappingURL=dom-test.spec.js.map

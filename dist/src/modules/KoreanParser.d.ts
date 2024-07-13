@@ -14,7 +14,17 @@ export default class KoreanParser {
     getNucleus(word: string): string;
     getCoda(word: string): string;
     isKorean(word: string): boolean;
+    /**
+     *
+     * @param {string} word - 장수
+     * @returns [["ㅈ", "ㅏ", "ㅇ"], ["ㅅ", "ㅜ"]]
+     */
     wordToLetters(word: string): string[];
+    /**
+     *
+     * @param {string} word - 장수
+     * @returns [["ㅈ", "ㅏ", "ㅇ"], ["ㅅ", "ㅜ", ""]]
+     */
     wordToLettersWithEmpty(word: string): string[];
     getOnsetIndex(letter: string): number;
     getNucleusIndex(letter: string): number;

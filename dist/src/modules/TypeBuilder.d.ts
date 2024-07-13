@@ -98,7 +98,7 @@ export default class TypeBuilder {
      */
     select(select: string): TypeBuilder;
     /**
-     * @deprecated since version 0.0.19
+     * @deprecated since version 0.0.19 - use config
      * @method config
      * @returns {TypeBuilder} Returns a TypeBuilder
      * @description Please use {@link TypeBuilder.config}.

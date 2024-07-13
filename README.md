@@ -4,7 +4,7 @@
 
 ## Version
 
-`v0.1.0`
+`v0.1.1`
 
 ## Typos의 한글 분해, 조합
 
@@ -20,7 +20,7 @@ pnpm add typoz
 ## CDN
 
 ```html
-<script src="https://www.unpkg.com/typoz@0.1.0/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@0.1.1/umd/typoz.min.js"></script>
 ```
 
 ## Congifuration
@@ -41,6 +41,18 @@ typoz.globalConfig(/* custom configs */);
 1. 지정된 클래스명(.typoz)를 탐색하고 자동 렌더링
 2. 특정 `id` 또는 `class`값으로 지정하여 렌더링
 3. 빌더를 이용한 세부적인 타이핑 제어
+
+### Util (since 0.1.1)
+
+버전 0.1.1부터 유틸리티가 추가됩니다.
+
+- 한글 자음으로 한국어 키워드를 검색할 수 있습니다.
+- 명사에 적합한 조사를 자동으로 부여할 수 있습니다.
+  - 예시) 라면, 사과... => 라면과 사과와...
+- 적합하지 않은 조사를 검증하고 올바른 조사를 찾을 수 있습니다.
+  - 예시) 라면와 => 라면과
+- 동사, 형용사를 변환합니다.
+  - 예시) verb + ~서: 무르다 => 물러, 돕다 => 도와, 무찌르다 => 무찔러
 
 ### Typoz
 
@@ -126,8 +138,8 @@ typoz.render([myElement]);
 
 빌더를 이용해 원하는 타이핑 효과를 제어할 수 있습니다. 빌더는 `TypeNode`를 렌더링하는 방식과 달리 개별 단위로 실행합니다. 메서드 행위는 아래와 같습니다.
 
-- createBuilder(): 빌더 인스턴스를 얻습니다. (✨ since v0.1.0)
-- node(): (deprecated) 빌더 인스턴스를 얻습니다. (since v0.1.0)
+- createBuilder(): 빌더 인스턴스를 얻습니다. (✨ since v0.1.1)
+- node(): (deprecated) 빌더 인스턴스를 얻습니다. (since v0.1.1)
 - select(idOrClass: string): 타겟을 지정합니다.
 - conf(config: Options): Typoz의 config와 동일한 포멧입니다.
 - write(word: string): 현재 커서에서 한글, 영문, 숫자 등 모든 문자를 단일 또는 문자열을 입력합니다.
@@ -136,8 +148,8 @@ typoz.render([myElement]);
 - erase(): 현재 커서에서 글자를 지웁니다.
 - run(): 지정한 흐름으로 한 번 실행한 후 완료 시 멈춥니다.
 - forever(skipErase: boolean = false): 지정한 흐름으로 무한 실행합니다. skipErase는 기본 false 값이며, true일 시 지우기 모션 없이 실행됩니다.
-- pauseRender(): 렌더링을 일시정지합니다. (✨ since v0.1.0)
-- resumeRender(): 렌더링을 재개합니다. (✨ since v0.1.0)
+- pauseRender(): 렌더링을 일시정지합니다. (✨ since v0.1.1)
+- resumeRender(): 렌더링을 재개합니다. (✨ since v0.1.1)
 
 ```javascript
 const typoz = new Typoz();

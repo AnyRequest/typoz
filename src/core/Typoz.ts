@@ -1,5 +1,5 @@
 /**
- * @version 0.1.0
+ * @version 0.1.1
  */
 
 import TypeNode from '@/models/TypeNode';
@@ -18,6 +18,7 @@ import type { HTMLTypozElement, Node, Options, RecursivePartial } from '..';
 import TypeBuilder from '@/modules/TypeBuilder';
 import { DEFAULT_CONFIG } from '@/utils/global.instance';
 import Util from '@/libs/utils';
+import { version } from '@/common/variables';
 
 export class Typoz {
   /**
@@ -32,6 +33,10 @@ export class Typoz {
    */
   private parser: Parser;
   readonly util: Util;
+
+  static version() {
+    return version;
+  }
 
   /**
    * @method createBuilder 타입빌더 인스턴스 호출 메서드
@@ -54,7 +59,7 @@ export class Typoz {
   }
 
   /**
-   * @deprecated since version 0.1.0
+   * @deprecated since version 0.1.0 - use createBuilder
    * @method node 타입빌더 인스턴스 호출 메서드
    * @description 빌더는 파서를 확장하여 사용됩니다.
    * @returns {TypeBuilder} 타입빌더를 반환합니다.

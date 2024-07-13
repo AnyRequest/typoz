@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "It was created to make it easier for users to implement their own typing effects. We are envisioning unique and diverse effects.",
   "main": "dist/src/index.js",
+  "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --watch-path=\"src/**\" --ext \"ts,json\" --ignore \"src/**/*.test.ts\" --exec \"ts-node src/index.ts\"",
     "build2": "rm -rf dist/ && gulp dev",

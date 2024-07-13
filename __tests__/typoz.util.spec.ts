@@ -2,30 +2,67 @@ import Typoz, { Util } from '@/index';
 import { describe, expect, it } from 'vitest';
 
 describe('Typoz Util Test', () => {
+  describe('[단어 유틸 테스트] splitIndex, splitIndexes', () => {
+    it('[단어 그룹 자르기] splitIndex', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.splitIndex('감사합니다', 2)).toStrictEqual([
+        '감사',
+        '합니다',
+      ]);
+      expect(typoz.util.splitIndex('감사', 0)).toStrictEqual(['감사']);
+    });
+
+    it('[단어 그룹 자르기 Fail] splitIndex', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.splitIndex.bind(this, '감사', 3)).toThrow();
+      expect(typoz.util.splitIndex.bind(this, '감사', 3)).toThrowError(
+        new RangeError('too much index'),
+      );
+    });
+
+    it('[단어 그룹 연속 자르기] splitIndex', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.splitIndexes('감사합니다', 2, 1, 1)).toStrictEqual([
+        '감사',
+        '합',
+        '니',
+        '다',
+      ]);
+      expect(typoz.util.splitIndexes('감사', 0, 2)).toStrictEqual(['감사']);
+    });
+  });
+
   /* 타이포즈 유틸 조사 테스트 */
-  describe('[Util Test] josa, josaWith and josaAnd', () => {
-    it('[Typoz Util] test --- josa el rl', () => {
+  describe('[조사 테스트] josa, josaWith and josaAnd', () => {
+    it('[조사 변환] josa --- el rl', () => {
       const typoz = new Typoz();
 
       expect(typoz.util.josa('안녕', Util.Josa.ElRl)).toStrictEqual('안녕을');
       expect(typoz.util.josa('이나', Util.Josa.ElRl)).toStrictEqual('이나를');
     });
 
-    it('[Typoz Util] test --- josa ei ga', () => {
+    it('[조사 변환] josa --- ei ga', () => {
       const typoz = new Typoz();
 
       expect(typoz.util.josa('만두', Util.Josa.EiGa)).toStrictEqual('만두가');
       expect(typoz.util.josa('배럴', Util.Josa.EiGa)).toStrictEqual('배럴이');
     });
 
-    it('[Typoz Util] test --- josa en nn', () => {
+    it('[조사 변환] josa --- en nn', () => {
       const typoz = new Typoz();
 
       expect(typoz.util.josa('만두', Util.Josa.EnNn)).toStrictEqual('만두는');
       expect(typoz.util.josa('배럴', Util.Josa.EnNn)).toStrictEqual('배럴은');
     });
 
-    it('[Typoz Util] test --- josaWith gwa wa', () => {
+    it('[조사 변환] josa --- gwa wa', () => {
+      const typoz = new Typoz();
+
+      expect(typoz.util.josa('만두', Util.Josa.GwaWa)).toStrictEqual('만두와');
+      expect(typoz.util.josa('배럴', Util.Josa.GwaWa)).toStrictEqual('배럴과');
+    });
+
+    it('[조사 다중 변환] josaWith --- only gwa wa', () => {
       const typoz = new Typoz();
 
       expect(
@@ -42,7 +79,7 @@ describe('Typoz Util Test', () => {
       ).toStrictEqual('배럴과 청포도와 가면과 나무');
     });
 
-    it('[Typoz Util] test --- josaAnd gwa wa', () => {
+    it('[조사, 그리고 변환] josaAnd --- gwa wa 여러 단어', () => {
       const typoz = new Typoz();
 
       expect(
@@ -53,7 +90,7 @@ describe('Typoz Util Test', () => {
       ).toStrictEqual('배럴과 청포도와 가면, 그리고 나무');
     });
 
-    it('[Typoz Util] test --- josaAnd gwa wa 2words', () => {
+    it('[조사, 그리고 변환] josaAnd --- gwa wa 2 단어', () => {
       const typoz = new Typoz();
 
       expect(
@@ -67,8 +104,8 @@ describe('Typoz Util Test', () => {
 
   /* 타이포즈 유틸 한국어 검색 테스트 */
 
-  describe('[Util Test] searchKorean', () => {
-    it('[Typoz Util] test --- searchByOnset for korean : result 1', () => {
+  describe('[한글 검색] searchKorean', () => {
+    it('[자음 검색] searchByOnset --- Only 한글 검색 : 1 개', () => {
       const typoz = new Typoz();
       const founded = typoz.util.searchByOnset(
         ['라면', '꼰대', '마리아', '마리아디비', '저스티스'],
@@ -77,7 +114,7 @@ describe('Typoz Util Test', () => {
       expect(founded.length).toStrictEqual(1);
     });
 
-    it('[Typoz Util] test --- searchByOnset for korean : result 2', () => {
+    it('[자음 검색] searchByOnset --- Only 한글 검색 : 2 개', () => {
       const typoz = new Typoz();
       const founded = typoz.util.searchByOnset(
         ['라면', '꼰대', '마리아', '마리아디비', '저스티스'],
@@ -86,7 +123,7 @@ describe('Typoz Util Test', () => {
       expect(founded.length).toStrictEqual(2);
     });
 
-    it('[Typoz Util] test --- searchByOnset for korean : result 0', () => {
+    it('[자음 검색] searchByOnset --- Only 한글 검색 : 0 개', () => {
       const typoz = new Typoz();
       const founded = typoz.util.searchByOnset(
         ['라면', '꼰대', '마리아', '마리아디비', '저스티스'],
@@ -95,7 +132,7 @@ describe('Typoz Util Test', () => {
       expect(founded.length).toStrictEqual(0);
     });
 
-    it('[Typoz Util] test --- searchByOnset for korean : fail', () => {
+    it('[자음 검색] searchByOnset --- Only 한글 검색 : 실패', () => {
       const typoz = new Typoz();
       const foundFeature = ({ withThrow }: { withThrow: boolean }) =>
         typoz.util.searchByOnset(
@@ -117,7 +154,7 @@ describe('Typoz Util Test', () => {
       expect(foundFeature({ withThrow: false })).toStrictEqual([]);
     });
 
-    it('[Typoz Util] test --- searchByOnset for korean : result 3', () => {
+    it('[자음 검색] searchByOnset --- Only 한글 검색 : 3 개', () => {
       const typoz = new Typoz();
       const founded = typoz.util.searchByOnset(
         ['라면', '꼰대', '마리아', '마리아디비', 'justice'],
@@ -126,30 +163,90 @@ describe('Typoz Util Test', () => {
       expect(founded.length).toStrictEqual(3);
     });
 
-    it('[Typoz Util] test --- verbToContinue', () => {
+    it.todo('동사 처리 필요');
+  });
+
+  describe('[동사 변환] verbToContinue', () => {
+    it('[연결 규칙] verbToContinue --- -르다 규칙 테스트', () => {
       const typoz = new Typoz();
       expect(typoz.util.verbToContinue('기르다')).toStrictEqual('길러');
-      expect(typoz.util.verbToContinue('미치다')).toStrictEqual('미쳐');
+      expect(typoz.util.verbToContinue('주무르다')).toStrictEqual('주물러');
       expect(typoz.util.verbToContinue('모르다')).toStrictEqual('몰라');
       expect(typoz.util.verbToContinue('다르다')).toStrictEqual('달라');
-      expect(typoz.util.verbToContinue('돕다')).toStrictEqual('도와');
-      expect(typoz.util.verbToContinue('졸다')).toStrictEqual('졸아');
-      expect(typoz.util.verbToContinue('긋다')).toStrictEqual('그어');
-      expect(typoz.util.verbToContinue('가누다')).toStrictEqual('가누어');
-      expect(typoz.util.verbToContinue('받다')).toStrictEqual('받아');
+    });
+    it('[연결 규칙] verbToContinue --- -ㅣ다 => ㅕ 규칙 테스트', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.verbToContinue('미치다')).toStrictEqual('미쳐');
       expect(typoz.util.verbToContinue('점치다')).toStrictEqual('점쳐');
+    });
+    it('[연결 규칙] verbToContinue --- -ㅗ ㅏ ㅘ다 => 아 규칙 테스트', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.verbToContinue('졸다')).toStrictEqual('졸아');
+      expect(typoz.util.verbToContinue('받다')).toStrictEqual('받아');
       expect(typoz.util.verbToContinue('놀다')).toStrictEqual('놀아');
+    });
+    it('[연결 규칙] verbToContinue --- -ㅜ ㅚ ㅡ(ㅅ받침)다 => 어 규칙 테스트', () => {
+      const typoz = new Typoz();
       expect(typoz.util.verbToContinue('괴다')).toStrictEqual('괴어');
-      expect(typoz.util.verbToContinue('주무르다')).toStrictEqual('주물러');
+      expect(typoz.util.verbToContinue('긋다')).toStrictEqual('그어');
+    });
+    it('[연결 규칙] verbToContinue --- -ㅜ ㅚ다 => ㅝ 규칙 테스트', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.verbToContinue('가누다')).toStrictEqual('가눠');
+      expect(typoz.util.verbToContinue('겨누다')).toStrictEqual('겨눠');
+      expect(typoz.util.verbToContinue('다루다')).toStrictEqual('다뤄');
+      expect(typoz.util.verbToContinue('굽다')).toStrictEqual('구워');
+      expect(typoz.util.verbToContinue('어둡다')).toStrictEqual('어두워');
+    });
+    it('[연결 규칙] verbToContinue --- -ㅗ(ㅂ받침)다 => 와 규칙 테스트', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.verbToContinue('돕다')).toStrictEqual('도와');
       expect(typoz.util.verbToContinue('곱다')).toStrictEqual('고와');
+    });
+    it('[연결 규칙] verbToContinue --- -ㅏ(ㅂ받침)다 => 워 규칙 테스트', () => {
+      const typoz = new Typoz();
+      expect(typoz.util.verbToContinue('고맙다')).toStrictEqual('고마워');
+      expect(typoz.util.verbToContinue('고깝다')).toStrictEqual('고까워');
+      expect(typoz.util.verbToContinue('가깝다')).toStrictEqual('가까워');
+    });
+    it('[연결 규칙] verbToContinue --- -하다 규칙 테스트', () => {
+      const typoz = new Typoz();
       expect(typoz.util.verbToContinue('주문하다')).toStrictEqual('주문해');
       expect(typoz.util.verbToContinue('고심하다')).toStrictEqual('고심해');
     });
+  });
 
-    it('[Typoz Util] test --- checkWrongSyntax for korean', () => {
+  describe('[오타 확인] checkOta', () => {
+    it('[오타 검증] checkOta --- 단어 연결 검증', () => {
       const typoz = new Typoz();
-      // const founded = typoz.util.checkWrongSyntax('아버지가방에들어가셨다.');
-      // expect(founded.length).toStrictEqual(3);
+      const checkOta1 = typoz.util.checkOta('가방와');
+      const checkOta2 = typoz.util.checkOta('가방 와');
+      expect(checkOta1[0]).toStrictEqual({
+        problem: '가방와',
+        index: 0,
+        correct: '가방과',
+      });
+      expect(checkOta2[0]).toStrictEqual({
+        problem: '와',
+        index: 1,
+        correct: '가방과',
+        detail: '조사는 붙여써야 합니다.',
+      });
+    });
+
+    it('[오타 검증] checkOta --- 문장 검증', () => {
+      const typoz = new Typoz();
+      const checkOta1 = typoz.util.checkOta('가방와 다른 점는');
+      expect(checkOta1[0]).toStrictEqual({
+        problem: '가방와',
+        index: 0,
+        correct: '가방과',
+      });
+      expect(checkOta1[1]).toStrictEqual({
+        problem: '점는',
+        index: 2,
+        correct: '점은',
+      });
     });
   });
 });

@@ -1,11 +1,13 @@
 /**
- * @version 0.1.0
+ * @version 0.1.1
  */
 import TypeNode from '../models/TypeNode.js';
 import Parser from '../modules/Parser.js';
 import { copyConfig, deprecatedMessage, findElements, findOne, getCursorStyle, initializeTypozStyle, recursiveConfigApply, trimInnerText, } from '../utils/feature.js';
 import TypeBuilder from '../modules/TypeBuilder.js';
 import { DEFAULT_CONFIG } from '../utils/global.instance.js';
+import Util from '../libs/utils.js';
+import { version } from '../common/variables.js';
 export class Typoz {
     /**
      * @private
@@ -18,6 +20,10 @@ export class Typoz {
      * @property {Parser} parser 텍스트 분석기
      */
     parser;
+    util;
+    static version() {
+        return version;
+    }
     /**
      * @method createBuilder 타입빌더 인스턴스 호출 메서드
      * @description 빌더는 파서를 확장하여 사용됩니다.
@@ -38,7 +44,7 @@ export class Typoz {
         return builder;
     }
     /**
-     * @deprecated since version 0.1.0
+     * @deprecated since version 0.1.0 - use createBuilder
      * @method node 타입빌더 인스턴스 호출 메서드
      * @description 빌더는 파서를 확장하여 사용됩니다.
      * @returns {TypeBuilder} 타입빌더를 반환합니다.
@@ -65,6 +71,7 @@ export class Typoz {
     typeBuilderNodes = [];
     constructor() {
         this.parser = new Parser();
+        this.util = new Util(this.parser);
     }
     /**
      * @method initialize typoz 사용에서 항상 필수로 먼저 실행되어야 합니다.

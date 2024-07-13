@@ -1,6 +1,7 @@
 import { Typoz } from './core/Typoz.js';
 import Parser from './modules/Parser.js';
 import KoreanParser from './modules/KoreanParser.js';
+import Util from './libs/utils.js';
 export declare const version: string;
 export type OmitNodesOptions = Omit<Options, 'nodes'>;
 export interface HTMLTypozElement extends HTMLElement {
@@ -144,5 +145,5 @@ export interface Options {
 export type RecursivePartial<T> = {
     [P in keyof T]?: RecursivePartial<T[P]>;
 };
-export { Typoz, Parser, KoreanParser };
+export { Typoz, Parser, KoreanParser, Util };
 export default Typoz;

@@ -17,6 +17,7 @@ export default class Parser extends BaseParser {
      *
      * @param sentence 문장
      * @example "안녕하세요"
+     * @returns "[["ㅇ","ㅏ","ㄴ"], ["ㄴ","ㅕ","ㅇ"], ["ㅎ","ㅏ"], ["ㅅ", "ㅔ"]]"
      */
     categorizing(sentence) {
         const temp = [];
