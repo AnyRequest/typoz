@@ -9,7 +9,11 @@ export default defineConfig({
       'src/(assets|common|pages)/**',
       './test/**',
       '**/dist/**',
+      '**/cjs/**',
+      '**/coverage/**',
+      '**/examples/**',
     ],
+    
     reporters: ['default', 'html', 'verbose'],
     coverage: {
       enabled: true,

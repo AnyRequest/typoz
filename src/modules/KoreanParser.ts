@@ -49,9 +49,20 @@ export default class KoreanParser {
   }
 
   /* 음절에서 음소 단위로 분리 */
+  /**
+   *
+   * @param {string} word - 장수
+   * @returns [["ㅈ", "ㅏ", "ㅇ"], ["ㅅ", "ㅜ"]]
+   */
   wordToLetters(word: string): string[] {
     return this.wordToLettersWithEmpty(word).filter((_) => _);
   }
+
+  /**
+   *
+   * @param {string} word - 장수
+   * @returns [["ㅈ", "ㅏ", "ㅇ"], ["ㅅ", "ㅜ", ""]]
+   */
   wordToLettersWithEmpty(word: string): string[] {
     const onset = this.getOnset(word);
     const nucleus = this.getNucleus(word);
