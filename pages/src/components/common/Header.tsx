@@ -1,20 +1,21 @@
 import {
   AppBar,
-  Toolbar,
-  Stack,
   Avatar,
-  Typography,
   Box,
   Button,
   Chip,
+  Stack,
+  Toolbar,
+  Typography,
 } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { BASE_PATH, BRAND_NAME, VERSION } from '../../utils/global';
-import { goTo } from '../../utils/features';
+import { Link, useNavigate } from 'react-router-dom';
 import { ColorModeContext } from '../../provider/ThemeProvider';
+import { goTo } from '../../utils/features';
+import { BASE_PATH, BRAND_NAME, VERSION } from '../../utils/global';
 
 const menu = [
+  { name: 'document', id: 'document', to: '/document' },
   { name: 'About', id: 'about', to: '' },
   { name: 'Installation', id: 'installation', to: '' },
   { name: 'How to use', id: 'how-to-use', to: '' },
@@ -23,6 +24,7 @@ const menu = [
 ];
 
 function Header() {
+  const navigate = useNavigate();
   const darkMode = useContext(ColorModeContext);
   const gnbRef = useRef(null);
   const [isFloat, setIsFloat] = useState(false);
@@ -30,13 +32,9 @@ function Header() {
   function handleFloat(entries: IntersectionObserverEntry[]) {
     entries.forEach((entry) => {
       if (entry.intersectionRatio === 0) {
-        // console.log('out');
-        // console.log(entry);
         setIsFloat(true);
         darkMode.change('dark');
       } else {
-        // console.log('in');
-        // console.log(entry);
         setIsFloat(false);
         darkMode.change('light');
       }
@@ -79,9 +77,11 @@ function Header() {
               src={`${BASE_PATH}logo/${
                 isFloat ? 'typoz-logo-w-fit.png' : 'typoz-logo-bw-fit.png'
               }`}
-              imgProps={{
-                sx: {
-                  objectFit: 'contain',
+              slotProps={{
+                img: {
+                  sx: {
+                    objectFit: 'contain',
+                  },
                 },
               }}
             />
@@ -108,8 +108,12 @@ function Header() {
           </Stack>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: 'flex', gap: 2 }}>
-            {menu.map(({ name, id }) => (
-              <Button key={name} color="inherit" onClick={() => goTo(id)}>
+            {menu.map(({ name, id, to }) => (
+              <Button
+                key={name}
+                color="inherit"
+                onClick={() => (to ? navigate(to) : id ? goTo(id) : {})}
+              >
                 {name}
               </Button>
             ))}

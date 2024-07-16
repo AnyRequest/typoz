@@ -43,6 +43,8 @@ export default class TypeNode {
    */
   private play: (value: boolean) => void;
 
+  private intervalQueue: (NodeJS.Timeout | number)[] = [];
+
   constructor(
     // id: number,
     el: HTMLTypozElement,
@@ -95,12 +97,18 @@ export default class TypeNode {
    */
   private copyCurrent(): string[][] {
     try {
-      const current = JSON.parse(
-        JSON.stringify(this.typingList[this.order]),
-      ) as string[][];
+      let typing = this.typingList[this.order];
+      if (!typing) {
+        this.orderUp();
+        typing = this.typingList[this.order];
+        // throw new Error('typing not found');
+      }
+      const current = JSON.parse(JSON.stringify(typing)) as string[][];
       return current;
     } catch (error) {
-      console.error('TypeNode was destroyed. [name: ' + this.name + ']', error);
+      this.destroy();
+      console.info(`TypeNode clear: [name: ${this.name}]`);
+      // console.error('TypeNode was destroyed. [name: ' + this.name + ']', error);
       return [];
     }
   }
@@ -134,12 +142,24 @@ export default class TypeNode {
    * @method destroy 타입노드 해제 및 초기화
    */
   destroy() {
+    console.info('TypeNode destroy');
     this.pause();
     this.clear();
-    this.element.innerHTML = this.element.typings[0];
-    delete this.element['typings'];
-    delete this.element['typozConfig'];
+    if ('typings' in this.element) {
+      this.element.innerHTML = this.element.typings[0];
+      delete this.element['typings'];
+    }
+    if ('typozConfig' in this.element) {
+      delete this.element['typozConfig'];
+    }
     this.typingList = [];
+
+    queueMicrotask(() => {
+      while (this.intervalQueue.length > 0) {
+        const typing = this.intervalQueue.shift();
+        clearInterval(typing);
+      }
+    });
   }
 
   /**
@@ -192,6 +212,7 @@ export default class TypeNode {
       );
       let pointer = origin.length;
       let word = eraseArray.pop();
+      if (!word) return;
       const eraseLoop = setInterval(async () => {
         if (this.stop) {
           await this.wait();
@@ -215,6 +236,7 @@ export default class TypeNode {
           ].join('');
         }
       }, (1 / this.config.speed.erase) * 100);
+      this.intervalQueue.push(eraseLoop);
     });
   }
 
@@ -230,6 +252,7 @@ export default class TypeNode {
       let pointer = 0;
       const change = [];
       let word = writeArray.shift();
+      if (!word) return;
       const writeLoop = setInterval(async () => {
         if (this.stop) {
           await this.wait();
@@ -248,6 +271,7 @@ export default class TypeNode {
           this.element.innerHTML = change.join('');
         }
       }, (1 / this.config.speed.write) * 100);
+      this.intervalQueue.push(writeLoop);
     });
   }
 
@@ -262,6 +286,7 @@ export default class TypeNode {
       let pointer = this.element.innerText.length;
       const origin = this.element.innerText;
       let word = eraseArray.pop();
+      if (!word) return;
       const eraseLoop = setInterval(async () => {
         if (this.stop) {
           await this.wait();
@@ -281,6 +306,7 @@ export default class TypeNode {
           this.element.innerText = origin.slice(0, pointer - 1) + word.pop();
         }
       }, (1 / this.config.speed.erase) * 100);
+      this.intervalQueue.push(eraseLoop);
     });
   }
 
@@ -296,6 +322,7 @@ export default class TypeNode {
       let pointer = 0;
       const change = [];
       let word = writeArray.shift();
+      if (!word) return;
       const writeLoop = setInterval(async () => {
         if (this.stop) {
           await this.wait();
@@ -314,6 +341,7 @@ export default class TypeNode {
           this.element.innerText = change.join('');
         }
       }, (1 / this.config.speed.write) * 100);
+      this.intervalQueue.push(writeLoop);
     });
   }
 
@@ -324,8 +352,9 @@ export default class TypeNode {
    */
   /* istanbul ignore next */
   async render(): Promise<void> {
-    if (this.isStarted === false) return;
-    this.orderUp();
+    if (this.isStarted === false) {
+      return;
+    }
     if (this.config.mode.divide) {
       await this.renderWriteDivide([...this.copyCurrent()]);
       await this.wait(this.config.delay);
@@ -340,6 +369,7 @@ export default class TypeNode {
         await this.wait(this.config.delay);
       }
     }
+    this.orderUp();
     if (this.isStarted) {
       this.render();
     }

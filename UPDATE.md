@@ -1,5 +1,13 @@
 # Updates
 
+- v0.1.2
+  - fix
+    - README.md 프로젝트 타이틀 수정
+    - typoz destroy 오류 수정
+    - typoz react 리렌더링 버그 수정
+    - typoz custom config words 추가 시 렌더 인덱스 넘어가는 현상 수정
+  - add
+    - react 컴포넌트 빌드 배포 준비
 - v0.1.1
   - feat
     - Typoz 신규 기능 추가

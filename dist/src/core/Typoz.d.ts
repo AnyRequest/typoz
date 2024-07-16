@@ -1,5 +1,5 @@
 /**
- * @version 0.1.1
+ * @version 0.1.2
  */
 import TypeNode from '../models/TypeNode.js';
 import type { HTMLTypozElement, Options, RecursivePartial } from '../index.js';

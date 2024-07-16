@@ -4,6 +4,7 @@ import Landing from './pages/Landing';
 // import Test from './pages/Test';
 import { BASE_PATH } from './utils/global';
 import ApiComponent from './pages/ApiComponent';
+import Docs from './pages/Docs';
 
 function App() {
   return (
@@ -11,10 +12,11 @@ function App() {
       <Route path="" element={<Layout />}>
         <Route path={BASE_PATH} element={<Landing />} />
         {/* <Route path={BASE_PATH + 'test/'} element={<Test />} /> */}
+        <Route path="document" element={<Docs />} />
       </Route>
-      <Route path={BASE_PATH + 'api'}>
+      {/* <Route path={BASE_PATH + 'api'}>
         <Route path="render" element={<ApiComponent />} />
-      </Route>
+      </Route> */}
     </Routes>
   );
 }

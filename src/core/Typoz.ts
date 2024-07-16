@@ -1,5 +1,5 @@
 /**
- * @version 0.1.1
+ * @version 0.1.2
  */
 
 import TypeNode from '@/models/TypeNode';
@@ -247,20 +247,25 @@ export class Typoz {
   private defaultRender() {
     const defaultElements = findElements(this.config.querySelector);
     for (const element of [...new Set(defaultElements)]) {
+      // console.log('insert', element, element.typings);
       const trimText = element.innerText.trim();
-      if (trimText !== '') {
-        if (!Object.hasOwn(element, 'typings')) {
-          element.typings = [];
-        }
-        element.typings.push(trimText.trim());
+      let typings = [];
+      if (!Object.hasOwn(element, 'typings')) {
+        element.typings = [];
       }
-      const converted = this.convert(trimText);
+      if (trimText) {
+        element.typings.push(trimText);
+        // console.log(element.typings);
+        const converted = this.convert(trimText);
+        typings.push(converted);
+      }
+      // console.log(typings);
+
       const typingModel = new TypeNode(
         element,
         element.typozConfig || JSON.parse(JSON.stringify(this.config)),
-        [converted],
+        typings,
       );
-
       this.typeNodes.push(typingModel);
     }
   }
@@ -275,17 +280,19 @@ export class Typoz {
   ) {
     for (const element of [...new Set(elements)]) {
       const trimText = element.innerText.trim();
-      if (trimText !== '') {
-        if (!Object.hasOwn(element, 'typings')) {
-          element.typings = [];
-        }
-        element.typings.push(trimText.trim());
+      let typings = [];
+      if (!Object.hasOwn(element, 'typings')) {
+        element.typings = [];
       }
-      const converted = this.convert(trimText);
+      if (trimText !== '') {
+        element.typings.push(trimText);
+        const converted = this.convert(trimText);
+        typings.push(converted);
+      }
       const typingModel = new TypeNode(
         element,
         element.typozConfig || JSON.parse(JSON.stringify(this.config)),
-        [converted],
+        typings,
       );
 
       this.typeNodes.push(typingModel);
@@ -301,20 +308,25 @@ export class Typoz {
       return (this.config.nodes as Node[]).reduce(
         (acc, { select, words, config }) => {
           const target = findOne(select);
+          // console.log('insert', target, target.typings);
+          const defaultQuerySelector =
+            this.config.querySelector instanceof Array
+              ? this.config.querySelector[0]
+              : this.config.querySelector;
+
           /* istanbul ignore next */
-          if (target) {
-            target.setAttribute;
+          if (target && !target.classList.contains(defaultQuerySelector)) {
             if (!Object.hasOwn(target, 'typozConfig')) {
               const copy = JSON.parse(JSON.stringify(this.config));
               recursiveConfigApply(copy, config || this.config);
               target.typozConfig = copy;
             }
             const targetText = trimInnerText(target);
-            if (targetText !== '') {
-              if (!Object.hasOwn(target, 'typings')) {
-                target.typings = [];
+            if (!Object.hasOwn(target, 'typings')) {
+              target.typings = [];
+              if (targetText) {
+                target.typings.push(targetText);
               }
-              target.typings.push(targetText.trim());
             }
             if (words?.length > 0) {
               target.typings.push(...words.map((_) => _.trim()));
@@ -344,9 +356,13 @@ export class Typoz {
     const nodesElements = this.getConfigNodes();
     for (const element of [...new Set(nodesElements)]) {
       const parseBaseText = element.innerText.trim();
-      const parsedSentences = [parseBaseText];
+      const parsedSentences = [];
+      if (parseBaseText) {
+        parsedSentences.push(parseBaseText);
+      }
       if (element.typings?.length > 0) {
         parsedSentences.push(...element.typings);
+        // console.log(element, element.typings);
       }
       const typingModel = new TypeNode(
         element,
@@ -375,7 +391,9 @@ export class Typoz {
     styles += getCursorStyle(this.config.style.cursor);
 
     this.defaultRender();
-    this.manualRender(elements);
+    if (elements) {
+      this.manualRender(elements);
+    }
     this.nodesRender();
 
     for (const typing of this.typeNodes) {

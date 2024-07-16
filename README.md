@@ -1,12 +1,12 @@
-# Typos
+# Typoz
 
-`Typos`는 Typography의 어원인 "Type"와 "-술"을 의미하는 접미사 graphy의 합성어에서 그리스어의 두 단어 τύπος(`typos`, 표시)와 γράφω(grapho, 쓰다)중에서 첫 단어인 typos에서 따온 이름입니다. 사용자가 직접 타이핑하는 효과를 보다 쉽게 구현하기 위해 제작되었습니다. 독특하고, 다양한 효과를 구상하고 있습니다.
+`Typoz`는 '타입(type)'과 'oz(온스)'의 결합으로, 다양한 타이핑 효과를 제공하는 라이브러리입니다.
 
 ## Version
 
-`v0.1.1`
+`v0.1.2`
 
-## Typos의 한글 분해, 조합
+## Typoz의 한글 분해, 조합
 
 `음소` -> `음절` \[조합\], `음절` -> `음소` \[분해\] 하며, 한글을 입력할 때 나타나는 자모의 조합 효과를 그대로 재현합니다.
 
@@ -20,7 +20,7 @@ pnpm add typoz
 ## CDN
 
 ```html
-<script src="https://www.unpkg.com/typoz@0.1.1/umd/typoz.min.js"></script>
+<script src="https://www.unpkg.com/typoz@0.1.2/umd/typoz.min.js"></script>
 ```
 
 ## Congifuration
@@ -54,7 +54,7 @@ typoz.globalConfig(/* custom configs */);
 - 동사, 형용사를 변환합니다.
   - 예시) verb + ~서: 무르다 => 물러, 돕다 => 도와, 무찌르다 => 무찔러
 
-### Typoz
+### Usage
 
 ```html
 <!-- 기본적으로 클래스명 typoz를 탐색하고 자동 실행합니다. -->

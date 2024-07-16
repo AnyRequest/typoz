@@ -39,6 +39,7 @@ export default class TypeNode {
      * @property {(value: boolean) => void} play 렌더링 시작 resolver
      */
     private play;
+    private intervalQueue;
     constructor(el: HTMLTypozElement, config: OmitNodesOptions, typings: string[][][]);
     /**
      * @method orderUp 타이핑 순서 증가

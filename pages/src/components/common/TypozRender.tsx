@@ -66,10 +66,59 @@ function TypozRender({
   config,
   ...props
 }: TypozRenderProps) {
-  const typoz = new Typoz();
   const typingRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const typoz = new Typoz();
+    function handleTypeBuilderProcess(typoz: Typoz, processes: PropcessType[]) {
+      const typeBuilder = typoz
+        .createBuilder()
+        .select('#' + id)
+        .config(config || {});
+      for (const { action, value, speed } of processes) {
+        switch (action) {
+          case 'write':
+            if (speed) typeBuilder.write(value, speed);
+            else typeBuilder.write(value);
+            break;
+          case 'erase':
+            if (speed) typeBuilder.erase(value, speed);
+            else typeBuilder.erase(value);
+            break;
+          case 'move':
+            if (speed) typeBuilder.move(value, speed);
+            else typeBuilder.move(value);
+            break;
+          case 'pause':
+            typeBuilder.pause(value);
+            break;
+          case 'allErase':
+            typeBuilder.allErase();
+            break;
+          case 'run':
+            typeBuilder.run();
+            break;
+          case 'forever':
+            typeBuilder.forever(value ?? false);
+            break;
+        }
+      }
+    }
+
+    function handleTypeNodeRender(typoz: Typoz) {
+      typoz.initialize();
+      typoz.globalConfig({
+        ...globalConfig,
+        nodes: [
+          {
+            select: id ? '#' + id : '.' + className,
+            words: words || [],
+            config,
+          },
+        ],
+      });
+    }
+
     if (typingRef.current) {
       if (builder === true) {
         handleTypeBuilderProcess(typoz, processes);
@@ -81,55 +130,6 @@ function TypozRender({
       typoz.destroy();
     };
   }, []);
-
-  function handleTypeBuilderProcess(typoz: Typoz, processes: PropcessType[]) {
-    const typeBuilder = typoz
-      .node()
-      .select('#' + id)
-      .config(config || {});
-    for (const { action, value, speed } of processes) {
-      switch (action) {
-        case 'write':
-          if (speed) typeBuilder.write(value, speed);
-          else typeBuilder.write(value);
-          break;
-        case 'erase':
-          if (speed) typeBuilder.erase(value, speed);
-          else typeBuilder.erase(value);
-          break;
-        case 'move':
-          if (speed) typeBuilder.move(value, speed);
-          else typeBuilder.move(value);
-          break;
-        case 'pause':
-          typeBuilder.pause(value);
-          break;
-        case 'allErase':
-          typeBuilder.allErase();
-          break;
-        case 'run':
-          typeBuilder.run();
-          break;
-        case 'forever':
-          typeBuilder.forever(value ?? false);
-          break;
-      }
-    }
-  }
-
-  function handleTypeNodeRender(typoz: Typoz) {
-    typoz.initialize();
-    typoz.globalConfig({
-      ...globalConfig,
-      nodes: [
-        {
-          select: id ? '#' + id : '.' + className,
-          words: words || [],
-          config,
-        },
-      ],
-    });
-  }
 
   return (
     <div ref={typingRef} id={id} className={className} {...props}>

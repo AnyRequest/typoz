@@ -10,3 +10,5 @@ cjs/
 
 loader.js
 package-lock.json
+
+lib/react
