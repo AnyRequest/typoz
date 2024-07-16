@@ -16,11 +16,11 @@ import { BASE_PATH, BRAND_NAME, VERSION } from '../../utils/global';
 
 const menu = [
   { name: 'document', id: 'document', to: '/document' },
-  { name: 'About', id: 'about', to: '' },
-  { name: 'Installation', id: 'installation', to: '' },
-  { name: 'How to use', id: 'how-to-use', to: '' },
-  { name: 'Use cases', id: 'use-cases', to: '' },
-  { name: 'Contact', id: 'contact', to: '' },
+  { name: 'Advanced', id: 'advanced', to: '/advanced' },
+  // { name: 'Installation', id: 'installation', to: '' },
+  // { name: 'How to use', id: 'how-to-use', to: '' },
+  // { name: 'Use cases', id: 'use-cases', to: '' },
+  // { name: 'Contact', id: 'contact', to: '' },
 ];
 
 function Header() {

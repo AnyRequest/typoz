@@ -1,10 +1,10 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import Landing from './pages/Landing';
 // import Test from './pages/Test';
-import { BASE_PATH } from './utils/global';
-import ApiComponent from './pages/ApiComponent';
 import Docs from './pages/Docs';
+import Advanced from './pages/Advanced';
+import { BASE_PATH } from './utils/global';
 
 function App() {
   return (
@@ -13,6 +13,7 @@ function App() {
         <Route path={BASE_PATH} element={<Landing />} />
         {/* <Route path={BASE_PATH + 'test/'} element={<Test />} /> */}
         <Route path="document" element={<Docs />} />
+        <Route path="advanced" element={<Advanced />} />
       </Route>
       {/* <Route path={BASE_PATH + 'api'}>
         <Route path="render" element={<ApiComponent />} />
